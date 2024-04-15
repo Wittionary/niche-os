@@ -8,14 +8,14 @@ while true; do
     current_time=$(date +"%H:%M")
 
     # Pull the Git repository
-#    git pull "$repo_url" 
+    REMOTE_STATUS=$(git pull "$repo_url")
 
     # Check if the repository has changed
-    if [[ $(git pull "$repo_url") == "Already up to date." ]]; then
+    if [[ $REMOTE_STATUS == "Already up to date." ]]; then
         echo "$current_time - repo hasn't changed"
     else
         echo "$current_time - changes found"
-	git pull "$repo_url"
+	    #git pull "$repo_url"
         sudo nixos-rebuild switch
     fi
 
