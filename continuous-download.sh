@@ -16,7 +16,8 @@ while true; do
     else
         echo "$current_time - changes found"
 	    #git pull "$repo_url"
-        sudo nixos-rebuild switch
+        sudo nixos-rebuild switch &
+        wait
     fi
 
     # Wait for 1 minute before checking again
