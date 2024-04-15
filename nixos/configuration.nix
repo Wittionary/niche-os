@@ -132,7 +132,7 @@ programs.git = {
   extraConfig = {
     credential = {
       credentialStore = "secretservice";
-      helper = "${git-credential-manager}/bin/git-credential-manager-core";
+      helper = "${pkgs.git-credential-manager}/bin/git-credential-manager-core";
     };
   };
 };
