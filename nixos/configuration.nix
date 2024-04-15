@@ -103,6 +103,7 @@
     curl
     file
     git-credential-manager
+    home-manager
     jq
     #obsidian # package is out-of-date -> insecure
 
