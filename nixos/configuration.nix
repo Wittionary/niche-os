@@ -129,6 +129,7 @@ programs.git = {
 programs.zsh =  {
 	enable = true;
 	enableCompletion = true;
+  autoSuggestions.enable = true;
 };
 
 
