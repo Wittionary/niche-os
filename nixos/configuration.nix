@@ -133,8 +133,8 @@ programs.git = {
     credential = {
       credentialStore = "secretservice";
       helper = "${git-credential-manager}/bin/git-credential-manager-core"
-    }
-  }
+    };
+  };
 };
 
 programs.zsh =  {
