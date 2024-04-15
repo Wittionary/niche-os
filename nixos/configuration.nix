@@ -84,8 +84,12 @@
     description = "witt";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
+      _1password
       firefox
     #  thunderbird
+
+      obsidian # v1.4.16 package is out-of-date -> insecure
+      vscode-with-extensions
     ];
   };
 
@@ -95,18 +99,19 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-	_1password
-	curl
-	file
-	jq
-	obsidian # package is out-of-date -> insecure
+    #_1password
+    curl
+    file
+    git-credential-manager
+    jq
+    #obsidian # package is out-of-date -> insecure
 
-	vim 
-	wget
+    vim 
+    wget
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
-                "electron-25.9.0"
+                "electron-25.9.0" # for obsidian 1.4.16
   ];
 
 
@@ -124,6 +129,12 @@ programs.git = {
 			defaultBranch = "main";
 		};
 	};
+  extraConfig = {
+    credential = {
+      credentialStore = "secretservice";
+      helper = "${git-credential-manager}/bin/git-credential-manager-core"
+    }
+  }
 };
 
 programs.zsh =  {
