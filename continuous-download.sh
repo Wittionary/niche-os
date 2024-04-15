@@ -1,4 +1,4 @@
-#!/bin/bash
+#!
 
 # Set the path to the Git repository
 repo_url="https://github.com/Wittionary/niche-os"
@@ -8,13 +8,14 @@ while true; do
     current_time=$(date +"%H:%M")
 
     # Pull the Git repository
-    git pull -C "$repo_url" 
+#    git pull "$repo_url" 
 
     # Check if the repository has changed
     if [[ $(git pull "$repo_url") == "Already up to date." ]]; then
         echo "$current_time - repo hasn't changed"
     else
-        echo "$current_time - changes found. Running nixos-rebuild switch"
+        echo "$current_time - changes found"
+	git pull "$repo_url"
         sudo nixos-rebuild switch
     fi
 
