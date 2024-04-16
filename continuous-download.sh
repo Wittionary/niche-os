@@ -18,9 +18,11 @@ while true; do
 	    #git pull "$repo_url"
         sudo nixos-rebuild switch &
         wait
+        echo "$current_time - rebuild done"
     fi
 
     # Wait for 1 minute before checking again
+    echo "$current_time - sleeping"
     sleep 1m
 done
 
