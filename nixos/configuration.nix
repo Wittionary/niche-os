@@ -8,7 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      <home-manager/nixos>
+      home-manager/nixos
     ];
 
   # Bootloader.
@@ -94,6 +94,18 @@
     ];
   };
 
+  home-manager.users.witt = {pkgs, ...}: {
+    home.packages = [ pkgs.vivaldi ];
+
+    programs.zsh =  {
+      enable = true;
+      enableCompletion = true;
+      #autoSuggestions.enable = true;
+    };
+
+    #home.stateVersion = "23.11";
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -135,12 +147,6 @@ programs.git = {
       helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
     };
   };
-};
-
-programs.zsh =  {
-	enable = true;
-	enableCompletion = true;
-  #autoSuggestions.enable = true;
 };
 
 
