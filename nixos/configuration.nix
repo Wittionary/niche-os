@@ -8,7 +8,6 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      home-manager/nixos
     ];
 
   # Bootloader.
@@ -90,20 +89,9 @@
     #  thunderbird
 
       obsidian # v1.4.16 package is out-of-date -> insecure
+      vivaldi
       vscode-with-extensions
     ];
-  };
-
-  home-manager.users.witt = {pkgs, ...}: {
-    home.packages = [ pkgs.vivaldi ];
-
-    programs.zsh =  {
-      enable = true;
-      enableCompletion = true;
-      #autoSuggestions.enable = true;
-    };
-
-    #home.stateVersion = "23.11";
   };
 
   # Allow unfree packages
@@ -123,6 +111,12 @@
     vim 
     wget
   ];
+
+  programs.zsh =  {
+    enable = true;
+    enableCompletion = true;
+    #autoSuggestions.enable = true;
+  };
 
   nixpkgs.config.permittedInsecurePackages = [
                 "electron-25.9.0" # for obsidian 1.4.16
