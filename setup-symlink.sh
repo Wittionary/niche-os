@@ -1,8 +1,8 @@
-#!/bin/bash
+#!
 # Points the system directory over to the git-managed configurations
 
 NIXOS_DIR="/etc/nixos/"
-GIT_DIR="~/git/niche-os/nixos/"
+GIT_DIR="/home/witt/git/niche-os/nixos/"
 CONFIGS="configuration.nix hardware-configuration.nix"
 
 for config in $CONFIGS; do
