@@ -85,10 +85,20 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       _1password
+      azure-cli
+      awscli2
+
+      bat # batcat
       firefox
-    #  thunderbird
+      fzf
+
+      kubectl
+      lolcat
 
       obsidian # v1.4.16 package is out-of-date -> insecure
+
+      terraform
+      terragrunt
       vivaldi
       vscode-with-extensions
     ];
@@ -106,8 +116,8 @@
     git-credential-manager
     home-manager
     jq
-    #obsidian # package is out-of-date -> insecure
-
+    podman
+    podman-compose
     vim 
     wget
   ];
@@ -115,7 +125,11 @@
   programs.zsh =  {
     enable = true;
     enableCompletion = true;
-    #autoSuggestions.enable = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+
+    #promptInit = ''
+    #''
   };
 
   nixpkgs.config.permittedInsecurePackages = [
