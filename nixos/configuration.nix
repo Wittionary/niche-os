@@ -127,10 +127,10 @@
   environment.shellAliases = {
     # ALIASES ---------------------------
     cls=clear;
-    d=podman;
-    tf=terraform;
-    tg=terragrunt;
-    kc=kubectl;
+    d="podman";
+    tf="terraform";
+    tg="terragrunt";
+    kc="kubectl";
     "aws.whoami"="aws iam get-user --query User.Arn --output text";
     "az.whoami"="az ad signed-in-user show --query userPrincipalName --output tsv";
     ".."="cd ..";
