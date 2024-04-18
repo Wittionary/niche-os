@@ -131,11 +131,11 @@
     tf=terraform;
     tg=terragrunt;
     kc=kubectl;
-    aws.whoami="aws iam get-user --query User.Arn --output text";
-    az.whoami="az ad signed-in-user show --query userPrincipalName --output tsv";
-    ..="cd ..";
-    ...="cd ../..";
-    ....="cd ../../..";
+    "aws.whoami"="aws iam get-user --query User.Arn --output text";
+    "az.whoami"="az ad signed-in-user show --query userPrincipalName --output tsv";
+    ".."="cd ..";
+    "..."="cd ../..";
+    "...."="cd ../../..";
   };
   programs.zsh =  {
     enable = true;
