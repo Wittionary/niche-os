@@ -127,7 +127,7 @@
   environment.shellAliases = {
     # ALIASES ---------------------------
     cls=clear;
-    d=docker;
+    d=podman;
     tf=terraform;
     tg=terragrunt;
     kc=kubectl;
