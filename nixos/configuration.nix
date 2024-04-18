@@ -82,7 +82,6 @@
   users.users.witt = {
     isNormalUser = true;
     description = "witt";
-    defaultUserShell = true;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       _1password
@@ -104,7 +103,6 @@
       vscode-with-extensions
     ];
   };
-  users.defaultUserShell = pkgs.zsh;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -126,11 +124,27 @@
     wget
   ];
 
+  environment.shellAliases = {
+    # ALIASES ---------------------------
+    cls=clear;
+    d=docker;
+    tf=terraform;
+    tg=terragrunt;
+    kc=kubectl;
+    aws.whoami="aws iam get-user --query User.Arn --output text";
+    az.whoami="az ad signed-in-user show --query userPrincipalName --output tsv";
+    ..="cd ..";
+    ...="cd ../..";
+    ....="cd ../../..";
+  };
   programs.zsh =  {
     enable = true;
     enableCompletion = true;
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
+    # shellAliases = {
+      
+    # };
 
     #promptInit = ''
     #''
