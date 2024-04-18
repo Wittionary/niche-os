@@ -126,7 +126,7 @@
 
   environment.shellAliases = {
     # ALIASES ---------------------------
-    cls=clear;
+    cls="clear";
     d="podman";
     tf="terraform";
     tg="terragrunt";
