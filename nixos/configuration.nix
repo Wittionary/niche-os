@@ -82,6 +82,7 @@
   users.users.witt = {
     isNormalUser = true;
     description = "witt";
+    defaultUserShell = true;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       _1password
@@ -103,7 +104,7 @@
       vscode-with-extensions
     ];
   };
-  users.defaultUserShell = [ pkgs.zsh ]
+  users.defaultUserShell = [ pkgs.zsh ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
