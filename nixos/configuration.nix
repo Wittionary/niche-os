@@ -116,6 +116,8 @@
     git-credential-manager
     home-manager
     jq
+
+    nmap
     podman
     podman-compose
     vim 
