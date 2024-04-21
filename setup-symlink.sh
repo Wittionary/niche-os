@@ -3,7 +3,7 @@
 
 NIXOS_DIR="/etc/nixos/"
 GIT_DIR="/home/witt/git/niche-os/nixos/"
-CONFIGS="configuration.nix hardware-configuration.nix"
+CONFIGS="configuration.nix hardware-configuration.nix home-manager.nix"
 
 for config in $CONFIGS; do
 	FILEPATH="$NIXOS_DIR$config"

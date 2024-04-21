@@ -6,8 +6,9 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ./hardware-configuration.nix
+      #./home-manager.nix
     ];
 
   # Bootloader.
@@ -99,6 +100,7 @@
 
       terraform
       terragrunt
+      todoist-electron
       vivaldi
       vscode-with-extensions
     ];
