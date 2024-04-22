@@ -2,7 +2,7 @@
 # Points the system directory over to the git-managed configurations
 
 NIXOS_DIR="/etc/nixos/"
-GIT_DIR="/home/witt/git/niche-os/nixos/"
+GIT_DIR="$HOME/git/niche-os/nixos/"
 CONFIGS="configuration.nix home-manager.nix"
 
 for config in $CONFIGS; do
@@ -10,7 +10,8 @@ for config in $CONFIGS; do
 	
 	# is present but not as a symlink
     if [[ -f "$FILEPATH" && ! ( -L "$FILEPATH" ) ]]; then
-        cp -v "$FILEPATH" "$FILEPATH.backup"
+        mv -v "$FILEPATH" "$FILEPATH.backup"
+        ln --symbolic --verbose "$GIT_DIR$config" "$FILEPATH" && echo "$FILEPATH is now a symlink"
 
 	# is a symlink
     elif [[ -L "$FILEPATH" ]]; then
