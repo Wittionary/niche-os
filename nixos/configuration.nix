@@ -9,6 +9,7 @@
     [
       ./hardware-configuration.nix
       #./home-manager.nix
+      ./wsl.nix
     ];
 
   # Bootloader.
