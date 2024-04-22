@@ -10,7 +10,7 @@ for config in $CONFIGS; do
 	
 	# is present but not as a symlink
     if [[ -f "$FILEPATH" && ! ( -L "$FILEPATH" ) ]]; then
-        rm -v "$FILEPATH"
+        cp -v "$FILEPATH" "$FILEPATH.backup"
 
 	# is a symlink
     elif [[ -L "$FILEPATH" ]]; then
