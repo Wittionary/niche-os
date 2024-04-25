@@ -127,6 +127,8 @@
     wget
   ];
 
+  programs.home-manager.enable = true;  
+
   environment.shellAliases = {
     # ALIASES ---------------------------
     cls="clear";
@@ -154,7 +156,7 @@
   };
 
   nixpkgs.config.permittedInsecurePackages = [
-                "electron-25.9.0" # for obsidian 1.4.16
+    "electron-25.9.0" # for obsidian 1.4.16
   ];
 
 
