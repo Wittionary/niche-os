@@ -2,8 +2,10 @@
 # Points the system directory over to the git-managed configurations
 
 NIXOS_DIR="/etc/nixos/"
+HOME_MANAGER_DIR="$HOME/.config/home-manager/"
 GIT_DIR="$HOME/git/niche-os/nixos/"
-CONFIGS="configuration.nix home-manager.nix"
+
+CONFIGS="configuration.nix home.nix"
 
 for config in $CONFIGS; do
 	FILEPATH="$NIXOS_DIR$config"
