@@ -14,6 +14,13 @@
     <home-manager/nixos>
   ];
 
+  nix = {
+    settings = {
+      # Enable flakes and new 'nix' command
+      experimental-features = "nix-command flakes";
+    };
+  };
+
   wsl.enable = true;
   wsl.defaultUser = "wittnix";
 
