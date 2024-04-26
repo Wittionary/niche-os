@@ -11,6 +11,7 @@
   imports = [
     # include NixOS-WSL modules
     <nixos-wsl/modules>
+    <home-manager/nixos>
   ];
 
   wsl.enable = true;
