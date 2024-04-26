@@ -9,7 +9,7 @@
     [
       ./hardware-configuration.nix
       
-      ./home-manager.nix
+      ./home.nix
       #<home-manager/nixos>
       #./wsl.nix
     ];
