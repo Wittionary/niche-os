@@ -8,8 +8,9 @@
   imports =
     [
       ./hardware-configuration.nix
-      #./home-manager.nix
-      <home-manager/nixos>
+      
+      ./home-manager.nix
+      #<home-manager/nixos>
       #./wsl.nix
     ];
 
