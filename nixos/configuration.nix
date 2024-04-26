@@ -9,7 +9,8 @@
     [
       ./hardware-configuration.nix
       #./home-manager.nix
-      ./wsl.nix
+      #<home-manager/nixos>
+      #./wsl.nix
     ];
 
   # Bootloader.
@@ -117,17 +118,17 @@
     curl
     file
     git-credential-manager
-    home-manager
     jq
 
     nmap
+    openssl
     podman
     podman-compose
     vim 
     wget
   ];
 
-  programs.home-manager.enable = true;  
+  #programs.home-manager.enable = true;  
 
   environment.shellAliases = {
     # ALIASES ---------------------------
