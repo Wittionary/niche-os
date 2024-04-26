@@ -91,11 +91,10 @@
       _1password
       azure-cli
       awscli2
-
       bat # batcat
       firefox
       fzf
-
+      home-manager # cli
       kubectl
       lolcat
 
@@ -128,8 +127,6 @@
     vim 
     wget
   ];
-
-  #programs.home-manager.enable = true;  
 
   environment.shellAliases = {
     # ALIASES ---------------------------
