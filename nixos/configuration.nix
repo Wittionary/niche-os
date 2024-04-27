@@ -94,6 +94,7 @@
     isNormalUser = true;
     description = "witt";
     extraGroups = [ "networkmanager" "wheel" ];
+    ignoreShellProgramCheck = true; # because home.nix is managing shell
     packages = with pkgs; [
       # _1password
       # azure-cli
@@ -115,6 +116,8 @@
     ];
   };
   users.defaultUserShell = pkgs.zsh;
+  programs.zsh.enable = true;
+
 
 
 

@@ -62,22 +62,32 @@ home-manager.useGlobalPkgs = true;
     # GIT --------------------------
     programs.git = {
       enable = true;
-      config = {
-        init = {
-          defaultBranch = "main";
-        };
-        credential = {
-          credentialStore = "secretservice";
-          helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
+      delta = { # https://github.com/dandavison/delta
+        enable = true;
+        options = {
+          side-by-side = true;
         };
       };
+      userName = "Witt Allen";
+      userEmail = "wittionary@users.noreply.github.com";
+#      config = {
+#        init = {
+#          defaultBranch = "main";
+#        };
+#        credential = {
+#          credentialStore = "secretservice";
+#          helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
+#        };
+#      };
     };
+    programs.git-credential-oauth.enable = true;
+    
 
     # ZSH --------------------------
     programs.zsh =  {
       enable = true;
       enableCompletion = true;
-      autosuggestions.enable = true;
+      enableAutosuggestions = true;
       history = {
         expireDuplicatesFirst = true; # space savers and clarity makers
         extended = true; # makes the format of the history entry more complicated: "history -fdD" vs "history"
@@ -86,29 +96,6 @@ home-manager.useGlobalPkgs = true;
         size = 1001;
       };
       sessionVariables = {
-        # PS1 deciphered:
-        # Start bolding text; yellow bg; name of logged in user; magenta bg; hostname
-        # blue bg; display working directory unless it's 3 dirs deep in which case display the current dir and its parent
-        # if in privileged shell then show the star emoji, else show nothing
-        # if last command exited 0 (success) then show happy face, else show mad/poo face
-        # End bolding text; reset fg and bg colors to default
-        logged_in_user="%{$bg[yellow]%}%{$fg[black]%}%n";
-        kube_context="%{$bg[yellow]%}%{$fg[black]%} $active_kube_context";
-
-        hostname="%{$bg[magenta]%}%{$fg[white]%}%M";
-        active_acct_display="%{$bg[magenta]%}%{$fg[white]%}☁️ $active_acct_az";
-
-        working_dir="%{$bg[blue]%}%(4~|../%2~|%~)";
-        priv_shell="%(!.✨.)";
-        exit_code="%(?.😀.💩)";
-        PS1="%B$kube_context$active_acct_display$working_dir$priv_shell$exit_code%b%{$reset_color%} ";
-
-        left_boundary="%{$fg[red]%}(%{$reset_color%}";
-        time="%T";
-        bg_jobs="%(1j., %j."")";
-        right_boundary="%{$fg[red]%})%{$reset_color%}";
-        RPS1="%K{$bg[black]%}$left_boundary$time$bg_jobs$right_boundary%k ";
-
         # non-prompt stuff
         FZF_DEFAULT_OPTS="--height 25% --layout=reverse";
       };
