@@ -10,7 +10,7 @@
       ./hardware-configuration.nix
       
       ./home.nix
-      #<home-manager/nixos>
+      <home-manager/nixos>
       #./wsl.nix
     ];
 
@@ -115,6 +115,8 @@
     ];
   };
 
+
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -187,7 +189,6 @@ programs.git = {
 };
 
 
-  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

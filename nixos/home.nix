@@ -12,24 +12,16 @@ home-manager.useUserPackages = true;
 home-manager.useGlobalPkgs = true;
 
 
-# Let Home Manager install and manage itself.
-programs.home-manager.enable = true;
+# Let Home Manager install and manage itself. This is for standaloe install
+# See: https://itsfoss.com/home-manager-nixos/#standalone-installation-of-home-manager
+# programs.home-manager.enable = true;
 
-home-manager.users.witt = { pkgs, ... }: {
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  home.username = "witt";
-  home.homeDirectory = "/home/witt";
+  home-manager.users.witt = { pkgs, ... }: {
+    home.packages = with pkgs; [ 
+      # pkgs.neofetch
+      # pkgs.podman
+    ];
 
-  home.packages = [ 
-    pkgs.neofetch
-    pkgs.podman
-  ];
-
-  programs.bash.enable = true;
-
-
-
-  home.stateVersion = "23.11"; # should stay at the version you originally installed.
-};
+    home.stateVersion = "23.11"; # should stay at the version you originally installed.
+  };
 }
