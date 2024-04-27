@@ -7,10 +7,10 @@
 {
   imports =
     [
-      ./hardware-configuration.nix
-      
-      ./home.nix
       <home-manager/nixos>
+
+      ./hardware-configuration.nix
+      ./home.nix
       #./wsl.nix
     ];
 
@@ -114,6 +114,7 @@
       # vscode-with-extensions
     ];
   };
+  users.defaultUserShell = pkgs.zsh;
 
 
 
@@ -137,31 +138,21 @@
     wget
   ];
 
-  environment.shellAliases = {
-    # ALIASES ---------------------------
-    cls="clear";
-    d="podman";
-    tf="terraform";
-    tg="terragrunt";
-    kc="kubectl";
-    "aws.whoami"="aws iam get-user --query User.Arn --output text";
-    "az.whoami"="az ad signed-in-user show --query userPrincipalName --output tsv";
-    ".."="cd ..";
-    "..."="cd ../..";
-    "...."="cd ../../..";
-  };
-  programs.zsh =  {
-    enable = true;
-    enableCompletion = true;
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
-    # shellAliases = {
-      
-    # };
+  # Now lives under home.shellAliases
+  # environment.shellAliases = {
+  #   # ALIASES ---------------------------
+  #   cls="clear";
+  #   d="podman";
+  #   tf="terraform";
+  #   tg="terragrunt";
+  #   kc="kubectl";
+  #   "aws.whoami"="aws iam get-user --query User.Arn --output text";
+  #   "az.whoami"="az ad signed-in-user show --query userPrincipalName --output tsv";
+  #   ".."="cd ..";
+  #   "..."="cd ../..";
+  #   "...."="cd ../../..";
+  # };
 
-    #promptInit = ''
-    #''
-  };
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0" # for obsidian 1.4.16
@@ -175,18 +166,20 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-programs.git = {
-	enable = true;
-	config = {
-		init = {
-			defaultBranch = "main";
-		};
-    credential = {
-      credentialStore = "secretservice";
-      helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
-    };
-  };
-};
+
+
+# programs.git = {
+# 	enable = true;
+# 	config = {
+# 		init = {
+# 			defaultBranch = "main";
+# 		};
+#     credential = {
+#       credentialStore = "secretservice";
+#       helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
+#     };
+#   };
+# };
 
 
 
