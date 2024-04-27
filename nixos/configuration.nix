@@ -95,23 +95,23 @@
     description = "witt";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      _1password
-      azure-cli
-      awscli2
-      bat # batcat
-      firefox
-      fzf
-      home-manager # cli
-      kubectl
-      lolcat
+      # _1password
+      # azure-cli
+      # awscli2
+      # bat # batcat
+      # firefox
+      # fzf
+      # home-manager # cli
+      # kubectl
+      # lolcat
 
-      obsidian # v1.4.16 package is out-of-date -> insecure
+      # obsidian # v1.4.16 package is out-of-date -> insecure
 
-      terraform
-      terragrunt
-      todoist-electron
-      vivaldi
-      vscode-with-extensions
+      # terraform
+      # terragrunt
+      # todoist-electron
+      # vivaldi
+      # vscode-with-extensions
     ];
   };
 

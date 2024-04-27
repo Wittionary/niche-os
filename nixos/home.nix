@@ -17,9 +17,30 @@ home-manager.useGlobalPkgs = true;
 # programs.home-manager.enable = true;
 
   home-manager.users.witt = { pkgs, ... }: {
-    home.packages = with pkgs; [ 
-      # pkgs.neofetch
-      # pkgs.podman
+    home.packages = with pkgs; [
+      _1password
+      azure-cli
+      awscli2
+      bat # batcat
+      
+      firefox
+      fzf
+      
+      home-manager # cli
+      
+      kubectl
+      lolcat
+      
+      neofetch
+      obsidian # v1.4.16 package is out-of-date -> insecure
+      podman
+
+      terraform
+      terragrunt
+      todoist-electron
+      
+      vivaldi
+      vscode-with-extensions      
     ];
 
     home.stateVersion = "23.11"; # should stay at the version you originally installed.
