@@ -91,7 +91,7 @@ home-manager.useGlobalPkgs = true;
         # generic
         mikestead.dotenv
         eamodio.gitlens
-        ritwickdey.LiveServer
+        ritwickdey.liveserver
 
         # dev ops stuff
         github.vscode-github-actions
