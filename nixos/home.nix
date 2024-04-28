@@ -80,7 +80,7 @@ home-manager.useGlobalPkgs = true;
 #        };
 #      };
     };
-    programs.git-credential-oauth.enable = true;
+    #programs.git-credential-oauth.enable = true; # requires rando to have access to my account
     
 
     # ZSH --------------------------
