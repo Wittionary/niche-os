@@ -117,7 +117,8 @@ home-manager.useGlobalPkgs = true;
         ms-python.debugpy      
       ];
       package = pkgs.vscodium # pkgs.vscode
-      userSettings {
+      
+      userSettings = {
         "editor.fontSize" = 16;
         "window.zoomLevel" = 1;
         "explorer.confirmDelete" = false;
