@@ -114,7 +114,7 @@ home-manager.useGlobalPkgs = true;
         # python
         ms-python.vscode-pylance
         ms-python.python
-        ms-python.debugpy      
+        #ms-python.debugpy # extension not found? "attribute 'debugpy' missing"
       ];
       package = pkgs.vscodium; # pkgs.vscode
 
