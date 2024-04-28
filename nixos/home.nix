@@ -22,6 +22,8 @@ home-manager.useGlobalPkgs = true;
       awscli2
       bat # batcat
       
+      dmenu-rs # dmenu but extensible and in Rust - https://github.com/Shizcow/dmenu-rs
+
       firefox
       fzf
       
@@ -39,7 +41,8 @@ home-manager.useGlobalPkgs = true;
       todoist-electron
       
       vivaldi
-      vscode-with-extensions      
+      vscode
+      #vscode-with-extensions      
     ];
 
     # ALIASES --------------------------
@@ -79,12 +82,49 @@ home-manager.useGlobalPkgs = true;
           helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
         };
       };
-#      config = {
-#        
-#      };
     };
-    #programs.git-credential-oauth.enable = true; # requires rando to have access to my account
     
+    # VS CODE --------------------------
+    programs.vscode = {
+      enable = true;
+      extensions = with pkgs.vscode-extensions; [
+        # generic
+        mikestead.dotenv
+        eamodio.gitlens
+        ritwickdey.LiveServer
+
+        # dev ops stuff
+        github.vscode-github-actions
+        ms-kubernetes-tools.vscode-kubernetes-tools
+        _4ops.terraform
+
+        # frontend / CSS
+        bradlc.vscode-tailwindcss
+
+        # golang  
+        golang.go
+
+        # nix
+        bbenoist.nix
+        jnoortheen.nix-ide
+
+        # powershell
+        ms-vscode.powershell
+        
+        # python
+        ms-python.vscode-pylance
+        ms-python.python
+        ms-python.debugpy      
+      ];
+      package = pkgs.vscodium # pkgs.vscode
+      userSettings {
+        "editor.fontSize" = 16;
+        "window.zoomLevel" = 1;
+        "explorer.confirmDelete" = false;
+        "explorer.confirmDragAndDrop" = false;
+        "powershell.promptToUpdatePowerShell" = false;
+      };
+    };
 
     # ZSH --------------------------
     programs.zsh =  {
