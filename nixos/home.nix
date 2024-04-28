@@ -17,7 +17,7 @@ home-manager.useGlobalPkgs = true;
 
   home-manager.users.witt = { pkgs, ... }: {
     home.packages = with pkgs; [
-      _1password
+      _1password-gui
       azure-cli
       awscli2
       bat # batcat
@@ -70,14 +70,17 @@ home-manager.useGlobalPkgs = true;
       };
       userName = "Witt Allen";
       userEmail = "wittionary@users.noreply.github.com";
+      extraConfig = {
+        init = {
+          defaultBranch = "main";
+        };
+        credential = {
+          credentialStore = "secretservice";
+          helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
+        };
+      };
 #      config = {
-#        init = {
-#          defaultBranch = "main";
-#        };
-#        credential = {
-#          credentialStore = "secretservice";
-#          helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
-#        };
+#        
 #      };
     };
     #programs.git-credential-oauth.enable = true; # requires rando to have access to my account
