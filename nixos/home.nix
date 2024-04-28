@@ -118,7 +118,7 @@ home-manager.useGlobalPkgs = true;
       ];
       package = pkgs.vscodium; # pkgs.vscode
 
-      userSettings {
+      userSettings = {
         "editor.fontSize" = 16;
         "explorer.confirmDelete" = false;
         "explorer.confirmDragAndDrop" = false;
