@@ -116,7 +116,7 @@ home-manager.useGlobalPkgs = true;
         ms-python.python
         #ms-python.debugpy # extension not found? "attribute 'debugpy' missing"
       ];
-      package = pkgs.vscodium; # pkgs.vscode
+      package = pkgs.vscode; # pkgs.vscode || pkgs.vscodium
 
       userSettings = {
         "editor.fontSize" = 16;
