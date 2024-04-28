@@ -116,9 +116,9 @@ home-manager.useGlobalPkgs = true;
         ms-python.python
         ms-python.debugpy      
       ];
-      package = pkgs.vscodium # pkgs.vscode
+      package = pkgs.vscodium; # pkgs.vscode
 
-      userSettings; {
+      userSettings {
         "editor.fontSize" = 16;
         "explorer.confirmDelete" = false;
         "explorer.confirmDragAndDrop" = false;
