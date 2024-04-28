@@ -137,6 +137,7 @@
     openssl
     podman
     podman-compose
+    python3Minimal
     vim 
     wget
   ];
