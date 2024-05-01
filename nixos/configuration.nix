@@ -57,13 +57,25 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm = {
-    enable = true;
-    banner = ''
-            hallo welt
-            '';
-  };
+  # services.xserver.displayManager.gdm = {
+  #   enable = true;
+  #   banner = ''
+  #           hallo welt
+  #           '';
+  # };
   services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.lightdm = {
+    enable = true;
+    background = ./wallpapers/never-forget.jpg;
+    greeters.gtk = {
+      enable = true;
+      theme.name = "Paper";
+      iconTheme.name = "Paper";
+      indicators = [
+        "~power"
+      ];
+    };
+  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -119,6 +131,9 @@
     file
     git-credential-manager
     jq
+
+    lightdm
+    lightdm-gtk-greeter
 
     nmap
     openssl
