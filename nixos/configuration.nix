@@ -57,7 +57,12 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm = {
+    enable = true;
+    banner = ''
+            hallo welt
+            '';
+  };
   services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
@@ -95,25 +100,7 @@
     description = "witt";
     extraGroups = [ "networkmanager" "wheel" ];
     ignoreShellProgramCheck = true; # because home.nix is managing shell
-    packages = with pkgs; [
-      # _1password
-      # azure-cli
-      # awscli2
-      # bat # batcat
-      # firefox
-      # fzf
-      # home-manager # cli
-      # kubectl
-      # lolcat
-
-      # obsidian # v1.4.16 package is out-of-date -> insecure
-
-      # terraform
-      # terragrunt
-      # todoist-electron
-      # vivaldi
-      # vscode-with-extensions
-    ];
+    # packages are in home-manager
   };
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
@@ -142,21 +129,6 @@
     wget
   ];
 
-  # Now lives under home.shellAliases
-  # environment.shellAliases = {
-  #   # ALIASES ---------------------------
-  #   cls="clear";
-  #   d="podman";
-  #   tf="terraform";
-  #   tg="terragrunt";
-  #   kc="kubectl";
-  #   "aws.whoami"="aws iam get-user --query User.Arn --output text";
-  #   "az.whoami"="az ad signed-in-user show --query userPrincipalName --output tsv";
-  #   ".."="cd ..";
-  #   "..."="cd ../..";
-  #   "...."="cd ../../..";
-  # };
-
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0" # for obsidian 1.4.16
@@ -170,21 +142,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-
-# programs.git = {
-# 	enable = true;
-# 	config = {
-# 		init = {
-# 			defaultBranch = "main";
-# 		};
-#     credential = {
-#       credentialStore = "secretservice";
-#       helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
-#     };
-#   };
-# };
-
 
 
   # Enable the OpenSSH daemon.
