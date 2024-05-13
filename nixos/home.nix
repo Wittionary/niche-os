@@ -45,6 +45,13 @@ home-manager.useGlobalPkgs = true;
       #vscode-with-extensions      
     ];
 
+
+    # theming engine
+    qt.enable = true;
+    qt.platformTheme = "gtk";
+    qt.style.name = "adwaita-dark";
+    qt.style.package = pkgs.adwaita-qt;
+
     # ALIASES --------------------------
     home.shellAliases = {
       # ALIASES ---------------------------
@@ -156,3 +163,20 @@ home-manager.useGlobalPkgs = true;
     home.stateVersion = "23.11"; # should stay at the version you originally installed.
   };
 }
+
+# AESTHETICS --------------------------
+# let 
+#   gruvboxPlus = import ./gruvbox-plus.nix { inherit pkgs; };
+# in
+# {
+#   gtk.enable = true;
+
+#   gtk.cursorTheme.package = pkgs.bibata-cursors;
+#   gtk.cursorTheme.name = "Bibata-Modern-Ice";
+
+#   gtk.theme.package = pkgs.adw-gtk3;
+#   gtk.theme.name = "adw-gtk3";
+
+#   gtk.iconTheme.package = gruvboxPlus;
+#   gtk.iconTheme.name = "GruvboxPlus"; 
+# }
