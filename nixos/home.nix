@@ -21,8 +21,9 @@ home-manager.useGlobalPkgs = true;
       azure-cli
       awscli2
       bat # batcat
-      
-      dmenu-rs # dmenu but extensible and in Rust - https://github.com/Shizcow/dmenu-rs
+
+      discord
+      #dmenu-rs # dmenu but extensible and in Rust - https://github.com/Shizcow/dmenu-rs
 
       firefox
       fzf
@@ -45,7 +46,7 @@ home-manager.useGlobalPkgs = true;
       #vscode-with-extensions      
     ];
 
-
+    
     # theming engine
     qt.enable = true;
     qt.platformTheme = "gtk";
