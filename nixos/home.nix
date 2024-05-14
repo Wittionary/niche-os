@@ -46,6 +46,17 @@ home-manager.useGlobalPkgs = true;
       #vscode-with-extensions      
     ];
 
+    # AESTHETICS --------------------------
+    gtk.enable = true;
+
+    gtk.cursorTheme.package = pkgs.bibata-cursors;
+    gtk.cursorTheme.name = "Bibata-Modern-Ice";
+
+    gtk.theme.package = pkgs.adw-gtk3;
+    gtk.theme.name = "adw-gtk3";
+
+    gtk.iconTheme.package = pkgs.gnome.adwaita-icon-theme;
+    gtk.iconTheme.name = "Adwaita"; 
     
     # theming engine
     qt.enable = true;

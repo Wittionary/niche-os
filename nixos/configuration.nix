@@ -140,6 +140,7 @@
     podman
     podman-compose
     python3Minimal
+    tmux
     vim 
     wget
   ];
