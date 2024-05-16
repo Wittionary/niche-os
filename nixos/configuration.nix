@@ -65,20 +65,21 @@
   #           '';
   # };
   services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.displayManager.lightdm = {
+  services.xserver.displayManager.sddm = {
     enable = true;
-    background = ./wallpapers/never-forget.jpg;
-    greeters.gtk = {
-      enable = true;
-      clock-format = "%F";
-      cursorTheme.name = "Adwaita";
-      theme.name = "Adwaita";
-      iconTheme.name = "Adwaita";
-      indicators = [
-        "~language"
-        "~power"
-      ];
-    };
+    # background = ./wallpapers/never-forget.jpg;
+    theme = "Adwaita";
+    # greeters.gtk = {
+    #   enable = true;
+    #   clock-format = "%F";
+    #   cursorTheme.name = "Adwaita";
+    #   theme.name = "Adwaita";
+    #   iconTheme.name = "Adwaita";
+    #   indicators = [
+    #     "~language"
+    #     "~power"
+    #   ];
+    # };
   };
 
   # Configure keymap in X11
