@@ -19,6 +19,7 @@
       # Enable flakes and new 'nix' command
       experimental-features = "nix-command flakes";
     };
+    # gc.options = "--delete-older-than +10";
   };
 
   # Bootloader.
@@ -69,9 +70,12 @@
     background = ./wallpapers/never-forget.jpg;
     greeters.gtk = {
       enable = true;
-      theme.name = "Paper";
-      iconTheme.name = "Paper";
+      clock-format = "%F";
+      cursorTheme.name = "Adwaita";
+      theme.name = "Adwaita";
+      iconTheme.name = "Adwaita";
       indicators = [
+        "~language"
         "~power"
       ];
     };
