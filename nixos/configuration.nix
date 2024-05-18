@@ -64,11 +64,14 @@
   #           hallo welt
   #           '';
   # };
+
   services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.desktopManager.xfce.enable = true;
   services.xserver.displayManager.sddm = {
     enable = true;
     # background = ./wallpapers/never-forget.jpg;
     theme = "Adwaita";
+    wayland.enable = true;
     # greeters.gtk = {
     #   enable = true;
     #   clock-format = "%F";
@@ -132,6 +135,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     #_1password
+    (callPackage ./sddm-themes.nix {}).sddm-theme-dialog
     curl
     file
     git-credential-manager
