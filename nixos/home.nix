@@ -146,6 +146,14 @@ home-manager.useGlobalPkgs = true;
       };
     };
 
+    # WAYLAND --------------------------
+    wayland.windowManager.sway = {
+      enable = true;
+      # config = rec {
+       
+      # };
+    };
+
     # ZSH --------------------------
     programs.zsh =  {
       enable = true;

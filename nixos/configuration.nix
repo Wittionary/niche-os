@@ -173,6 +173,8 @@
       PasswordAuthentication = true;
     };
   };
+
+  security.polkit.enable = true; # needed for sway
   
 
   # Open ports in the firewall.
