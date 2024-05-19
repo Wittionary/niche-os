@@ -69,20 +69,11 @@
   # services.xserver.desktopManager.xfce.enable = true;
   services.xserver.displayManager.sddm = {
     enable = true;
+    package = pkgs.lib.mkForce pkgs.libsForQt5.sddm; # https://github.com/NixOS/nixpkgs/issues/292761#issuecomment-2094854200
+    # extraPackages = pkgs.lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
     # background = ./wallpapers/never-forget.jpg;
-    theme = "Adwaita";
+    theme = "sddm-theme-dialog";
     wayland.enable = true;
-    # greeters.gtk = {
-    #   enable = true;
-    #   clock-format = "%F";
-    #   cursorTheme.name = "Adwaita";
-    #   theme.name = "Adwaita";
-    #   iconTheme.name = "Adwaita";
-    #   indicators = [
-    #     "~language"
-    #     "~power"
-    #   ];
-    # };
   };
 
   # Configure keymap in X11
