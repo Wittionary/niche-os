@@ -60,7 +60,7 @@ home-manager.useGlobalPkgs = true;
     
     # theming engine
     qt.enable = true;
-    qt.platformTheme= "gtk3";
+    qt.platformTheme.name = "gtk3";
     qt.style.name = "adwaita-dark";
     qt.style.package = pkgs.adwaita-qt;
 
@@ -158,7 +158,7 @@ home-manager.useGlobalPkgs = true;
     programs.zsh =  {
       enable = true;
       enableCompletion = true;
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       history = {
         expireDuplicatesFirst = true; # space savers and clarity makers
         extended = true; # makes the format of the history entry more complicated: "history -fdD" vs "history"
