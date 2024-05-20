@@ -17,11 +17,14 @@ home-manager.useGlobalPkgs = true;
 
   home-manager.users.witt = { pkgs, ... }: {
     home.packages = with pkgs; [
-      _1password
+      _1password-gui
       azure-cli
       awscli2
       bat # batcat
-      
+
+      discord
+      #dmenu-rs # dmenu but extensible and in Rust - https://github.com/Shizcow/dmenu-rs
+
       firefox
       fzf
       
@@ -39,8 +42,27 @@ home-manager.useGlobalPkgs = true;
       todoist-electron
       
       vivaldi
-      vscode-with-extensions      
+      vscode
+      #vscode-with-extensions      
     ];
+
+    # AESTHETICS --------------------------
+    gtk.enable = true;
+
+    gtk.cursorTheme.package = pkgs.bibata-cursors;
+    gtk.cursorTheme.name = "Bibata-Modern-Ice";
+
+    gtk.theme.package = pkgs.adw-gtk3;
+    gtk.theme.name = "adw-gtk3";
+
+    gtk.iconTheme.package = pkgs.gnome.adwaita-icon-theme;
+    gtk.iconTheme.name = "Adwaita"; 
+    
+    # theming engine
+    qt.enable = true;
+    qt.platformTheme.name = "gtk3";
+    qt.style.name = "adwaita-dark";
+    qt.style.package = pkgs.adwaita-qt;
 
     # ALIASES --------------------------
     home.shellAliases = {
@@ -70,24 +92,73 @@ home-manager.useGlobalPkgs = true;
       };
       userName = "Witt Allen";
       userEmail = "wittionary@users.noreply.github.com";
-#      config = {
-#        init = {
-#          defaultBranch = "main";
-#        };
-#        credential = {
-#          credentialStore = "secretservice";
-#          helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
-#        };
-#      };
+      extraConfig = {
+        init = {
+          defaultBranch = "main";
+        };
+        credential = {
+          credentialStore = "secretservice";
+          helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
+        };
+      };
     };
-    #programs.git-credential-oauth.enable = true; # requires rando to have access to my account
     
+    # VS CODE --------------------------
+    programs.vscode = {
+      enable = true;
+      extensions = with pkgs.vscode-extensions; [
+        # generic
+        mikestead.dotenv
+        eamodio.gitlens
+        ritwickdey.liveserver
+
+        # dev ops stuff
+        github.vscode-github-actions
+        ms-kubernetes-tools.vscode-kubernetes-tools
+        _4ops.terraform
+
+        # frontend / CSS
+        bradlc.vscode-tailwindcss
+
+        # golang  
+        golang.go
+
+        # nix
+        bbenoist.nix
+        jnoortheen.nix-ide
+
+        # powershell
+        ms-vscode.powershell
+        
+        # python
+        ms-python.vscode-pylance
+        ms-python.python
+        #ms-python.debugpy # extension not found? "attribute 'debugpy' missing"
+      ];
+      package = pkgs.vscode; # pkgs.vscode || pkgs.vscodium
+
+      userSettings = {
+        "editor.fontSize" = 16;
+        "explorer.confirmDelete" = false;
+        "explorer.confirmDragAndDrop" = false;
+        "powershell.promptToUpdatePowerShell" = false;
+        "window.zoomLevel" = 1;
+      };
+    };
+
+    # WAYLAND --------------------------
+    wayland.windowManager.sway = {
+      enable = true;
+      # config = rec {
+       
+      # };
+    };
 
     # ZSH --------------------------
     programs.zsh =  {
       enable = true;
       enableCompletion = true;
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       history = {
         expireDuplicatesFirst = true; # space savers and clarity makers
         extended = true; # makes the format of the history entry more complicated: "history -fdD" vs "history"

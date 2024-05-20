@@ -1,4 +1,4 @@
-#!
+#!/bin/sh
 # Points the system directory over to the git-managed configurations
 
 NIXOS_DIR="/etc/nixos/"

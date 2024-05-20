@@ -19,6 +19,7 @@
       # Enable flakes and new 'nix' command
       experimental-features = "nix-command flakes";
     };
+    # gc.options = "--delete-older-than +10";
   };
 
   # Bootloader.
@@ -57,13 +58,28 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.displayManager.gdm = {
+  #   enable = true;
+  #   banner = ''
+  #           hallo welt
+  #           '';
+  # };
+
   services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.desktopManager.xfce.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    package = pkgs.lib.mkForce pkgs.libsForQt5.sddm; # https://github.com/NixOS/nixpkgs/issues/292761#issuecomment-2094854200
+    extraPackages = pkgs.lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
+    # background = ./wallpapers/never-forget.jpg;
+    theme = "sddm-theme-dialog";
+    wayland.enable = true;
+  };
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    xkb.layout = "us";
+    xkb.variant = "";
   };
 
   # Enable CUPS to print documents.
@@ -95,25 +111,7 @@
     description = "witt";
     extraGroups = [ "networkmanager" "wheel" ];
     ignoreShellProgramCheck = true; # because home.nix is managing shell
-    packages = with pkgs; [
-      # _1password
-      # azure-cli
-      # awscli2
-      # bat # batcat
-      # firefox
-      # fzf
-      # home-manager # cli
-      # kubectl
-      # lolcat
-
-      # obsidian # v1.4.16 package is out-of-date -> insecure
-
-      # terraform
-      # terragrunt
-      # todoist-electron
-      # vivaldi
-      # vscode-with-extensions
-    ];
+    # packages are in home-manager
   };
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
@@ -128,33 +126,24 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     #_1password
+    (callPackage ./sddm-themes.nix {}).sddm-theme-dialog
     curl
     file
     git-credential-manager
     jq
 
+    lightdm
+    lightdm-gtk-greeter
+
     nmap
     openssl
     podman
     podman-compose
+    python3Minimal
+    tmux
     vim 
     wget
   ];
-
-  # Now lives under home.shellAliases
-  # environment.shellAliases = {
-  #   # ALIASES ---------------------------
-  #   cls="clear";
-  #   d="podman";
-  #   tf="terraform";
-  #   tg="terragrunt";
-  #   kc="kubectl";
-  #   "aws.whoami"="aws iam get-user --query User.Arn --output text";
-  #   "az.whoami"="az ad signed-in-user show --query userPrincipalName --output tsv";
-  #   ".."="cd ..";
-  #   "..."="cd ../..";
-  #   "...."="cd ../../..";
-  # };
 
 
   nixpkgs.config.permittedInsecurePackages = [
@@ -171,26 +160,20 @@
   # };
 
 
-# programs.git = {
-# 	enable = true;
-# 	config = {
-# 		init = {
-# 			defaultBranch = "main";
-# 		};
-#     credential = {
-#       credentialStore = "secretservice";
-#       helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
-#     };
-#   };
-# };
-
-
-
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = true;
+    };
+  };
+
+  security.polkit.enable = true; # needed for sway
+  
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 22 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

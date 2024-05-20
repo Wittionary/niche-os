@@ -1,4 +1,4 @@
-#!
+#!/bin/sh
 
 # Set the path to the Git repository
 repo_url="https://github.com/Wittionary/niche-os"
