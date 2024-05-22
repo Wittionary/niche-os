@@ -1,7 +1,7 @@
 {
   description = "A simple NixOS flake";
 
-  inputs = {
+  inputs = { # "inputs" defines all the dependencies of this flake
     # NixOS official package source, using the nixos-unstable branch here
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
