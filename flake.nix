@@ -1,9 +1,11 @@
 {
-  description = "A simple NixOS flake";
+  description = "Your new nix config";
 
   inputs = { # "inputs" defines all the dependencies of this flake
-    # NixOS official package source, using the nixos-unstable branch here
+    # NixOS official package source
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    
+    # Home manager
     home-manager = {
       url = "github:nix-community/home-manager/master"; # hashtag unstable
       # The `follows` keyword in inputs is used for inheritance.
@@ -14,25 +16,33 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
-    nixosConfigurations.snowmachine = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        # Import the previous configuration.nix we used,
-        # so the old configuration file still takes effect
-        ./configuration.nix
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
+  in {
+    # NixOS configuration entrypoint
+    # Available through 'nixos-rebuild --flake .#your-hostname'
+    nixosConfigurations = {
+      snowmachine = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        # > Our main nixos configuration file <
+        modules = [./nixos/configuration.nix];
+      };
+    };
 
-        # make home-manager as a module of nixos
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-
-          home-manager.users.witt = import ./home-manager/home.nix;
-
-          # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
-        }
-      ];
+    # Standalone home-manager configuration entrypoint
+    # Available through 'home-manager --flake .#your-username@your-hostname'
+    homeConfigurations = {
+      "witt@snowmachine" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+        extraSpecialArgs = {inherit inputs outputs;};
+        # > Our main home-manager configuration file <
+        modules = [./home-manager/home.nix];
+      };
     };
   };
 }

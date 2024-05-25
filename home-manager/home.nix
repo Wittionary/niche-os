@@ -1,19 +1,59 @@
-{ config, pkgs, ... }:
-
+# This is your home-manager configuration file
+# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
+  # You can import other home-manager modules here
   imports =
   [
-    # <home-manager/nixos>
+    # If you want to use home-manager modules from other flakes (such as nix-colors):
+    # inputs.nix-colors.homeManagerModule
+
+    # You can also split up your configuration and import pieces of it here:
+    # ./nvim.nix
   ];
 
-# Global stuff - these are now handled in flake.nix
-# home-manager.useUserPackages = true;
-# home-manager.useGlobalPkgs = true;
+  nixpkgs = {
+    # You can add overlays here
+    overlays = [
+      # If you want to use overlays exported from other flakes:
+      # neovim-nightly-overlay.overlays.default
+
+      # Or define it inline, for example:
+      # (final: prev: {
+      #   hi = final.hello.overrideAttrs (oldAttrs: {
+      #     patches = [ ./change-hello-to-hi.patch ];
+      #   });
+      # })
+    ];
+    # Configure your nixpkgs instance
+    config = {
+      # Disable if you don't want unfree packages
+      allowUnfree = true;
+      # Workaround for https://github.com/nix-community/home-manager/issues/2942
+      allowUnfreePredicate = _: true;
+    };
+  };
+
+  home = {
+    username = "witt";
+    homeDirectory = "/home/${username}";
+  };
+
+# Global stuff
+home-manager.useUserPackages = true;
+home-manager.useGlobalPkgs = true;
+# Nicely reload system units when changing configs
+systemd.user.startServices = "sd-switch";
 
 
 # Let Home Manager install and manage itself. This is for standaloe install
 # See: https://itsfoss.com/home-manager-nixos/#standalone-installation-of-home-manager
-# programs.home-manager.enable = true;
+programs.home-manager.enable = true;
 
   # home-manager.users.witt = { pkgs, ... }: {
   home.packages = with pkgs; [
@@ -149,9 +189,6 @@
   # WAYLAND --------------------------
   wayland.windowManager.sway = {
     enable = true;
-    # config = rec {
-      
-    # };
   };
 
   # ZSH --------------------------
@@ -180,6 +217,7 @@
     enableZshIntegration = true;
   };
 
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.11"; # should stay at the version you originally installed.
 
 }
