@@ -7,10 +7,10 @@
 {
   imports =
     [
-      <home-manager/nixos>
+      # <home-manager/nixos>
 
       ./hardware-configuration.nix
-      ./home.nix
+      # ./home.nix
       #./wsl.nix
     ];
 
@@ -129,6 +129,7 @@
     (callPackage ./sddm-themes.nix {}).sddm-theme-dialog
     curl
     file
+    git
     git-credential-manager
     jq
 
