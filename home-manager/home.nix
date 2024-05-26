@@ -39,21 +39,23 @@
     };
   };
 
-  home = {
+  home = rec {
     username = "witt";
     homeDirectory = "/home/${username}";
   };
 
 # Global stuff
-home-manager.useUserPackages = true;
-home-manager.useGlobalPkgs = true;
+#home-manager.useUserPackages = true;
+#home-manager.useGlobalPkgs = true;
 # Nicely reload system units when changing configs
 systemd.user.startServices = "sd-switch";
 
 
 # Let Home Manager install and manage itself. This is for standaloe install
 # See: https://itsfoss.com/home-manager-nixos/#standalone-installation-of-home-manager
-programs.home-manager.enable = true;
+programs.home-manager = {
+	enable = true;
+};
 
   # home-manager.users.witt = { pkgs, ... }: {
   home.packages = with pkgs; [
