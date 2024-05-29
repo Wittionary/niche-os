@@ -70,8 +70,6 @@ programs.home-manager = {
     firefox
     fzf
     
-    home-manager # cli
-    
     kubectl
     lolcat
     
@@ -191,6 +189,18 @@ programs.home-manager = {
   # WAYLAND --------------------------
   wayland.windowManager.sway = {
     enable = true;
+  };
+
+  # TERMINAL --------------------------
+  programs.kitty = {
+    enable = true;
+    theme = "Doom One";
+    font = {
+      size = 16;
+      package = pkgs.dejavu_fonts;
+      name = "DeJavu Sans";
+    };
+    shellIntegration.enableZshIntegration = true;
   };
 
   # ZSH --------------------------
