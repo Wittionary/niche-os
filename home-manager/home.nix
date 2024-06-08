@@ -201,8 +201,8 @@ programs.home-manager = {
   };
   programs.swaylock = {
     enable = true;
-    settings = {
-      color = "808080";
+    settings = { # TODO: make un-ugly
+      color = "809ABB";
       font-size = 48;
       indicator-idle-visible = false;
       indicator-radius = 100;

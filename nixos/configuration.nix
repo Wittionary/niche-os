@@ -185,10 +185,12 @@
     podman
     podman-compose
     python3Minimal
+    uv # python package and env management
 
     # general admin / utilities
     curl
     file
+    netbird-ui # network my devices together
     nmap
     openssl
 
