@@ -116,7 +116,7 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver.enable = false;
 
   # Enable the GNOME Desktop Environment.
   # services.xserver.displayManager.gdm = {
@@ -174,32 +174,44 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     #_1password
-    (callPackage ./sddm-themes.nix {}).sddm-theme-dialog
-    curl
-    file
-    git
-    git-credential-manager
-    jq
-
+    (callPackage ./sddm-themes.nix {}).sddm-theme-dialog # login screen theme
     lightdm
     lightdm-gtk-greeter
 
-    nmap
-    openssl
+    # dev tools
+    git
+    git-credential-manager
+    jq
     podman
     podman-compose
     python3Minimal
+
+    # general admin / utilities
+    curl
+    file
+    nmap
+    openssl
+
+    # system
+    
+
+    # terminal
     tmux
     vim 
     wget
   ];
 
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0" # for obsidian 1.4.16
-  ];
+  
 
+  # SECURITY --------------------------
   security.polkit.enable = true; # needed for sway
+  security.pam.services.swaylock = {}; # needed for swaylock
+
+  # security exceptions -------------
+  nixpkgs.config.permittedInsecurePackages = [
+  "electron-25.9.0" # for obsidian 1.4.16
+  ];
   
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 22 ];

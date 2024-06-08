@@ -189,14 +189,34 @@ programs.home-manager = {
   # WAYLAND --------------------------
   wayland.windowManager.sway = {
     enable = true;
+    config = rec {
+      #modifier = "Mod4";
+      # Use kitty as default terminal
+      terminal = "kitty"; 
+      startup = [
+        # Launch terminal on start
+        {command = terminal;}
+      ];
+    };
+  };
+  programs.swaylock = {
+    enable = true;
+    settings = {
+      color = "808080";
+      font-size = 48;
+      indicator-idle-visible = false;
+      indicator-radius = 100;
+      line-color = "ffffff";
+      show-failed-attempts = true;
+    };
   };
 
   # TERMINAL --------------------------
   programs.kitty = {
     enable = true;
-    theme = "Doom One";
+    theme = "Novel"; #"Doom One";
     font = {
-      size = 16;
+      size = 18;
       package = pkgs.dejavu_fonts;
       name = "DeJavu Sans";
     };
