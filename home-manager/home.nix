@@ -106,10 +106,8 @@ programs.home-manager = {
 
   # ALIASES --------------------------
   home.shellAliases = {
-    # ALIASES ---------------------------
     cls="clear";
     d="podman";
-    kc="kubectl";
     ll="ls -l";
     tf="terraform";
     tg="terragrunt";
@@ -190,31 +188,38 @@ programs.home-manager = {
   wayland.windowManager.sway = {
     enable = true;
     config = rec {
-      #modifier = "Mod4";
+      modifier = "Mod4";
       # Use kitty as default terminal
       terminal = "kitty"; 
       startup = [
         # Launch terminal on start
         {command = terminal;}
       ];
+
+      defaultWorkspace = "1";
+      bars = [
+        {
+          position = "top";
+        }
+      ];
     };
   };
   programs.swaylock = {
     enable = true;
     settings = { # TODO: make un-ugly
-      image = ../nixos/wallpapers/never-forget.jpg;
+      image = "$HOME/git/niche-os/nixos/wallpapers/never-forget.jpg";
       scaling = "fit";
       color = "809ABB";
       # font = TODO;
-      font-size = 48;
-      indicator-idle-visible = false;
+      font-size = 24;
+      indicator-idle-visible = false; # circle shows when not typing
       indicator-radius = 100;
       line-color = "ffffff";
       line-caps-lock-color = "ff0000";
       show-failed-attempts = true;
       ignore-empty-password = true;
 
-      inside-color = "676767";
+      inside-color = "676767ff";
       inside-clear-color = "1f1f1f";
       inside-ver-color = "898f89";
       inside-wrong-color = "8f4656";
@@ -311,7 +316,7 @@ programs.home-manager = {
       }
 
       fsearch() { # Fuzzy search w/ file contents preview
-          fzf --preview='batcat --style=numbers --color=always --line-range :500 {}' --preview-window=up:80% --height 100% --layout=default
+          fzf --preview='bat --style=numbers --color=always --line-range :500 {}' --preview-window=up:80% --height 100% --layout=default
       }
 
       whereami() { # determine which cloud provider and kubernetes' contexts I'm under and display

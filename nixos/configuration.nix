@@ -132,8 +132,7 @@
     enable = true;
     package = pkgs.lib.mkForce pkgs.libsForQt5.sddm; # https://github.com/NixOS/nixpkgs/issues/292761#issuecomment-2094854200
     extraPackages = pkgs.lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
-    # background = ./wallpapers/never-forget.jpg;
-    theme = "sddm-theme-dialog";
+    theme = "where-is-my-sddm-theme"; #"sddm-theme-dialog";
     wayland.enable = true;
   };
 
@@ -175,6 +174,8 @@
   environment.systemPackages = with pkgs; [
     #_1password
     (callPackage ./sddm-themes.nix {}).sddm-theme-dialog # login screen theme
+    where-is-my-sddm-theme
+
     lightdm
     lightdm-gtk-greeter
 
