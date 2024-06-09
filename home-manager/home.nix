@@ -202,12 +202,28 @@ programs.home-manager = {
   programs.swaylock = {
     enable = true;
     settings = { # TODO: make un-ugly
+      image = ../nixos/wallpapers/never-forget.jpg;
+      scaling = "fit";
       color = "809ABB";
+      # font = TODO;
       font-size = 48;
       indicator-idle-visible = false;
       indicator-radius = 100;
       line-color = "ffffff";
+      line-caps-lock-color = "ff0000";
       show-failed-attempts = true;
+      ignore-empty-password = true;
+
+      inside-color = "676767";
+      inside-clear-color = "1f1f1f";
+      inside-ver-color = "898f89";
+      inside-wrong-color = "8f4656";
+
+      separator-color = "ffffffff";
+
+      text-color = "efefef";
+      text-ver-color = "898f89";
+      text-wrong-color = "8f4656";
     };
   };
 
