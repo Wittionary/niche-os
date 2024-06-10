@@ -116,7 +116,15 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = false;
+  services.xserver = {
+    enable = true;
+    desktopManager.gnome.enable = true;
+    videoDrivers = [ "displayLink" "modesetting" ]; #
+
+    # Configure keymap in X11
+    xkb.layout = "us";
+    xkb.variant = "";
+  };
 
   # Enable the GNOME Desktop Environment.
   # services.xserver.displayManager.gdm = {
@@ -126,24 +134,26 @@
   #           '';
   # };
 
-  services.xserver.desktopManager.gnome.enable = true;
-  # services.xserver.desktopManager.xfce.enable = true;
+
   services.displayManager.sddm = {
     enable = true;
     package = pkgs.lib.mkForce pkgs.libsForQt5.sddm; # https://github.com/NixOS/nixpkgs/issues/292761#issuecomment-2094854200
     extraPackages = pkgs.lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
-    theme = "where-is-my-sddm-theme"; #"sddm-theme-dialog";
+    theme = "sddm-theme-dialog"; #"where-is-my-sddm-theme";
     wayland.enable = true;
   };
 
-  # Configure keymap in X11
-  services.xserver = {
-    xkb.layout = "us";
-    xkb.variant = "";
-  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+  # support Thunderbolt devices
+  services.hardware.bolt.enable = true;
+
+  # hardware acceleration for snowmachine
+  hardware.opengl.extraPackages = [
+    pkgs.intel-compute-runtime
+  ];
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -196,7 +206,7 @@
     openssl
 
     # system
-    
+    displaylink # dock    
 
     # terminal
     tmux
