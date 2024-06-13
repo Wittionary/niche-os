@@ -18,11 +18,13 @@ cd git/
 nix run nixpkgs#git clone https://github.com/Wittionary/niche-os.git --extra-experimental-features nix-command --extra-experimental-features flakes
 cd niche-os/
 # backup default configuration
+# delete nixos directory
+sudo rm /etc/nixos/
 # set symlink
-ln --symbolic --verbose . /etc/nixos/ # broken atm
+sudo ln --symbolic --verbose /home/wittnix/git/niche-os/ /etc/nixos
 # build nixOS config
-sudo nixos-rebuild switch --flake .#WSL_ON_NIX_HOSTNAME_TBD
+sudo nixos-rebuild switch --flake .#nixos # stormtrooper
 # build home-manager config
-home-manager switch --flake .#witt@WSL_ON_NIX_HOSTNAME_TBD
+home-manager switch --flake .#witt@nixos #stormtrooper
 
 ```
