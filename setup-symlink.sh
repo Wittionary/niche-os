@@ -1,11 +1,12 @@
 #!/bin/sh
 # Points the system directory over to the git-managed configurations
 
+MY_HOME="/home/witt"
 NIXOS_DIR="/etc/nixos/"
-HOME_MANAGER_DIR="$HOME/.config/home-manager/"
-GIT_DIR="$HOME/git/niche-os/nixos/"
+HOME_MANAGER_DIR="$MY_HOME/.config/home-manager/"
+GIT_DIR="$MY_HOME/git/niche-os/nixos/"
 
-CONFIGS="configuration.nix home.nix"
+CONFIGS="configuration.nix home.nix flake.nix"
 
 for config in $CONFIGS; do
 	FILEPATH="$NIXOS_DIR$config"

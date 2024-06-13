@@ -1,32 +1,93 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+{ 
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
+  # You can import other NixOS modules here
+  imports = [
+    # If you want to use modules from other flakes (such as nixos-hardware):
+    # inputs.hardware.nixosModules.common-cpu-amd
+    # inputs.hardware.nixosModules.common-ssd
 
-{ config, pkgs, ... }:
+    # You can also split up your configuration and import pieces of it here:
+    # ./users.nix
 
-{
-  imports =
-    [
-      <home-manager/nixos>
+    ./hardware-configuration.nix
+  ];
 
-      ./hardware-configuration.nix
-      ./home.nix
-      #./wsl.nix
+  nixpkgs = {
+    # You can add overlays here
+    overlays = [
+      # If you want to use overlays exported from other flakes:
+      # neovim-nightly-overlay.overlays.default
+
+      # Or define it inline, for example:
+      # (final: prev: {
+      #   hi = final.hello.overrideAttrs (oldAttrs: {
+      #     patches = [ ./change-hello-to-hi.patch ];
+      #   });
+      # })
     ];
+    # Configure your nixpkgs instance
+    config = {
+      # Disable if you don't want unfree packages
+      allowUnfree = true;
+    };
+  };
 
-  nix = {
+  nix = let
+    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+  in {
     settings = {
       # Enable flakes and new 'nix' command
       experimental-features = "nix-command flakes";
+      # Opinionated: disable global registry
+      flake-registry = "";
+      # Workaround for https://github.com/NixOS/nix/issues/9574
+      nix-path = config.nix.nixPath;
     };
-    # gc.options = "--delete-older-than +10";
+    # Opinionated: disable channels
+    channel.enable = true;
+
+    # Opinionated: make flake registry and nix path match flake inputs
+    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
+    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
   };
+
+  networking.hostName = "snowmachine";
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "snowmachine";
+ # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users = {
+    witt = {
+      # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
+      # Be sure to change it (using passwd) after rebooting!
+      description = "witt";
+      isNormalUser = true;
+      extraGroups = [ "networkmanager" "wheel" ];
+      openssh.authorizedKeys.keys = [
+        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
+      ];
+      ignoreShellProgramCheck = true; # because home.nix is managing shell
+      # packages are in home-manager
+    };
+  };
+
+  # Enable the OpenSSH daemon.
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = true;
+      PermitRootLogin = "no";
+    };
+  };
+  
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -55,7 +116,15 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver = {
+    enable = true;
+    desktopManager.gnome.enable = true;
+    videoDrivers = [ "displayLink" "modesetting" ]; #
+
+    # Configure keymap in X11
+    xkb.layout = "us";
+    xkb.variant = "";
+  };
 
   # Enable the GNOME Desktop Environment.
   # services.xserver.displayManager.gdm = {
@@ -65,25 +134,26 @@
   #           '';
   # };
 
-  services.xserver.desktopManager.gnome.enable = true;
-  # services.xserver.desktopManager.xfce.enable = true;
+
   services.displayManager.sddm = {
     enable = true;
     package = pkgs.lib.mkForce pkgs.libsForQt5.sddm; # https://github.com/NixOS/nixpkgs/issues/292761#issuecomment-2094854200
     extraPackages = pkgs.lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
-    # background = ./wallpapers/never-forget.jpg;
-    theme = "sddm-theme-dialog";
+    theme = "sddm-theme-dialog"; #"where-is-my-sddm-theme";
     wayland.enable = true;
   };
 
-  # Configure keymap in X11
-  services.xserver = {
-    xkb.layout = "us";
-    xkb.variant = "";
-  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+  # support Thunderbolt devices
+  services.hardware.bolt.enable = true;
+
+  # hardware acceleration for snowmachine
+  hardware.opengl.extraPackages = [
+    pkgs.intel-compute-runtime
+  ];
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -105,85 +175,63 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.witt = {
-    isNormalUser = true;
-    description = "witt";
-    extraGroups = [ "networkmanager" "wheel" ];
-    ignoreShellProgramCheck = true; # because home.nix is managing shell
-    # packages are in home-manager
-  };
+ 
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
-
-
-
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     #_1password
-    (callPackage ./sddm-themes.nix {}).sddm-theme-dialog
-    curl
-    file
-    git-credential-manager
-    jq
+    (callPackage ./sddm-themes.nix {}).sddm-theme-dialog # login screen theme
+    where-is-my-sddm-theme
 
     lightdm
     lightdm-gtk-greeter
 
-    nmap
-    openssl
+    # dev tools
+    git
+    git-credential-manager
+    jq
     podman
     podman-compose
     python3Minimal
+    uv # python package and env management
+
+    # general admin / utilities
+    curl
+    file
+    netbird-ui # network my devices together
+    nmap
+    openssl
+
+    # system
+    displaylink # dock    
+
+    # terminal
     tmux
     vim 
     wget
   ];
 
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0" # for obsidian 1.4.16
-  ];
-
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-
-  # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    ports = [ 22 ];
-    settings = {
-      PasswordAuthentication = true;
-    };
-  };
-
-  security.polkit.enable = true; # needed for sway
   
 
+  # SECURITY --------------------------
+  security.polkit.enable = true; # needed for sway
+  security.pam.services.swaylock = {}; # needed for swaylock
+
+  # security exceptions -------------
+  nixpkgs.config.permittedInsecurePackages = [
+  "electron-25.9.0" # for obsidian 1.4.16
+  ];
+  
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 22 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
-
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  system.stateVersion = "23.11";
 }
