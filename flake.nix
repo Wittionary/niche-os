@@ -34,7 +34,7 @@
       };
 
       # WSL terminals
-      nixos = nixpkgs.lib.nixosSystem { # stormtrooper
+      stormtrooper = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules = [./nixos/configuration.nix];
       };
@@ -51,10 +51,9 @@
       };
 
       # WSL terminals
-      "wittnix@nixos" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+      "witt@stormtrooper" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs;};
-        # > Our main home-manager configuration file <
         modules = [./home-manager/home.nix];
       };
     };
