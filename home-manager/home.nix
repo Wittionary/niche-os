@@ -70,8 +70,6 @@ programs.home-manager = {
     firefox
     fzf
     
-    home-manager # cli
-    
     kubectl
     lolcat
     
@@ -108,10 +106,8 @@ programs.home-manager = {
 
   # ALIASES --------------------------
   home.shellAliases = {
-    # ALIASES ---------------------------
     cls="clear";
     d="podman";
-    kc="kubectl";
     ll="ls -l";
     tf="terraform";
     tg="terragrunt";
@@ -191,6 +187,61 @@ programs.home-manager = {
   # WAYLAND --------------------------
   wayland.windowManager.sway = {
     enable = true;
+    config = rec {
+      modifier = "Mod4";
+      # Use kitty as default terminal
+      terminal = "kitty"; 
+      startup = [
+        # Launch terminal on start
+        {command = terminal;}
+      ];
+
+      defaultWorkspace = "1";
+      bars = [
+        {
+          position = "top";
+        }
+      ];
+    };
+  };
+  programs.swaylock = {
+    enable = true;
+    settings = { # TODO: make un-ugly
+      image = "$HOME/git/niche-os/nixos/wallpapers/never-forget.jpg";
+      scaling = "fit";
+      color = "809ABB";
+      # font = TODO;
+      font-size = 24;
+      indicator-idle-visible = false; # circle shows when not typing
+      indicator-radius = 100;
+      line-color = "ffffff";
+      line-caps-lock-color = "ff0000";
+      show-failed-attempts = true;
+      ignore-empty-password = true;
+
+      inside-color = "676767ff";
+      inside-clear-color = "1f1f1f";
+      inside-ver-color = "898f89";
+      inside-wrong-color = "8f4656";
+
+      separator-color = "ffffffff";
+
+      text-color = "efefef";
+      text-ver-color = "898f89";
+      text-wrong-color = "8f4656";
+    };
+  };
+
+  # TERMINAL --------------------------
+  programs.kitty = {
+    enable = true;
+    theme = "Novel"; #"Doom One";
+    font = {
+      size = 18;
+      package = pkgs.dejavu_fonts;
+      name = "DeJavu Sans";
+    };
+    shellIntegration.enableZshIntegration = true;
   };
 
   # ZSH --------------------------
@@ -211,9 +262,85 @@ programs.home-manager = {
     };
     syntaxHighlighting.enable = true;
 
-    #promptInit = ''
-    #''
+    initExtra = ''
+      # PS1 deciphered:
+      # Start bolding text; yellow bg; name of logged in user; magenta bg; hostname
+      # blue bg; display working directory unless it's 3 dirs deep in which case display the current dir and its parent
+      # if in privileged shell then show the star emoji, else show nothing
+      # if last command exited 0 (success) then show happy face, else show mad/poo face
+      # End bolding text; reset fg and bg colors to default
+      logged_in_user="%{$bg[yellow]%}%{$fg[black]%}%n"
+      kube_context="%{$bg[yellow]%}%{$fg[black]%} $active_kube_context"
+
+      hostname="%{$bg[magenta]%}%{$fg[white]%}%M"
+      active_acct_display="%{$bg[magenta]%}%{$fg[white]%}☁️ $active_acct_az"
+
+      working_dir="%{$bg[blue]%}%(4~|../%2~|%~)"
+      priv_shell="%(!.✨.)"
+      exit_code="%(?.😀.💩)"
+      PS1="%B$kube_context$active_acct_display$working_dir$priv_shell$exit_code%b%{$reset_color%} "
+
+      left_boundary="%{$fg[red]%}(%{$reset_color%}"
+      time="%T"
+      bg_jobs="%(1j., %j."")"
+      right_boundary="%{$fg[red]%})%{$reset_color%}"
+      RPS1="%K{$bg[black]%}$left_boundary$time$bg_jobs$right_boundary%k "
+
+
+      # FUNCTIONS ---------------------------
+      g() { # git aliases/chords
+          if [[ "$1" == "s" || "$1" == "" ]]; then
+              git status -sb
+          elif [[ "$1" == "b" ]]; then
+              git branch --list
+          elif [[ "$1" == "p" ]]; then
+              git pull
+          elif [[ "$1" == "can" ]]; then
+              # Commit all now
+              git add .
+              CommitMessage = "Commit All @ $(date +%m-%d-%y) $(date +%H:%M:%S)"
+              git commit -am $CommitMessage
+          elif [[ "$1" == "ca" ]]; then
+              git add .
+              git commit -am $2
+          elif [[ "$1" == "cu" ]]; then
+              # Undo that last commit
+              #echo "StackOverflow link is in clipboard"
+              echo "https://stackoverflow.com/questions/927358/how-do-i-undo-the-most-recent-local-commits-in-git"
+          elif [[ "$1" == "pp" ]]; then
+              git push --progress
+          fi
+      }
+      kc() { # kubectl but as a rainbow
+          kubectl $@ | lolcat --freq=0.3
+      }
+
+      fsearch() { # Fuzzy search w/ file contents preview
+          fzf --preview='bat --style=numbers --color=always --line-range :500 {}' --preview-window=up:80% --height 100% --layout=default
+      }
+
+      whereami() { # determine which cloud provider and kubernetes' contexts I'm under and display
+          # AZ CLI
+          if [[ -z $(history | grep --perl-regexp '^\s{1,2}\d{1,4}\s{2}az\s.*') ]]; then 
+              # az command has not run recently 
+              active_acct_az=""
+          else 
+              active_acct_az=$(az account show -o tsv --query name | cut -c 1-13)
+          fi
+
+          # KUBECTL
+          if [[ -z $(history | grep --perl-regexp '^\s{1,2}\d{1,4}\s{2}(sudo\s)?(kubectl|kc){1}\s.*$') ]]; then 
+              # kubectl (or alias) has not run recently 
+              active_kube_context=""
+          else 
+              active_kube_context=$(kubectl config current-context)
+          fi
+          
+          source ~/.zshrc
+      }
+    '';
   };
+
   programs.autojump = {
     enable = true;
     enableZshIntegration = true;
