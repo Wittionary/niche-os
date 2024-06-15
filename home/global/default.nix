@@ -244,6 +244,17 @@ programs.home-manager = {
       package = pkgs.dejavu_fonts;
       name = "DeJavu Sans";
     };
+    settings = {
+      # color scheme --------------
+      background_opacity = "0.9";
+      backgroud_blur = "5"; # 64 is max
+      # advanced ---------------
+      notify_on_cmd_finish = "unfocused 15 bell";
+
+      # OS specific ---------------
+      wayland_titlebar_color = "system";
+
+    };
     shellIntegration.enableZshIntegration = true;
   };
 
