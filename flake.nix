@@ -37,7 +37,7 @@
       # WSL terminals
       stormtrooper = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
-        modules = [./nixos/configuration.nix];
+        modules = [ ./hosts/stormtrooper ];
       };
     };
 

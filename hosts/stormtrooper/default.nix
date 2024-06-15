@@ -25,6 +25,9 @@
 
   wsl.enable = true;
   wsl.defaultUser = "witt";
+  networking = {
+    hostName = "stormtrooper";
+  };
 
   environment.systemPackages = with pkgs; [
     #_1password
