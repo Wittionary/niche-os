@@ -185,7 +185,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     #_1password
-    (callPackage ./sddm-themes.nix {}).sddm-theme-dialog # login screen theme
+    (callPackage ../common/global/sddm-themes.nix {}).sddm-theme-dialog # login screen theme
     where-is-my-sddm-theme
 
     lightdm
