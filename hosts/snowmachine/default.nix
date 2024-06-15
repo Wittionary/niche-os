@@ -15,6 +15,8 @@
     # ./users.nix
 
     ./hardware-configuration.nix
+
+    ../common/global
   ];
 
   nixpkgs = {
@@ -47,6 +49,7 @@
       flake-registry = "";
       # Workaround for https://github.com/NixOS/nix/issues/9574
       nix-path = config.nix.nixPath;
+      warn-dirty = false;
     };
     # Opinionated: disable channels
     channel.enable = true;
@@ -56,7 +59,9 @@
     nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
   };
 
-  networking.hostName = "snowmachine";
+  networking = {
+    hostName = "snowmachine";
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -74,7 +79,7 @@
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       ignoreShellProgramCheck = true; # because home.nix is managing shell
-      # packages are in home-manager
+      # user-specific packages are in home-manager
     };
   };
 
@@ -89,10 +94,6 @@
   };
   
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -175,15 +176,13 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
- 
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     #_1password
-    (callPackage ./sddm-themes.nix {}).sddm-theme-dialog # login screen theme
+    (callPackage ../common/global/sddm-themes.nix {}).sddm-theme-dialog # login screen theme
     where-is-my-sddm-theme
 
     lightdm

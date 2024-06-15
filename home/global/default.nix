@@ -153,7 +153,7 @@ programs.home-manager = {
       # dev ops stuff
       github.vscode-github-actions
       ms-kubernetes-tools.vscode-kubernetes-tools
-      _4ops.terraform
+      #_4ops.terraform # there's a deprecation "warning" that prevents home-manager compile
 
       # frontend / CSS
       bradlc.vscode-tailwindcss

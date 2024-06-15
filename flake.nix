@@ -27,10 +27,11 @@
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
+      # Yoga laptop - mainly for nixOS development
       snowmachine = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         # > Our main nixos configuration file <
-        modules = [./nixos/configuration.nix];
+        modules = [ ./hosts/snowmachine ];
       };
 
       # WSL terminals
@@ -43,18 +44,24 @@
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
+      # Yoga laptop - mainly for nixOS development
       "witt@snowmachine" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
-        # > Our main home-manager configuration file <
-        modules = [./home-manager/home.nix];
+        modules = [
+          ./home/global
+          ./home/snowmachine.nix
+        ];
       };
 
       # WSL terminals
       "witt@stormtrooper" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./home-manager/home.nix];
+        modules = [
+          ./home/global
+          ./home/stormtrooper.nix
+        ];
       };
     };
   };
