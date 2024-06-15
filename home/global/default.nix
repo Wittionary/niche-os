@@ -134,6 +134,9 @@ programs.home-manager = {
       init = {
         defaultBranch = "main";
       };
+      push = {
+        autoSetupRemote = true;
+      };
       credential = {
         credentialStore = "secretservice";
         helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
