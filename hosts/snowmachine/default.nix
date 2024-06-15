@@ -16,7 +16,7 @@
 
     ./hardware-configuration.nix
 
-    # ../common/global
+    ../common/global
   ];
 
   nixpkgs = {
@@ -58,7 +58,9 @@
     nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
   };
 
-  networking.hostName = "snowmachine";
+  networking = {
+    hostName = "snowmachine";
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -76,7 +78,7 @@
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       ignoreShellProgramCheck = true; # because home.nix is managing shell
-      # packages are in home-manager
+      # user-specific packages are in home-manager
     };
   };
 
@@ -91,10 +93,6 @@
   };
   
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -177,9 +175,7 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
- 
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

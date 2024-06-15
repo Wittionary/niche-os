@@ -11,7 +11,9 @@
   imports = [
     # include NixOS-WSL modules
     <nixos-wsl/modules>
-    <home-manager/nixos>
+    # <home-manager/nixos>
+
+    ../common/global
   ];
 
   nix = {
@@ -22,14 +24,13 @@
   };
 
   wsl.enable = true;
-  wsl.defaultUser = "wittnix";
+  wsl.defaultUser = "witt";
 
   environment.systemPackages = with pkgs; [
     #_1password
     curl
     file
     git-credential-manager
-    home-manager
     jq
 
     nmap
