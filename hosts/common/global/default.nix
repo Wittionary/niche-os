@@ -10,4 +10,6 @@
  
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
+
+  programs.vim.defaultEditor = true;
 }
