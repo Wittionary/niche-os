@@ -15,6 +15,8 @@
     # ./users.nix
 
     ./hardware-configuration.nix
+
+    # ../common/global
   ];
 
   nixpkgs = {
