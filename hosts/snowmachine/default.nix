@@ -201,6 +201,7 @@
     curl
     file
     netbird-ui # network my devices together
+    nh # nix helper CLI - https://github.com/viperML/nh
     nmap
     openssl
 
@@ -213,6 +214,12 @@
     wget
   ];
 
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep-since 14d --keep 10";
+    flake = "/home/witt/git/niche-os"; # TODO: have this take in variables
+  };
 
   
 
