@@ -165,6 +165,7 @@ programs.home-manager = {
       golang.go
 
       # nix
+      kamadorueda.alejandra # nix code formatter - https://github.com/kamadorueda/alejandra
       bbenoist.nix
       jnoortheen.nix-ide
 
