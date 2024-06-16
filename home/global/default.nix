@@ -247,7 +247,7 @@ programs.home-manager = {
     settings = {
       # color scheme --------------
       background_opacity = "0.9";
-      backgroud_blur = "5"; # 64 is max
+      backgroud_blur = "20"; # 64 is max
       # advanced ---------------
       notify_on_cmd_finish = "unfocused 15 bell";
 
@@ -276,6 +276,8 @@ programs.home-manager = {
     };
     syntaxHighlighting.enable = true;
 
+    # TODO: add ZLE - that might fix the foreground/background colors not working
+    # https://man.archlinux.org/man/zshmisc.1#Visual_effects
     initExtra = ''
       # PS1 deciphered:
       # Start bolding text; yellow bg; name of logged in user; magenta bg; hostname

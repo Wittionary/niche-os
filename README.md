@@ -15,7 +15,7 @@ On nixOS on WSL:
 cd $HOME
 mkdir git
 cd git/
-nix shell nixpkgs#git
+nix shell nixpkgs#git --extra-experimental-features nix-command --extra-experimental-features flakes
 git clone https://github.com/Wittionary/niche-os.git --extra-experimental-features nix-command --extra-experimental-features flakes
 cd niche-os/
 # delete nixos directory - there's no hardware-configuration.nix to worry about
