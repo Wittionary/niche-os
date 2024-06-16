@@ -15,16 +15,18 @@ On nixOS on WSL:
 cd $HOME
 mkdir git
 cd git/
-nix run nixpkgs#git clone https://github.com/Wittionary/niche-os.git --extra-experimental-features nix-command --extra-experimental-features flakes
+nix shell nixpkgs#git
+git clone https://github.com/Wittionary/niche-os.git --extra-experimental-features nix-command --extra-experimental-features flakes
 cd niche-os/
-# backup default configuration
 # delete nixos directory - there's no hardware-configuration.nix to worry about
-sudo rm /etc/nixos/
+sudo rm -drf /etc/nixos/
 # set symlink
-sudo ln --symbolic --verbose /home/wittnix/git/niche-os/ /etc/nixos
+sudo ln --symbolic --verbose /home/nixos/git/niche-os/ /etc/nixos
+
 # build nixOS config
-sudo nixos-rebuild switch --flake .#stormtrooper # prev: nixos
-# build home-manager config
+sudo nixos-rebuild switch --flake .#stormtrooper
+
+# build home-manager config?
 home-manager switch --flake .#witt@stormtrooper
 
 ```
