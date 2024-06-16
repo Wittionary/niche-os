@@ -279,6 +279,10 @@ programs.home-manager = {
     # TODO: add ZLE - that might fix the foreground/background colors not working
     # https://man.archlinux.org/man/zshmisc.1#Visual_effects
     initExtra = ''
+      # enable colors
+      zmodload zsh/nearcolor
+      autoload -U colors && colors
+
       # PS1 deciphered:
       # Start bolding text; yellow bg; name of logged in user; magenta bg; hostname
       # blue bg; display working directory unless it's 3 dirs deep in which case display the current dir and its parent
