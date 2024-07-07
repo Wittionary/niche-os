@@ -10,6 +10,7 @@ Assumes a fresh state; nothing with an existing customized configuration.
 
 On nixOS:
 
+
 On nixOS on WSL:
 ```bash
 cd $HOME
@@ -29,4 +30,14 @@ sudo nixos-rebuild switch --flake .#stormtrooper
 # build home-manager config?
 home-manager switch --flake .#witt@stormtrooper
 
+```
+
+## general commands
+After the initial setup, use `nh` for iteration
+```bash
+# for nix OS, system changes
+nh os switch
+
+# for home-manager changes
+nh home switch
 ```

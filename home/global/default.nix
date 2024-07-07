@@ -8,8 +8,7 @@
   ...
 }: {
   # You can import other home-manager modules here
-  imports =
-  [
+  imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
 
@@ -44,18 +43,17 @@
     homeDirectory = "/home/${username}";
   };
 
-# Global stuff
-#home-manager.useUserPackages = true;
-#home-manager.useGlobalPkgs = true;
-# Nicely reload system units when changing configs
-systemd.user.startServices = "sd-switch";
+  # Global stuff
+  #home-manager.useUserPackages = true;
+  #home-manager.useGlobalPkgs = true;
+  # Nicely reload system units when changing configs
+  systemd.user.startServices = "sd-switch";
 
-
-# Let Home Manager install and manage itself. This is for standaloe install
-# See: https://itsfoss.com/home-manager-nixos/#standalone-installation-of-home-manager
-programs.home-manager = {
-	enable = true;
-};
+  # Let Home Manager install and manage itself. This is for standaloe install
+  # See: https://itsfoss.com/home-manager-nixos/#standalone-installation-of-home-manager
+  programs.home-manager = {
+    enable = true;
+  };
 
   # home-manager.users.witt = { pkgs, ... }: {
   home.packages = with pkgs; [
@@ -69,10 +67,10 @@ programs.home-manager = {
 
     firefox
     fzf
-    
+
     kubectl
     lolcat
-    
+
     neofetch
     obsidian # v1.4.16 package is out-of-date -> insecure
     podman
@@ -80,10 +78,10 @@ programs.home-manager = {
     terraform
     terragrunt
     todoist-electron
-    
+
     vivaldi
     vscode
-    #vscode-with-extensions      
+    #vscode-with-extensions
   ];
 
   # AESTHETICS --------------------------
@@ -96,8 +94,8 @@ programs.home-manager = {
   gtk.theme.name = "adw-gtk3";
 
   gtk.iconTheme.package = pkgs.gnome.adwaita-icon-theme;
-  gtk.iconTheme.name = "Adwaita"; 
-  
+  gtk.iconTheme.name = "Adwaita";
+
   # theming engine
   qt.enable = true;
   qt.platformTheme.name = "gtk3";
@@ -106,23 +104,24 @@ programs.home-manager = {
 
   # ALIASES --------------------------
   home.shellAliases = {
-    cls="clear";
-    d="podman";
-    ll="ls -l";
-    tf="terraform";
-    tg="terragrunt";
-    
-    "aws.whoami"="aws iam get-user --query User.Arn --output text";
-    "az.whoami"="az ad signed-in-user show --query userPrincipalName --output tsv";
-    ".."="cd ..";
-    "..."="cd ../..";
-    "...."="cd ../../..";
+    cls = "clear";
+    d = "podman";
+    ll = "ls -l";
+    tf = "terraform";
+    tg = "terragrunt";
+
+    "aws.whoami" = "aws iam get-user --query User.Arn --output text";
+    "az.whoami" = "az ad signed-in-user show --query userPrincipalName --output tsv";
+    ".." = "cd ..";
+    "..." = "cd ../..";
+    "...." = "cd ../../..";
   };
-  
+
   # GIT --------------------------
   programs.git = {
     enable = true;
-    delta = { # https://github.com/dandavison/delta
+    delta = {
+      # https://github.com/dandavison/delta
       enable = true;
       options = {
         side-by-side = true;
@@ -143,7 +142,7 @@ programs.home-manager = {
       };
     };
   };
-  
+
   # VS CODE --------------------------
   programs.vscode = {
     enable = true;
@@ -161,17 +160,17 @@ programs.home-manager = {
       # frontend / CSS
       bradlc.vscode-tailwindcss
 
-      # golang  
+      # golang
       golang.go
 
       # nix
-      kamadorueda.alejandra # nix code formatter - https://github.com/kamadorueda/alejandra
+      # kamadorueda.alejandra # nix code formatter - https://github.com/kamadorueda/alejandra
       bbenoist.nix
       jnoortheen.nix-ide
 
       # powershell
       ms-vscode.powershell
-      
+
       # python
       ms-python.vscode-pylance
       ms-python.python
@@ -194,7 +193,7 @@ programs.home-manager = {
     config = rec {
       modifier = "Mod4";
       # Use kitty as default terminal
-      terminal = "kitty"; 
+      terminal = "kitty";
       startup = [
         # Launch terminal on start
         {command = terminal;}
@@ -210,7 +209,8 @@ programs.home-manager = {
   };
   programs.swaylock = {
     enable = true;
-    settings = { # TODO: make un-ugly
+    settings = {
+      # TODO: make un-ugly
       image = "$HOME/git/niche-os/nixos/wallpapers/never-forget.jpg";
       scaling = "fit";
       color = "809ABB";
@@ -254,13 +254,12 @@ programs.home-manager = {
 
       # OS specific ---------------
       wayland_titlebar_color = "system";
-
     };
     shellIntegration.enableZshIntegration = true;
   };
 
   # ZSH --------------------------
-  programs.zsh =  {
+  programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
@@ -273,7 +272,7 @@ programs.home-manager = {
     };
     sessionVariables = {
       # non-prompt stuff
-      FZF_DEFAULT_OPTS="--height 25% --layout=reverse";
+      FZF_DEFAULT_OPTS = "--height 25% --layout=reverse";
     };
     syntaxHighlighting.enable = true;
 
@@ -340,23 +339,74 @@ programs.home-manager = {
           fzf --preview='bat --style=numbers --color=always --line-range :500 {}' --preview-window=up:80% --height 100% --layout=default
       }
 
+      swayhelp() {
+          # source: https://richardwong.io/post/linux/2021-07-10-sway-guide/
+          echo -e "// applications
+\t Mod + Enter -> open terminal
+\t Mod + D -> open wofi to search and open applications
+\t Mod + Shift + Q -> kill current focused application
+
+// navigating within workspace
+\t Mod + left/right/up/down -> move within workspace
+\t Mod + h/j/k/l -> vim-based navigation 
+\t Mod + Shift + left/right/h/j/k/l -> move applications within your workspace
+
+// tiling options
+\t Mod + W -> tabbed mode 
+  \t note: useful for many instances of the same application
+\t Mod + S -> stack mode
+\t Mod + E -> tiling mode 
+  \t note: repeat to re-tile in different orientation
+\t Mod + B -> split horizontal (in tiling mode)
+\t Mod + v -> split vertical (in tiling mode)
+\t Mod + F -> fullscreen an application
+\t Mod + Shift + Space -> floating mode
+\t Mod + Space -> toggle between tiling area and floating area
+\t Mod + drag with mouse -> to move floating windows with mouse
+
+// scratchpad (a bag for holding windows)
+\t Mod + Shift + Minus -> move current window to the scratchpad
+\t Mod + Minus -> show the scratchpad 
+  \t note: repeat to cycle the windows of the scratchpad
+\t Mod + Shift + Space -> send currently focused scratchpad to tiling area
+
+// resize
+\t Mod + R -> enter resize mode. Note: use arrow keys/hjkl to resize. 
+  \t You can also use your mouse to drag edges of floating windows
+
+// navigate workspaces
+\t Mod + <num> -> go to the num-th workspace
+  \t <num> is any number from 0 to 9
+\t Mod + PageUp/PageDown -> move the the left/right workspace
+
+// Custom utilities enabled by the Fedora Post-install guide
+\t Shift + Print -> select and screenshot
+\t Print -> screenshot whole screen
+\t Brightness keys -> control brightness
+\t Sound keys -> control sound
+
+// sway
+\t Mod + Shift + C -> reload config
+\t Mod + Shift + E -> quit sway"
+      }
+
       whereami() { # determine which cloud provider and kubernetes' contexts I'm under and display
           # AZ CLI
-          if [[ -z $(history | grep --perl-regexp '^\s{1,2}\d{1,4}\s{2}az\s.*') ]]; then 
-              # az command has not run recently 
+          if [[ -z $(history | grep --perl-regexp '^\s{1,2}\d{1,4}\s{2}az\s.*') ]]; then
+              # az command has not run recently
               active_acct_az=""
-          else 
+          else
               active_acct_az=$(az account show -o tsv --query name | cut -c 1-13)
           fi
 
           # KUBECTL
-          if [[ -z $(history | grep --perl-regexp '^\s{1,2}\d{1,4}\s{2}(sudo\s)?(kubectl|kc){1}\s.*$') ]]; then 
-              # kubectl (or alias) has not run recently 
+          if [[ -z $(history | grep --perl-regexp '^\s{1,2}\d{1,4}\s{2}(sudo\s)?(kubectl|kc){1}\s.*$') ]]; then
+              # kubectl (or alias) has not run recently
               active_kube_context=""
-          else 
+          else
               active_kube_context=$(kubectl config current-context)
           fi
-          
+
           source ~/.zshrc
       }
     '';
@@ -369,5 +419,4 @@ programs.home-manager = {
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.11"; # should stay at the version you originally installed.
-
 }

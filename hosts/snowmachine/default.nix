@@ -120,6 +120,7 @@
   services.xserver = {
     enable = true;
     desktopManager.gnome.enable = true;
+    displayManager.setupCommands = "sway"; # is this how I start sway?
     videoDrivers = [ "displayLink" "modesetting" ]; #
 
     # Configure keymap in X11
@@ -127,23 +128,17 @@
     xkb.variant = "";
   };
 
-  # Enable the GNOME Desktop Environment.
-  # services.xserver.displayManager.gdm = {
-  #   enable = true;
-  #   banner = ''
-  #           hallo welt
-  #           '';
-  # };
 
-
-  services.displayManager.sddm = {
-    enable = true;
-    package = pkgs.lib.mkForce pkgs.libsForQt5.sddm; # https://github.com/NixOS/nixpkgs/issues/292761#issuecomment-2094854200
-    extraPackages = pkgs.lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
-    theme = "sddm-theme-dialog"; #"where-is-my-sddm-theme";
-    wayland.enable = true;
+  services.displayManager = {
+    defaultSession = "gnome"; # gnome
+    sddm = {
+      enable = true;
+      package = pkgs.lib.mkForce pkgs.libsForQt5.sddm; # https://github.com/NixOS/nixpkgs/issues/292761#issuecomment-2094854200
+      extraPackages = pkgs.lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
+      theme = "sddm-theme-dialog"; #"where-is-my-sddm-theme";
+      wayland.enable = true;
+    };
   };
-
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -172,10 +167,6 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
 
 
   # List packages installed in system profile. To search, run:
