@@ -12,4 +12,8 @@
   programs.zsh.enable = true;
 
   programs.vim.defaultEditor = true;
+
+  fonts.fonts = with pkgs; [
+    ibm-plex
+  ];
 }
