@@ -120,7 +120,7 @@
   services.xserver = {
     enable = true;
     desktopManager.gnome.enable = true;
-    displayManager.setupCommands = "sway"; # is this how I start sway?
+    #displayManager.setupCommands = "sway"; # is this how I start sway?
     videoDrivers = [ "displayLink" "modesetting" ]; #
 
     # Configure keymap in X11
@@ -176,8 +176,8 @@
     (callPackage ../common/global/sddm-themes.nix {}).sddm-theme-dialog # login screen theme
     where-is-my-sddm-theme
 
-    lightdm
-    lightdm-gtk-greeter
+    #lightdm
+    #lightdm-gtk-greeter
 
     # dev tools
     git
@@ -212,6 +212,16 @@
     flake = "/home/witt/git/niche-os"; # TODO: have this take in variables
   };
 
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+  };
+  xdg.portal = {
+    enable = true;
+    wlr = { # sway
+      enable = true;
+    };
+  };
   
 
   # SECURITY --------------------------

@@ -235,6 +235,11 @@
       text-wrong-color = "8f4656";
     };
   };
+  systemd.user.services.swaylock = {
+    Unit.Description = "Lock screen";
+    Service.ExecStart = "${config.programs.swaylock.package}/bin/swaylock";
+  };
+
 
   # TERMINAL --------------------------
   programs.kitty = {
