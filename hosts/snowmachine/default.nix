@@ -208,7 +208,7 @@
   programs.nh = {
     enable = true;
     clean.enable = true;
-    clean.extraArgs = "--keep-since 14d --keep 10";
+    clean.extraArgs = "--keep-since 90d --keep 10";
     flake = "/home/witt/git/niche-os"; # TODO: have this take in variables
   };
 

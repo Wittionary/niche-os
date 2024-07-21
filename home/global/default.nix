@@ -55,7 +55,7 @@
     enable = true;
   };
 
-  # home-manager.users.witt = { pkgs, ... }: {
+  # home-manager.users.witt = { pkgs, ... }: { # I believe I needed to comment this out because it was a holdover from a nixOS-managed home-manager module
   home.packages = with pkgs; [
     _1password-gui
     azure-cli
