@@ -34,6 +34,12 @@
         modules = [ ./hosts/snowmachine ];
       };
 
+	# PC desktop
+      starmachine = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [ ./hosts/starmachine ];
+      };
+
       # WSL terminals
       stormtrooper = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
@@ -51,6 +57,16 @@
         modules = [
           ./home/global
           ./home/snowmachine.nix
+        ];
+      };
+
+      # PC Desktop
+      "witt@starmachine" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pk>
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [
+          ./home/global
+          ./home/starmachine.nix
         ];
       };
 
