@@ -14,12 +14,18 @@
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # hardware
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    nixos-hardware,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -34,10 +40,19 @@
         modules = [ ./hosts/snowmachine ];
       };
 
-	# PC desktop
+	    # PC desktop
       starmachine = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
-        modules = [ ./hosts/starmachine ];
+        modules = [ 
+          ./hosts/starmachine
+          # add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
+          nixos-hardware.nixosModules.common-cpu-amd
+          nixos-hardware.nixosModules.common-gpu-amd # onboard GPU
+          nixos-hardware.nixosModules.common-gpu-nvidia # the real graphics card
+          nixos-hardware.nixosModules.common-pc
+          # nixos-hardware.nixosModules.common-pc-ssd # not sure if needed
+          # nixos-hardware.nixosModules.common-hidpi # not sure if needed
+        ];
       };
 
       # WSL terminals
