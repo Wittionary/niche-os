@@ -150,6 +150,15 @@
     pkgs.intel-compute-runtime
   ];
 
+  # starmachine graphics card stuff
+  hardware.graphics.enable = true;
+  hardware.nvidia.open = false;
+  services.xserver.videoDrivers = [
+    "nvidia"
+    # "amdgpu"
+  ];
+
+
   # Enable sound with pipewire.
   sound.enable = false; # https://github.com/NixOS/nixpkgs/issues/319809#issuecomment-2167912680
   hardware.pulseaudio.enable = false;
