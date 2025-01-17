@@ -156,10 +156,10 @@
   hardware.nvidia = {
     open = false;
   }
-  services.xserver.videoDrivers = [
-    "nvidia"
+  #services.xserver.videoDrivers = [
+   # "nvidia"
     # "amdgpu"
-  ];
+  #];
 
 
   # Enable sound with pipewire.
