@@ -153,7 +153,9 @@
   # starmachine graphics card stuff
   hardware.opengl.enable = true;
   # hardware.graphics.enable = true; 
-  hardware.nvidia.open = false;
+  hardware.nvidia = {
+    open = false;
+  }
   services.xserver.videoDrivers = [
     "nvidia"
     # "amdgpu"
