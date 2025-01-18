@@ -49,7 +49,7 @@
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
-  # Let Home Manager install and manage itself. This is for standaloe install
+  # Let Home Manager install and manage itself. This is for standalone install
   # See: https://itsfoss.com/home-manager-nixos/#standalone-installation-of-home-manager
   programs.home-manager = {
     enable = true;
