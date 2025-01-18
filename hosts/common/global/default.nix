@@ -13,7 +13,7 @@
 
   programs.vim.defaultEditor = true;
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     ibm-plex
   ];
 }
