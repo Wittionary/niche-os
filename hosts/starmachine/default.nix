@@ -60,7 +60,7 @@
   };
 
   networking = {
-    hostName = "snowmachine";
+    hostName = "starmachine";
   };
 
   # Bootloader.
@@ -121,7 +121,6 @@
     enable = true;
     desktopManager.gnome.enable = true;
     #displayManager.setupCommands = "sway"; # is this how I start sway?
-    videoDrivers = [ "displayLink" "modesetting" ]; #
 
     # Configure keymap in X11
     xkb.layout = "us";
@@ -146,13 +145,25 @@
   # support Thunderbolt devices
   services.hardware.bolt.enable = true;
 
-  # hardware acceleration for snowmachine
+  # hardware acceleration for starmachine
   hardware.opengl.extraPackages = [
     pkgs.intel-compute-runtime
   ];
 
+  # starmachine graphics card stuff
+  hardware.opengl.enable = true;
+  # hardware.graphics.enable = true; 
+  hardware.nvidia = {
+    open = false;
+  };
+  #services.xserver.videoDrivers = [
+   # "nvidia"
+    # "amdgpu"
+  #];
+
+
   # Enable sound with pipewire.
-  sound.enable = true;
+  sound.enable = false; # https://github.com/NixOS/nixpkgs/issues/319809#issuecomment-2167912680
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -197,8 +208,7 @@
     openssl
 
     # system
-    displaylink # dock    
-
+  
     # terminal
     tmux
     vim 
