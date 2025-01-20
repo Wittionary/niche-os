@@ -11,37 +11,18 @@
   imports = [
     # include NixOS-WSL modules
     <nixos-wsl/modules>
-    # <home-manager/nixos>
 
     ../common/global
   ];
 
-  nix = {
-    settings = {
-      # Enable flakes and new 'nix' command
-      experimental-features = "nix-command flakes";
-    };
-  };
-
   wsl.enable = true;
   wsl.defaultUser = "witt";
+
   networking = {
     hostName = "stormtrooper";
   };
 
-  environment.systemPackages = with pkgs; [
-    #_1password
-    curl
-    file
-    git-credential-manager
-    jq
 
-    nmap
-    podman
-    podman-compose
-    vim 
-    wget
-  ];
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It's perfectly fine and recommended to leave

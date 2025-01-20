@@ -136,9 +136,6 @@
     (callPackage ./sddm-themes.nix {}).sddm-theme-dialog # login screen theme
     where-is-my-sddm-theme
 
-    #lightdm
-    #lightdm-gtk-greeter
-
     # dev tools
     git
     git-credential-manager
