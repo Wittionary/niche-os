@@ -19,12 +19,16 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
+
+    # hosts file provider - https://github.com/StevenBlack/hosts#nix-flake
+    hosts.url = "github:StevenBlack/hosts/master";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    hosts,
     nixos-hardware,
     ...
   } @ inputs: let
@@ -37,7 +41,10 @@
       snowmachine = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         # > Our main nixos configuration file <
-        modules = [ ./hosts/snowmachine ];
+        modules = [
+          ./hosts/snowmachine
+          hosts.nixosModule
+        ];
       };
 
 	    # PC desktop
