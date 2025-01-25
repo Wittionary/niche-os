@@ -1,4 +1,6 @@
 #!/bin/sh
+# DEPRECATED
+# Just gonna do development locally. This gives me too many issues.
 
 # Set the path to the Git repository
 repo_url="https://github.com/Wittionary/niche-os"
