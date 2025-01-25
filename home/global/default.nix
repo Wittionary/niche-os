@@ -243,7 +243,7 @@
   # TERMINAL --------------------------
   programs.kitty = {
     enable = true;
-    theme = "Novel"; #"Doom One";
+    theme = lib.mkDefault "Novel"; #"Doom One";
     font = {
       size = 18;
       package = pkgs.dejavu_fonts;

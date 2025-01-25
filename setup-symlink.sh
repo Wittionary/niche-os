@@ -1,5 +1,6 @@
 #!/bin/sh
 # Points the system directory over to the git-managed configurations
+# TODO: Update this to support new directory setup (with flakes) 
 
 MY_HOME="/home/witt"
 NIXOS_DIR="/etc/nixos/"
