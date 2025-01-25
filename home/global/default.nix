@@ -55,7 +55,6 @@
     enable = true;
   };
 
-  # home-manager.users.witt = { pkgs, ... }: { # I believe I needed to comment this out because it was a holdover from a nixOS-managed home-manager module
   home.packages = with pkgs; [
     _1password-gui
     azure-cli
@@ -72,7 +71,7 @@
     lolcat
 
     neofetch
-    obsidian # v1.4.16 package is out-of-date -> insecure
+    obsidian
     podman
 
     terraform
@@ -244,7 +243,7 @@
   # TERMINAL --------------------------
   programs.kitty = {
     enable = true;
-    theme = "Novel"; #"Doom One";
+    theme = lib.mkDefault "Novel"; #"Doom One";
     font = {
       size = 18;
       package = pkgs.dejavu_fonts;
