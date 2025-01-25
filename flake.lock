@@ -20,6 +20,25 @@
         "type": "github"
       }
     },
+    "hosts": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1737602324,
+        "narHash": "sha256-Yv35eT+iOhq+N3waEj+Fs036/r8o2FtJsG+6pQ8WkXs=",
+        "owner": "StevenBlack",
+        "repo": "hosts",
+        "rev": "6631d69419bb0f8f3cdfca6df8215f4e294edff0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "StevenBlack",
+        "ref": "master",
+        "repo": "hosts",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1736978406,
@@ -40,6 +59,19 @@
       "locked": {
         "lastModified": 1718318537,
         "narHash": "sha256-4Zu0RYRcAY/VWuu6awwq4opuiD//ahpc2aFHg2CWqFY=",
+        "path": "/nix/store/qqwr649pc0qprc9lw2fmdsi1km6p7q2h-source",
+        "rev": "e9ee548d90ff586a6471b4ae80ae9cfcbceb3420",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1718318537,
+        "narHash": "sha256-4Zu0RYRcAY/VWuu6awwq4opuiD//ahpc2aFHg2CWqFY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "e9ee548d90ff586a6471b4ae80ae9cfcbceb3420",
@@ -55,8 +87,9 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "hosts": "hosts",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },
