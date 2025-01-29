@@ -33,16 +33,6 @@
     open = false;
   };
 
-  # Enable sound with pipewire.
-  sound.enable = false; # https://github.com/NixOS/nixpkgs/issues/319809#issuecomment-2167912680
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 
   # SECURITY --------------------------
   
