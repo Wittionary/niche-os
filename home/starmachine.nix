@@ -8,6 +8,6 @@
   ];
   
   programs.kitty = {
-    theme = "Doom One";
+    themeFile = "Doom_One";
   };
 }

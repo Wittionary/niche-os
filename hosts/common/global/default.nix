@@ -135,7 +135,7 @@
   services.hardware.bolt.enable = true;
 
   # hardware acceleration
-  hardware.opengl.extraPackages = [
+  hardware.graphics.extraPackages = [
     pkgs.intel-compute-runtime
   ];
 
@@ -192,7 +192,7 @@
   };
 
     # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
