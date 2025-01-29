@@ -191,6 +191,16 @@
     };
   };
 
+    # Enable sound with pipewire.
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+
   # SECURITY --------------------------
   security.polkit.enable = true; # needed for sway
   security.pam.services.swaylock = {}; # needed for swaylock
