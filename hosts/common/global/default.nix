@@ -75,7 +75,22 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    dns = "systemd-resolved";
+  };
+  services.resolved = {
+    enable = true;
+    extraConfig = lib.mkDefault ''
+      DNS=45.90.28.0#c49352.dns.nextdns.io # TODO: consider implementing this native package; it's kind of trash though
+      DNS=2a07:a8c0::#c49352.dns.nextdns.io # TODO: refactor so the hostname is auto-prefixed in this global config
+      DNS=45.90.30.0#c49352.dns.nextdns.io
+      DNS=2a07:a8c1::#c49352.dns.nextdns.io 
+    '';
+    dnssec = "allow-downgrade";
+    dnsovertls = "true";
+  };
+
   networking.hosts = {
     # example: "0.0.0.0" = [ "site-to-block.net" ];
   };

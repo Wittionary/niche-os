@@ -22,6 +22,14 @@
   networking = {
     hostName = "starmachine";
   };
+  services.resolved = {
+    extraConfig = ''
+      DNS=45.90.28.0#starmachine-c49352.dns.nextdns.io # TODO: consider implementing this native package; it's kind of trash though
+      DNS=2a07:a8c0::#starmachine-c49352.dns.nextdns.io
+      DNS=45.90.30.0#starmachine-c49352.dns.nextdns.io
+      DNS=2a07:a8c1::#starmachine-c49352.dns.nextdns.io
+    '';
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
