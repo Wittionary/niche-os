@@ -332,7 +332,26 @@
               #echo "StackOverflow link is in clipboard"
               echo "https://stackoverflow.com/questions/927358/how-do-i-undo-the-most-recent-local-commits-in-git"
           elif [[ "$1" == "pp" ]]; then
+              # Push
               git push --progress
+          elif [[ "$1" == "l" ]]; then
+              # Recent commits
+              git log -3
+          elif [[ "$1" == "ll" ]]; then
+              # All of the commits
+              git log
+          elif [[ "$1" == "ch" ]]; then
+              # Checkout a branch
+              if [[ "$2" != "" ]]; then
+                  git checkout $2
+              else
+                  git checkout $(
+                      git branch --list | 
+                      grep -v "\*" | # everything but the currently selected branch
+                      sed 's/^[ \t]*//;s/[ \t]*$//' | fzf --height 25% --layout=reverse
+                  )
+
+              fi
           fi
       }
       kc() { # kubectl but as a rainbow
