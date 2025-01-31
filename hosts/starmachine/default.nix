@@ -36,7 +36,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # graphics card stuff
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
   hardware.nvidia = {
     open = false;
   };

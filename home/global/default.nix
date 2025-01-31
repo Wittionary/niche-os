@@ -92,7 +92,7 @@
   gtk.theme.package = pkgs.adw-gtk3;
   gtk.theme.name = "adw-gtk3";
 
-  gtk.iconTheme.package = pkgs.gnome.adwaita-icon-theme;
+  gtk.iconTheme.package = pkgs.adwaita-icon-theme;
   gtk.iconTheme.name = "Adwaita";
 
   # theming engine
@@ -243,7 +243,7 @@
   # TERMINAL --------------------------
   programs.kitty = {
     enable = true;
-    theme = lib.mkDefault "Novel"; #"Doom One";
+    themeFile = lib.mkDefault "Novel"; #"Doom One";
     font = {
       size = 18;
       package = pkgs.dejavu_fonts;

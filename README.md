@@ -61,4 +61,15 @@ nh os switch .
 
 # for home-manager changes
 nh home switch .
+
+# every once in a while
+nh clean all
 ```
+
+## update flakes
+Make sure you're on a new branch and that you've got 15 minutes for this thing to build.
+```bash
+nix flake update
+nh os switch && nh home switch
+```
+After that, you'll probably get a handful of errors and warnings that need to be resolved as a result of new deprecations or naming changes.
