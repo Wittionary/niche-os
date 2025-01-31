@@ -220,7 +220,10 @@
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
 
-  programs.vim.defaultEditor = true;
+  programs.vim = {
+    enable = true;
+    defaultEditor = true;
+  };
 
   fonts.packages = with pkgs; [
     ibm-plex
