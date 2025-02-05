@@ -92,7 +92,7 @@
   gtk.theme.package = pkgs.adw-gtk3;
   gtk.theme.name = "adw-gtk3";
 
-  gtk.iconTheme.package = pkgs.gnome.adwaita-icon-theme;
+  gtk.iconTheme.package = pkgs.adwaita-icon-theme;
   gtk.iconTheme.name = "Adwaita";
 
   # theming engine
@@ -243,7 +243,7 @@
   # TERMINAL --------------------------
   programs.kitty = {
     enable = true;
-    theme = lib.mkDefault "Novel"; #"Doom One";
+    themeFile = lib.mkDefault "Novel"; #"Doom One";
     font = {
       size = 18;
       package = pkgs.dejavu_fonts;
@@ -332,7 +332,26 @@
               #echo "StackOverflow link is in clipboard"
               echo "https://stackoverflow.com/questions/927358/how-do-i-undo-the-most-recent-local-commits-in-git"
           elif [[ "$1" == "pp" ]]; then
+              # Push
               git push --progress
+          elif [[ "$1" == "l" ]]; then
+              # Recent commits
+              git log -3
+          elif [[ "$1" == "ll" ]]; then
+              # All of the commits
+              git log
+          elif [[ "$1" == "ch" ]]; then
+              # Checkout a branch
+              if [[ "$2" != "" ]]; then
+                  git checkout $2
+              else
+                  git checkout $(
+                      git branch --list | 
+                      grep -v "\*" | # everything but the currently selected branch
+                      sed 's/^[ \t]*//;s/[ \t]*$//' | fzf --height 25% --layout=reverse
+                  )
+
+              fi
           fi
       }
       kc() { # kubectl but as a rainbow

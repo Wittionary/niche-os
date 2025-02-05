@@ -75,7 +75,22 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    dns = "systemd-resolved";
+  };
+  services.resolved = {
+    enable = true;
+    extraConfig = lib.mkDefault ''
+      DNS=45.90.28.0#c49352.dns.nextdns.io # TODO: consider implementing this native package; it's kind of trash though
+      DNS=2a07:a8c0::#c49352.dns.nextdns.io # TODO: refactor so the hostname is auto-prefixed in this global config
+      DNS=45.90.30.0#c49352.dns.nextdns.io
+      DNS=2a07:a8c1::#c49352.dns.nextdns.io 
+    '';
+    dnssec = "allow-downgrade";
+    dnsovertls = "true";
+  };
+
   networking.hosts = {
     # example: "0.0.0.0" = [ "site-to-block.net" ];
   };
@@ -135,7 +150,7 @@
   services.hardware.bolt.enable = true;
 
   # hardware acceleration
-  hardware.opengl.extraPackages = [
+  hardware.graphics.extraPackages = [
     pkgs.intel-compute-runtime
   ];
 
@@ -191,6 +206,16 @@
     };
   };
 
+    # Enable sound with pipewire.
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+
   # SECURITY --------------------------
   security.polkit.enable = true; # needed for sway
   security.pam.services.swaylock = {}; # needed for swaylock
@@ -210,7 +235,10 @@
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
 
-  programs.vim.defaultEditor = true;
+  programs.vim = {
+    enable = true;
+    defaultEditor = true;
+  };
 
   fonts.packages = with pkgs; [
     ibm-plex

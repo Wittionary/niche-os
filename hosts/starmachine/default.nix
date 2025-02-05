@@ -22,27 +22,25 @@
   networking = {
     hostName = "starmachine";
   };
+  services.resolved = {
+    extraConfig = ''
+      DNS=45.90.28.0#starmachine-c49352.dns.nextdns.io # TODO: consider implementing this native package; it's kind of trash though
+      DNS=2a07:a8c0::#starmachine-c49352.dns.nextdns.io
+      DNS=45.90.30.0#starmachine-c49352.dns.nextdns.io
+      DNS=2a07:a8c1::#starmachine-c49352.dns.nextdns.io
+    '';
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # graphics card stuff
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
   hardware.nvidia = {
     open = false;
   };
 
-  # Enable sound with pipewire.
-  sound.enable = false; # https://github.com/NixOS/nixpkgs/issues/319809#issuecomment-2167912680
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 
   # SECURITY --------------------------
   
