@@ -125,6 +125,9 @@
   services.xserver = {
     enable = true;
     desktopManager.gnome.enable = true;
+    desktopManager.wallpaper = {
+      mode = "fill";
+    };
     #displayManager.setupCommands = "sway"; # is this how I start sway?
 
     # Configure keymap in X11
