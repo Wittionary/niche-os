@@ -47,6 +47,16 @@
         ];
       };
 
+	# hacktop - ThinkPad
+      hacktop = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        # > Our main nixos configuration file <
+        modules = [
+          ./hosts/hacktop
+          hosts.nixosModule
+        ];
+      };
+
 	    # PC desktop
       starmachine = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
@@ -79,6 +89,16 @@
         modules = [
           ./home/global
           ./home/snowmachine.nix
+        ];
+      };
+
+      # hacktop
+      "witt@hacktop" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' insta>
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [
+          ./home/global
+          ./home/hacktop.nix
         ];
       };
 
