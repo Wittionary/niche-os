@@ -183,6 +183,8 @@
     # system
   
     # terminal
+    cowsay
+    figlet
     tmux
     vim 
     wget
