@@ -171,6 +171,7 @@
     podman-compose
     python3Minimal
     uv # python package and env management
+    zola
 
     # general admin / utilities
     curl
