@@ -440,6 +440,26 @@
     enableZshIntegration = true;
   };
 
+# MUSIC --------------------------
+  services.spotifyd = {
+    enable = true;
+    settings = { # https://docs.spotifyd.rs/config/File.html#configuration-file
+      global = {
+        device_name = "starmachine"; # TODO: replace with variable
+        device_type = "computer";
+        cache_path = "/home/witt/.cache/spotifyd"; # TODO: replace home path with nix variable: e.g. ${home.homeDirectory}
+        autoplay = false;
+        zeroconf_port = 5577;
+        # use_keyring = true;
+        # on_song_change_hook = "command_to_run_on_playback_events";
+      };
+    };
+  };
+
+  programs.spotify-player = {
+    enable = true;
+  };
+
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.11"; # should stay at the version you originally installed.
 }
