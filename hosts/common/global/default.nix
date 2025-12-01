@@ -173,6 +173,7 @@
     where-is-my-sddm-theme
 
     # dev tools
+    dotnetCorePackages.sdk_10_0-bin
     git
     git-credential-manager
     jq
