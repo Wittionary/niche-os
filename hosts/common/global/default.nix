@@ -124,20 +124,23 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    desktopManager.gnome.enable = true;
-    #displayManager.setupCommands = "sway"; # is this how I start sway?
 
     # Configure keymap in X11
     xkb.layout = "us";
     xkb.variant = "";
+  };
+  
+  services = {
+    desktopManager.gnome.enable = true;
+    #displayManager.setupCommands = "sway"; # is this how I start sway?
   };
  
   services.displayManager = {
     defaultSession = "gnome"; # gnome
     sddm = {
       enable = true;
-      package = pkgs.lib.mkForce pkgs.libsForQt5.sddm; # https://github.com/NixOS/nixpkgs/issues/292761#issuecomment-2094854200
-      extraPackages = pkgs.lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
+      package = pkgs.kdePackages.sddm; # https://github.com/NixOS/nixpkgs/issues/292761#issuecomment-2110094381
+      #extraPackages = pkgs.lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
       theme = "sddm-theme-dialog"; #"where-is-my-sddm-theme";
       wayland.enable = true;
     };
