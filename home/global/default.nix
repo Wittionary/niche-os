@@ -119,16 +119,9 @@
   # GIT --------------------------
   programs.git = {
     enable = true;
-    delta = {
-      # https://github.com/dandavison/delta
-      enable = true;
-      options = {
-        side-by-side = true;
-      };
-    };
-    userName = "Witt Allen";
-    userEmail = "wittionary@users.noreply.github.com";
-    extraConfig = {
+    settings = {
+      user.name = "Witt Allen";
+      user.email = "wittionary@users.noreply.github.com";
       init = {
         defaultBranch = "main";
       };
@@ -142,47 +135,57 @@
     };
   };
 
+  programs.delta = { # https://github.com/dandavison/delta
+    enable = true;
+    enableGitIntegration = true;
+    options = {
+      side-by-side = true;
+    };
+  };
+
   # VS CODE --------------------------
   programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      # generic
-      mikestead.dotenv
-      eamodio.gitlens
-      ritwickdey.liveserver
-
-      # dev ops stuff
-      github.vscode-github-actions
-      ms-kubernetes-tools.vscode-kubernetes-tools
-      #_4ops.terraform # there's a deprecation "warning" that prevents home-manager compile
-
-      # frontend / CSS
-      bradlc.vscode-tailwindcss
-
-      # golang
-      golang.go
-
-      # nix
-      # kamadorueda.alejandra # nix code formatter - https://github.com/kamadorueda/alejandra
-      bbenoist.nix
-      jnoortheen.nix-ide
-
-      # powershell
-      ms-vscode.powershell
-
-      # python
-      ms-python.vscode-pylance
-      ms-python.python
-      #ms-python.debugpy # extension not found? "attribute 'debugpy' missing"
-    ];
     package = pkgs.vscode; # pkgs.vscode || pkgs.vscodium
+    profiles.default = {
+      extensions = with pkgs.vscode-extensions; [
+        # generic
+        mikestead.dotenv
+        eamodio.gitlens
+        ritwickdey.liveserver
 
-    userSettings = {
-      "editor.fontSize" = 16;
-      "explorer.confirmDelete" = false;
-      "explorer.confirmDragAndDrop" = false;
-      "powershell.promptToUpdatePowerShell" = false;
-      "window.zoomLevel" = 1;
+        # dev ops stuff
+        github.vscode-github-actions
+        ms-kubernetes-tools.vscode-kubernetes-tools
+        #_4ops.terraform # there's a deprecation "warning" that prevents home-manager compile
+
+        # frontend / CSS
+        bradlc.vscode-tailwindcss
+
+        # golang
+        golang.go
+
+        # nix
+        # kamadorueda.alejandra # nix code formatter - https://github.com/kamadorueda/alejandra
+        bbenoist.nix
+        jnoortheen.nix-ide
+
+        # powershell
+        ms-vscode.powershell
+
+        # python
+        ms-python.vscode-pylance
+        ms-python.python
+        #ms-python.debugpy # extension not found? "attribute 'debugpy' missing"
+      ];
+
+      userSettings = {
+        "editor.fontSize" = 16;
+        "explorer.confirmDelete" = false;
+        "explorer.confirmDragAndDrop" = false;
+        "powershell.promptToUpdatePowerShell" = false;
+        "window.zoomLevel" = 1;
+      };
     };
   };
 
