@@ -285,7 +285,7 @@
 
     # TODO: add ZLE - that might fix the foreground/background colors not working
     # https://man.archlinux.org/man/zshmisc.1#Visual_effects
-    initExtra = ''
+    initContent = ''
       # enable colors
       zmodload zsh/nearcolor
       autoload -U colors && colors
@@ -348,12 +348,12 @@
               if [[ "$2" != "" ]]; then
                   git checkout $2
               else
+                  # greps everything but the currently selected branch
                   git checkout $(
                       git branch --list | 
-                      grep -v "\*" | # everything but the currently selected branch
+                      grep -v "\*" | 
                       sed 's/^[ \t]*//;s/[ \t]*$//' | fzf --height 25% --layout=reverse
                   )
-
               fi
           fi
       }
