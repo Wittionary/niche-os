@@ -33,7 +33,8 @@ nh home switch .
 ```
 
 
-On nixOS on WSL:
+~~On nixOS on WSL:~~
+I've not yet gotten this to work successfully.
 ```bash
 HOSTNAME="stormtrooper"
 mkdir $HOME/git/ && cd $HOME/git/
@@ -67,7 +68,7 @@ nh clean all
 ```
 
 ## update flakes
-Make sure you're on a new branch and that you've got 15 minutes for this thing to build.
+Make sure you're on a new branch and that you've got 15 minutes for this thing to download packages and build.
 ```bash
 sudo nix flake update
 nh os switch && nh home switch
