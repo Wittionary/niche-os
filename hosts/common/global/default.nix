@@ -129,7 +129,7 @@
     xkb.layout = "us";
     xkb.variant = "";
   };
-  
+
   services = {
     desktopManager.gnome.enable = true;
     #displayManager.setupCommands = "sway"; # is this how I start sway?
@@ -167,6 +167,7 @@
     where-is-my-sddm-theme
 
     # dev tools
+    dotnetCorePackages.sdk_10_0-bin
     git
     git-credential-manager
     jq
