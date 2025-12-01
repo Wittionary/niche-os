@@ -171,6 +171,7 @@
     podman-compose
     python3Minimal
     uv # python package and env management
+    zola
 
     # general admin / utilities
     curl
@@ -183,6 +184,8 @@
     # system
   
     # terminal
+    cowsay
+    figlet
     tmux
     vim 
     wget
@@ -226,11 +229,15 @@
   ];
   
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
+  networking.firewall = {
+    allowedTCPPorts = [
+      22 # ssh
+      5577 # spotify zeroconf
+    ];
+    allowedUDPPorts = [
+      5353 # mDNS - required for spotify device discovery
+    ];
+  };
 
   users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
