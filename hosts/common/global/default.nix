@@ -1,10 +1,11 @@
-{ 
+{
   inputs,
   lib,
   config,
   pkgs,
   ...
-}: {
+}:
+{
 
   nixpkgs = {
     # You can add overlays here
@@ -26,25 +27,27 @@
     };
   };
 
-  nix = let
-    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-  in {
-    settings = {
-      # Enable flakes and new 'nix' command
-      experimental-features = "nix-command flakes";
-      # Opinionated: disable global registry
-      flake-registry = "";
-      # Workaround for https://github.com/NixOS/nix/issues/9574
-      nix-path = config.nix.nixPath;
-      warn-dirty = false;
-    };
-    # Opinionated: disable channels
-    channel.enable = true;
+  nix =
+    let
+      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+    in
+    {
+      settings = {
+        # Enable flakes and new 'nix' command
+        experimental-features = "nix-command flakes";
+        # Opinionated: disable global registry
+        flake-registry = "";
+        # Workaround for https://github.com/NixOS/nix/issues/9574
+        nix-path = config.nix.nixPath;
+        warn-dirty = false;
+      };
+      # Opinionated: disable channels
+      channel.enable = true;
 
-    # Opinionated: make flake registry and nix path match flake inputs
-    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
-    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-  };
+      # Opinionated: make flake registry and nix path match flake inputs
+      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
+      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+    };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users = {
@@ -53,7 +56,10 @@
       # Be sure to change it (using passwd) after rebooting!
       description = "witt";
       isNormalUser = true;
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
@@ -85,7 +91,7 @@
       DNS=45.90.28.0#c49352.dns.nextdns.io # TODO: consider implementing this native package; it's kind of trash though
       DNS=2a07:a8c0::#c49352.dns.nextdns.io # TODO: refactor so the hostname is auto-prefixed in this global config
       DNS=45.90.30.0#c49352.dns.nextdns.io
-      DNS=2a07:a8c1::#c49352.dns.nextdns.io 
+      DNS=2a07:a8c1::#c49352.dns.nextdns.io
     '';
     dnssec = "allow-downgrade";
     dnsovertls = "true";
@@ -102,7 +108,6 @@
     blockPorn = true;
     blockSocial = false;
   };
-
 
   # Set your time zone.
   time.timeZone = "America/Chicago";
@@ -134,14 +139,14 @@
     desktopManager.gnome.enable = true;
     #displayManager.setupCommands = "sway"; # is this how I start sway?
   };
- 
+
   services.displayManager = {
     defaultSession = "gnome"; # gnome
     sddm = {
       enable = true;
       package = pkgs.kdePackages.sddm; # https://github.com/NixOS/nixpkgs/issues/292761#issuecomment-2110094381
       #extraPackages = pkgs.lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
-      theme = "sddm-theme-dialog"; #"where-is-my-sddm-theme";
+      theme = "sddm-theme-dialog"; # "where-is-my-sddm-theme";
       wayland.enable = true;
     };
   };
@@ -163,7 +168,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     #_1password
-    (callPackage ./sddm-themes.nix {}).sddm-theme-dialog # login screen theme
+    (callPackage ./sddm-themes.nix { }).sddm-theme-dialog # login screen theme
     where-is-my-sddm-theme
 
     # dev tools
@@ -171,6 +176,8 @@
     git
     git-credential-manager
     jq
+    nil # nix language server
+    nixd # another nix language server
     podman
     podman-compose
     python3Minimal
@@ -186,12 +193,12 @@
     openssl
 
     # system
-  
+
     # terminal
     cowsay
     figlet
     tmux
-    vim 
+    vim
     wget
   ];
 
@@ -208,12 +215,13 @@
   };
   xdg.portal = {
     enable = true;
-    wlr = { # sway
+    wlr = {
+      # sway
       enable = true;
     };
   };
 
-    # Enable sound with pipewire.
+  # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -225,13 +233,13 @@
 
   # SECURITY --------------------------
   security.polkit.enable = true; # needed for sway
-  security.pam.services.swaylock = {}; # needed for swaylock
+  security.pam.services.swaylock = { }; # needed for swaylock
 
   # security exceptions -------------
   nixpkgs.config.permittedInsecurePackages = [
-  "electron-25.9.0" # for obsidian 1.4.16
+    "electron-25.9.0" # for obsidian 1.4.16
   ];
-  
+
   # Open ports in the firewall.
   networking.firewall = {
     allowedTCPPorts = [
