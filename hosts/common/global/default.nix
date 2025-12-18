@@ -177,6 +177,8 @@
     git
     git-credential-manager
     jq
+    nil # nix language server
+    nixd # another nix language server
     podman
     podman-compose
     python3Minimal

@@ -189,6 +189,17 @@
     };
   };
 
+  # ZED IDE --------------------------
+  programs.zed-editor = {
+    enable = true;
+    extensions = [
+      "csharp"
+      "nix"
+      "powershell"
+      "superhtml"
+      "terraform"
+    ];
+  };
   # WAYLAND --------------------------
   wayland.windowManager.sway = {
     enable = true;
