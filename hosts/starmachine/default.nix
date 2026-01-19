@@ -1,10 +1,11 @@
-{ 
+{
   inputs,
   lib,
   config,
   pkgs,
   ...
-}: {
+}:
+{
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules from other flakes (such as nixos-hardware):
@@ -36,16 +37,25 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # graphics card stuff
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
   hardware.nvidia = {
     open = false;
   };
+  # GAMING RELATED ------------------
+  # resource: https://journix.dev/posts/gaming-on-nixos/
+  programs.steam = {
+    enable = true;
+    gamescopeSession.enable = true;
+  };
+  programs.gamemode.enable = true;
 
+  environment.systemPackages = with pkgs; [
+    mangohud # simple overlay program for monitoring FPS, temperature, CPU and GPU load
+  ];
 
-  # SECURITY --------------------------
-  
-  # security exceptions -------------
-  
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
 }
