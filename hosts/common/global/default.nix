@@ -193,6 +193,12 @@
     nmap
     openssl
 
+    # privacy / anonymity-based
+    i2p # https://geti2p.net/en/about/intro
+    mullvad # CLI tool for the VPN client
+    simplex-chat-desktop
+    tor-browser
+
     # system
 
     # terminal
