@@ -455,6 +455,11 @@
     enableZshIntegration = true;
   };
 
+  # PRIVACY & ANONYMITY --------------------------
+  programs.mullvad-vpn = {
+    enable = true;
+  };
+
   # MUSIC --------------------------
   services.spotifyd = {
     enable = true;
