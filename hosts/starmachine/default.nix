@@ -53,6 +53,7 @@
   programs.gamemode.enable = true;
 
   environment.systemPackages = with pkgs; [
+    heroic # game launcher
     mangohud # simple overlay program for monitoring FPS, temperature, CPU and GPU load
   ];
 
