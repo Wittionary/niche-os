@@ -186,6 +186,7 @@
     zola
 
     # general admin / utilities
+    bottles # wine / exe wrapper
     curl
     file
     netbird-ui # network my devices together
