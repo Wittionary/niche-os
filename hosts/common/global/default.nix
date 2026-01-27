@@ -129,7 +129,6 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    #displayManager.setupCommands = "sway"; # is this how I start sway?
 
     # Configure keymap in X11
     xkb.layout = "us";
