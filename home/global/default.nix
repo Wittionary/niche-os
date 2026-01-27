@@ -102,6 +102,15 @@
   qt.style.name = "adwaita-dark";
   qt.style.package = pkgs.adwaita-qt;
 
+  # wallpaper
+  dconf.settings = {
+    "org/gnome/desktop/background" = {
+      color-shading-type = "solid";
+      picture-uri = "file:///home/witt/git/niche-os/nixos/wallpapers/flowers-desaturated.jpg";
+      picture-uri-dark = "file:///home/witt/git/niche-os/nixos/wallpapers/spaceship-silhouette.jpg";
+    };
+  };
+
   # ALIASES --------------------------
   home.shellAliases = {
     cls = "clear";
