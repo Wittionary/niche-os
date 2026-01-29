@@ -146,8 +146,11 @@
       enable = true;
       package = pkgs.kdePackages.sddm; # https://github.com/NixOS/nixpkgs/issues/292761#issuecomment-2110094381
       #extraPackages = pkgs.lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
-      theme = "sddm-theme-dialog"; # "where-is-my-sddm-theme";
+      theme = "where-is-my-sddm-theme"; # "sddm-theme-dialog"; # "where-is-my-sddm-theme"; # "sugar-dark";
       wayland.enable = true;
+      # settings = {
+      #   Greeter=${};
+      # };
     };
   };
 
@@ -167,9 +170,9 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #_1password
     (callPackage ./sddm-themes.nix { }).sddm-theme-dialog # login screen theme
-    where-is-my-sddm-theme
+    (callPackage ./sddm-themes.nix { }).sddm-sugar-dark
+    (callPackage ./sddm-themes.nix { }).where-is-my-sddm-theme
 
     # dev tools
     dotnetCorePackages.sdk_10_0-bin

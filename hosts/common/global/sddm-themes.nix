@@ -16,7 +16,6 @@
     };
   };
 
-  # currently unused
   sddm-sugar-dark = stdenv.mkDerivation rec {
     pname = "sddm-sugar-dark-theme";
     version = "1.2";
@@ -29,7 +28,23 @@
       owner = "MarianArlt";
       repo = "sddm-sugar-dark";
       rev = "v${version}";
-      sha256 = "0gx0am7vq1ywaw2rm1p015x90b75ccqxnb1sz3wy8yjl27v82yhb";
+      sha256 = "+R0PX84SL2qH8rZMfk3tqkhGWPR6DpY1LgX9bifNYCg=";
+    };
+  };
+
+  where-is-my-sddm-theme = stdenv.mkDerivation rec {
+    pname = "where-is-my-sddm-theme";
+    version = "1.12.0";
+    dontBuild = true;
+    installPhase = ''
+      mkdir -p $out/share/sddm/themes
+      cp -aR $src $out/share/sddm/themes/where-is-my-sddm-theme
+    '';
+    src = fetchFromGitHub {
+      owner = "stepanzubkov";
+      repo = "where-is-my-sddm-theme";
+      rev = "v${version}";
+      sha256 = "+R0PX84SL2qH8rZMfk3tqkhGWPR6DpY1LgX9bifNYCg=";
     };
   };
 }
