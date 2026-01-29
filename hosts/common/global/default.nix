@@ -198,6 +198,7 @@
     mullvad # CLI tool for the VPN client
     simplex-chat-desktop
     tor-browser
+    tutanota-desktop
 
     # system
 
