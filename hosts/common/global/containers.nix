@@ -22,8 +22,6 @@
   environment.systemPackages = with pkgs; [
     podman
     podman-compose
-    # podman-tui  # TUI for managing containers
-    skopeo
   ];
 
   # Enable container networking
@@ -45,14 +43,11 @@
       };
     };
 
-    # Registry settings - uncomment and modify if you need specific registries
     registries.search = [
-      # "docker.io"
       "quay.io"
     ];
   };
 
-  # Optional: Enable rootless containers for users
   # This allows non-root users to run containers
   users.users.witt = {
     extraGroups = [ "podman" ];
