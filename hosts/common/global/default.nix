@@ -7,6 +7,10 @@
 }:
 {
 
+  imports = [
+    ./containers.nix
+  ];
+
   nixpkgs = {
     # You can add overlays here
     overlays = [
