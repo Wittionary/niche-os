@@ -178,11 +178,10 @@
     jq
     nil # nix language server
     nixd # another nix language server
-    podman
-    podman-compose
     python3Minimal
     uv # python package and env management
     zola
+    # see also `containers.nix`
 
     # general admin / utilities
     bottles # wine / exe wrapper
