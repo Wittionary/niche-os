@@ -193,6 +193,7 @@
     file
     netbird-ui # network my devices together
     nh # nix helper CLI - https://github.com/viperML/nh
+    mumble # client
     nmap
     openssl
 
