@@ -45,6 +45,7 @@
 
     registries.search = [
       "quay.io"
+      "docker.io"
     ];
   };
 
