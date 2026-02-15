@@ -1,10 +1,11 @@
 {
-  description = "Your new nix config";
+  description = "Wittionary's nixOS configuration";
 
-  inputs = { # "inputs" defines all the dependencies of this flake
+  inputs = {
+    # "inputs" defines all the dependencies of this flake
     # NixOS official package source
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    
+
     # Home manager
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -21,31 +22,34 @@
     };
 
     # hosts file provider - https://github.com/StevenBlack/hosts#nix-flake
-    hosts.url = "github:StevenBlack/hosts/master";
+    # stevenblack-hosts.url = "github:StevenBlack/hosts/master";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    hosts,
-    nixos-hardware,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
-  in {
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
-    nixosConfigurations = {
-      # Yoga laptop - mainly for nixOS development
-      snowmachine = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        # > Our main nixos configuration file <
-        modules = [
-          ./hosts/snowmachine
-          hosts.nixosModule
-        ];
-      };
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      # stevenblack-hosts,
+      nixos-hardware,
+      ...
+    }@inputs:
+    let
+      inherit (self) outputs;
+    in
+    {
+      # NixOS configuration entrypoint
+      # Available through 'nixos-rebuild --flake .#your-hostname'
+      nixosConfigurations = {
+        # Yoga laptop - mainly for nixOS development
+        snowmachine = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          # > Our main nixos configuration file <
+          modules = [
+            ./hosts/snowmachine
+            # stevenblack-hosts.nixosModule
+          ];
+        };
 
 	# hacktop - ThinkPad
       hacktop = nixpkgs.lib.nixosSystem {
@@ -72,12 +76,12 @@
         ];
       };
 
-      # WSL terminals
-      stormtrooper = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        modules = [ ./hosts/stormtrooper ];
+        # WSL terminals
+        stormtrooper = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [ ./hosts/stormtrooper ];
+        };
       };
-    };
 
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
@@ -102,25 +106,25 @@
         ];
       };
 
-      # PC Desktop
-      "witt@starmachine" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pk>
-        extraSpecialArgs = {inherit inputs outputs;};
-        modules = [
-          ./home/global
-          ./home/starmachine.nix
-        ];
-      };
+        # PC Desktop
+        "witt@starmachine" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pk>
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            ./home/global
+            ./home/starmachine.nix
+          ];
+        };
 
-      # WSL terminals
-      "witt@stormtrooper" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        extraSpecialArgs = {inherit inputs outputs;};
-        modules = [
-          ./home/global
-          ./home/stormtrooper.nix
-        ];
+        # WSL terminals
+        "witt@stormtrooper" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            ./home/global
+            ./home/stormtrooper.nix
+          ];
+        };
       };
     };
-  };
 }

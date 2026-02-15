@@ -6,7 +6,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   # You can import other home-manager modules here
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
@@ -101,6 +102,15 @@
   qt.style.name = "adwaita-dark";
   qt.style.package = pkgs.adwaita-qt;
 
+  # wallpaper
+  dconf.settings = {
+    "org/gnome/desktop/background" = {
+      color-shading-type = "solid";
+      picture-uri = "file:///home/witt/git/niche-os/nixos/wallpapers/flowers-desaturated.jpg";
+      picture-uri-dark = "file:///home/witt/git/niche-os/nixos/wallpapers/spaceship-silhouette.jpg";
+    };
+  };
+
   # ALIASES --------------------------
   home.shellAliases = {
     cls = "clear";
@@ -119,16 +129,9 @@
   # GIT --------------------------
   programs.git = {
     enable = true;
-    delta = {
-      # https://github.com/dandavison/delta
-      enable = true;
-      options = {
-        side-by-side = true;
-      };
-    };
-    userName = "Witt Allen";
-    userEmail = "wittionary@users.noreply.github.com";
-    extraConfig = {
+    settings = {
+      user.name = "Witt Allen";
+      user.email = "wittionary@users.noreply.github.com";
       init = {
         defaultBranch = "main";
       };
@@ -142,50 +145,72 @@
     };
   };
 
-  # VS CODE --------------------------
-  programs.vscode = {
+  programs.delta = {
+    # https://github.com/dandavison/delta
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      # generic
-      mikestead.dotenv
-      eamodio.gitlens
-      ritwickdey.liveserver
-
-      # dev ops stuff
-      github.vscode-github-actions
-      ms-kubernetes-tools.vscode-kubernetes-tools
-      #_4ops.terraform # there's a deprecation "warning" that prevents home-manager compile
-
-      # frontend / CSS
-      bradlc.vscode-tailwindcss
-
-      # golang
-      golang.go
-
-      # nix
-      # kamadorueda.alejandra # nix code formatter - https://github.com/kamadorueda/alejandra
-      bbenoist.nix
-      jnoortheen.nix-ide
-
-      # powershell
-      ms-vscode.powershell
-
-      # python
-      ms-python.vscode-pylance
-      ms-python.python
-      #ms-python.debugpy # extension not found? "attribute 'debugpy' missing"
-    ];
-    package = pkgs.vscode; # pkgs.vscode || pkgs.vscodium
-
-    userSettings = {
-      "editor.fontSize" = 16;
-      "explorer.confirmDelete" = false;
-      "explorer.confirmDragAndDrop" = false;
-      "powershell.promptToUpdatePowerShell" = false;
-      "window.zoomLevel" = 1;
+    enableGitIntegration = true;
+    options = {
+      side-by-side = true;
     };
   };
 
+  # VS CODE --------------------------
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscode; # pkgs.vscode || pkgs.vscodium
+    profiles.default = {
+      extensions = with pkgs.vscode-extensions; [
+        # generic
+        mikestead.dotenv
+        eamodio.gitlens
+        ritwickdey.liveserver
+
+        # dev ops stuff
+        github.vscode-github-actions
+        ms-kubernetes-tools.vscode-kubernetes-tools
+        #_4ops.terraform # there's a deprecation "warning" that prevents home-manager compile
+
+        # frontend / CSS
+        bradlc.vscode-tailwindcss
+
+        # golang
+        golang.go
+
+        # nix
+        # kamadorueda.alejandra # nix code formatter - https://github.com/kamadorueda/alejandra
+        bbenoist.nix
+        jnoortheen.nix-ide
+
+        # powershell
+        ms-vscode.powershell
+
+        # python
+        ms-python.vscode-pylance
+        ms-python.python
+        #ms-python.debugpy # extension not found? "attribute 'debugpy' missing"
+      ];
+
+      userSettings = {
+        "editor.fontSize" = 16;
+        "explorer.confirmDelete" = false;
+        "explorer.confirmDragAndDrop" = false;
+        "powershell.promptToUpdatePowerShell" = false;
+        "window.zoomLevel" = 1;
+      };
+    };
+  };
+
+  # ZED IDE --------------------------
+  programs.zed-editor = {
+    enable = true;
+    extensions = [
+      "csharp"
+      "nix"
+      "powershell"
+      "superhtml"
+      "terraform"
+    ];
+  };
   # WAYLAND --------------------------
   wayland.windowManager.sway = {
     enable = true;
@@ -195,7 +220,7 @@
       terminal = "kitty";
       startup = [
         # Launch terminal on start
-        {command = terminal;}
+        { command = terminal; }
       ];
 
       defaultWorkspace = "1";
@@ -239,11 +264,10 @@
     Service.ExecStart = "${config.programs.swaylock.package}/bin/swaylock";
   };
 
-
   # TERMINAL --------------------------
   programs.kitty = {
     enable = true;
-    themeFile = lib.mkDefault "Novel"; #"Doom One";
+    themeFile = lib.mkDefault "Novel"; # "Doom One";
     font = {
       size = 18;
       package = pkgs.dejavu_fonts;
@@ -282,156 +306,156 @@
 
     # TODO: add ZLE - that might fix the foreground/background colors not working
     # https://man.archlinux.org/man/zshmisc.1#Visual_effects
-    initExtra = ''
-      # enable colors
-      zmodload zsh/nearcolor
-      autoload -U colors && colors
+    initContent = ''
+            # enable colors
+            zmodload zsh/nearcolor
+            autoload -U colors && colors
 
-      # PS1 deciphered:
-      # Start bolding text; yellow bg; name of logged in user; magenta bg; hostname
-      # blue bg; display working directory unless it's 3 dirs deep in which case display the current dir and its parent
-      # if in privileged shell then show the star emoji, else show nothing
-      # if last command exited 0 (success) then show happy face, else show mad/poo face
-      # End bolding text; reset fg and bg colors to default
-      logged_in_user="%{$bg[yellow]%}%{$fg[black]%}%n"
-      kube_context="%{$bg[yellow]%}%{$fg[black]%} $active_kube_context"
+            # PS1 deciphered:
+            # Start bolding text; yellow bg; name of logged in user; magenta bg; hostname
+            # blue bg; display working directory unless it's 3 dirs deep in which case display the current dir and its parent
+            # if in privileged shell then show the star emoji, else show nothing
+            # if last command exited 0 (success) then show happy face, else show mad/poo face
+            # End bolding text; reset fg and bg colors to default
+            logged_in_user="%{$bg[yellow]%}%{$fg[black]%}%n"
+            kube_context="%{$bg[yellow]%}%{$fg[black]%} $active_kube_context"
 
-      hostname="%{$bg[magenta]%}%{$fg[white]%}%M"
-      active_acct_display="%{$bg[magenta]%}%{$fg[white]%}☁️ $active_acct_az"
+            hostname="%{$bg[magenta]%}%{$fg[white]%}%M"
+            active_acct_display="%{$bg[magenta]%}%{$fg[white]%}☁️ $active_acct_az"
 
-      working_dir="%{$bg[blue]%}%(4~|../%2~|%~)"
-      priv_shell="%(!.✨.)"
-      exit_code="%(?.😀.💩)"
-      PS1="%B$kube_context$active_acct_display$working_dir$priv_shell$exit_code%b%{$reset_color%} "
+            working_dir="%{$bg[blue]%}%(4~|../%2~|%~)"
+            priv_shell="%(!.✨.)"
+            exit_code="%(?.😀.💩)"
+            PS1="%B$kube_context$active_acct_display$working_dir$priv_shell$exit_code%b%{$reset_color%} "
 
-      left_boundary="%{$fg[red]%}(%{$reset_color%}"
-      time="%T"
-      bg_jobs="%(1j., %j."")"
-      right_boundary="%{$fg[red]%})%{$reset_color%}"
-      RPS1="%K{$bg[black]%}$left_boundary$time$bg_jobs$right_boundary%k "
+            left_boundary="%{$fg[red]%}(%{$reset_color%}"
+            time="%T"
+            bg_jobs="%(1j., %j."")"
+            right_boundary="%{$fg[red]%})%{$reset_color%}"
+            RPS1="%K{$bg[black]%}$left_boundary$time$bg_jobs$right_boundary%k "
 
 
-      # FUNCTIONS ---------------------------
-      g() { # git aliases/chords
-          if [[ "$1" == "s" || "$1" == "" ]]; then
-              git status -sb
-          elif [[ "$1" == "b" ]]; then
-              git branch --list
-          elif [[ "$1" == "p" ]]; then
-              git pull
-          elif [[ "$1" == "can" ]]; then
-              # Commit all now
-              git add .
-              CommitMessage = "Commit All @ $(date +%m-%d-%y) $(date +%H:%M:%S)"
-              git commit -am $CommitMessage
-          elif [[ "$1" == "ca" ]]; then
-              git add .
-              git commit -am $2
-          elif [[ "$1" == "cu" ]]; then
-              # Undo that last commit
-              #echo "StackOverflow link is in clipboard"
-              echo "https://stackoverflow.com/questions/927358/how-do-i-undo-the-most-recent-local-commits-in-git"
-          elif [[ "$1" == "pp" ]]; then
-              # Push
-              git push --progress
-          elif [[ "$1" == "l" ]]; then
-              # Recent commits
-              git log -3
-          elif [[ "$1" == "ll" ]]; then
-              # All of the commits
-              git log
-          elif [[ "$1" == "ch" ]]; then
-              # Checkout a branch
-              if [[ "$2" != "" ]]; then
-                  git checkout $2
-              else
-                  git checkout $(
-                      git branch --list | 
-                      grep -v "\*" | # everything but the currently selected branch
-                      sed 's/^[ \t]*//;s/[ \t]*$//' | fzf --height 25% --layout=reverse
-                  )
+            # FUNCTIONS ---------------------------
+            g() { # git aliases/chords
+                if [[ "$1" == "s" || "$1" == "" ]]; then
+                    git status -sb
+                elif [[ "$1" == "b" ]]; then
+                    git branch --list
+                elif [[ "$1" == "p" ]]; then
+                    git pull
+                elif [[ "$1" == "can" ]]; then
+                    # Commit all now
+                    git add .
+                    CommitMessage = "Commit All @ $(date +%m-%d-%y) $(date +%H:%M:%S)"
+                    git commit -am $CommitMessage
+                elif [[ "$1" == "ca" ]]; then
+                    git add .
+                    git commit -am $2
+                elif [[ "$1" == "cu" ]]; then
+                    # Undo that last commit
+                    #echo "StackOverflow link is in clipboard"
+                    echo "https://stackoverflow.com/questions/927358/how-do-i-undo-the-most-recent-local-commits-in-git"
+                elif [[ "$1" == "pp" ]]; then
+                    # Push
+                    git push --progress
+                elif [[ "$1" == "l" ]]; then
+                    # Recent commits
+                    git log -3
+                elif [[ "$1" == "ll" ]]; then
+                    # All of the commits
+                    git log
+                elif [[ "$1" == "ch" ]]; then
+                    # Checkout a branch
+                    if [[ "$2" != "" ]]; then
+                        git checkout $2
+                    else
+                        # greps everything but the currently selected branch
+                        git checkout $(
+                            git branch --list |
+                            grep -v "\*" |
+                            sed 's/^[ \t]*//;s/[ \t]*$//' | fzf --height 25% --layout=reverse
+                        )
+                    fi
+                fi
+            }
+            kc() { # kubectl but as a rainbow
+                kubectl $@ | lolcat --freq=0.3
+            }
 
-              fi
-          fi
-      }
-      kc() { # kubectl but as a rainbow
-          kubectl $@ | lolcat --freq=0.3
-      }
+            fsearch() { # Fuzzy search w/ file contents preview
+                fzf --preview='bat --style=numbers --color=always --line-range :500 {}' --preview-window=up:80% --height 100% --layout=default
+            }
 
-      fsearch() { # Fuzzy search w/ file contents preview
-          fzf --preview='bat --style=numbers --color=always --line-range :500 {}' --preview-window=up:80% --height 100% --layout=default
-      }
+            swayhelp() {
+                # source: https://richardwong.io/post/linux/2021-07-10-sway-guide/
+                echo -e "// applications
+      \t Mod + Enter -> open terminal
+      \t Mod + D -> open wofi to search and open applications
+      \t Mod + Shift + Q -> kill current focused application
 
-      swayhelp() {
-          # source: https://richardwong.io/post/linux/2021-07-10-sway-guide/
-          echo -e "// applications
-\t Mod + Enter -> open terminal
-\t Mod + D -> open wofi to search and open applications
-\t Mod + Shift + Q -> kill current focused application
+      // navigating within workspace
+      \t Mod + left/right/up/down -> move within workspace
+      \t Mod + h/j/k/l -> vim-based navigation
+      \t Mod + Shift + left/right/h/j/k/l -> move applications within your workspace
 
-// navigating within workspace
-\t Mod + left/right/up/down -> move within workspace
-\t Mod + h/j/k/l -> vim-based navigation 
-\t Mod + Shift + left/right/h/j/k/l -> move applications within your workspace
+      // tiling options
+      \t Mod + W -> tabbed mode
+        \t note: useful for many instances of the same application
+      \t Mod + S -> stack mode
+      \t Mod + E -> tiling mode
+        \t note: repeat to re-tile in different orientation
+      \t Mod + B -> split horizontal (in tiling mode)
+      \t Mod + v -> split vertical (in tiling mode)
+      \t Mod + F -> fullscreen an application
+      \t Mod + Shift + Space -> floating mode
+      \t Mod + Space -> toggle between tiling area and floating area
+      \t Mod + drag with mouse -> to move floating windows with mouse
 
-// tiling options
-\t Mod + W -> tabbed mode 
-  \t note: useful for many instances of the same application
-\t Mod + S -> stack mode
-\t Mod + E -> tiling mode 
-  \t note: repeat to re-tile in different orientation
-\t Mod + B -> split horizontal (in tiling mode)
-\t Mod + v -> split vertical (in tiling mode)
-\t Mod + F -> fullscreen an application
-\t Mod + Shift + Space -> floating mode
-\t Mod + Space -> toggle between tiling area and floating area
-\t Mod + drag with mouse -> to move floating windows with mouse
+      // scratchpad (a bag for holding windows)
+      \t Mod + Shift + Minus -> move current window to the scratchpad
+      \t Mod + Minus -> show the scratchpad
+        \t note: repeat to cycle the windows of the scratchpad
+      \t Mod + Shift + Space -> send currently focused scratchpad to tiling area
 
-// scratchpad (a bag for holding windows)
-\t Mod + Shift + Minus -> move current window to the scratchpad
-\t Mod + Minus -> show the scratchpad 
-  \t note: repeat to cycle the windows of the scratchpad
-\t Mod + Shift + Space -> send currently focused scratchpad to tiling area
+      // resize
+      \t Mod + R -> enter resize mode. Note: use arrow keys/hjkl to resize.
+        \t You can also use your mouse to drag edges of floating windows
 
-// resize
-\t Mod + R -> enter resize mode. Note: use arrow keys/hjkl to resize. 
-  \t You can also use your mouse to drag edges of floating windows
+      // navigate workspaces
+      \t Mod + <num> -> go to the num-th workspace
+        \t <num> is any number from 0 to 9
+      \t Mod + PageUp/PageDown -> move the the left/right workspace
 
-// navigate workspaces
-\t Mod + <num> -> go to the num-th workspace
-  \t <num> is any number from 0 to 9
-\t Mod + PageUp/PageDown -> move the the left/right workspace
+      // Custom utilities enabled by the Fedora Post-install guide
+      \t Shift + Print -> select and screenshot
+      \t Print -> screenshot whole screen
+      \t Brightness keys -> control brightness
+      \t Sound keys -> control sound
 
-// Custom utilities enabled by the Fedora Post-install guide
-\t Shift + Print -> select and screenshot
-\t Print -> screenshot whole screen
-\t Brightness keys -> control brightness
-\t Sound keys -> control sound
+      // sway
+      \t Mod + Shift + C -> reload config
+      \t Mod + Shift + E -> quit sway"
+            }
 
-// sway
-\t Mod + Shift + C -> reload config
-\t Mod + Shift + E -> quit sway"
-      }
+            whereami() { # determine which cloud provider and kubernetes' contexts I'm under and display
+                # AZ CLI
+                if [[ -z $(history | grep --perl-regexp '^\s{1,2}\d{1,4}\s{2}az\s.*') ]]; then
+                    # az command has not run recently
+                    active_acct_az=""
+                else
+                    active_acct_az=$(az account show -o tsv --query name | cut -c 1-13)
+                fi
 
-      whereami() { # determine which cloud provider and kubernetes' contexts I'm under and display
-          # AZ CLI
-          if [[ -z $(history | grep --perl-regexp '^\s{1,2}\d{1,4}\s{2}az\s.*') ]]; then
-              # az command has not run recently
-              active_acct_az=""
-          else
-              active_acct_az=$(az account show -o tsv --query name | cut -c 1-13)
-          fi
+                # KUBECTL
+                if [[ -z $(history | grep --perl-regexp '^\s{1,2}\d{1,4}\s{2}(sudo\s)?(kubectl|kc){1}\s.*$') ]]; then
+                    # kubectl (or alias) has not run recently
+                    active_kube_context=""
+                else
+                    active_kube_context=$(kubectl config current-context)
+                fi
 
-          # KUBECTL
-          if [[ -z $(history | grep --perl-regexp '^\s{1,2}\d{1,4}\s{2}(sudo\s)?(kubectl|kc){1}\s.*$') ]]; then
-              # kubectl (or alias) has not run recently
-              active_kube_context=""
-          else
-              active_kube_context=$(kubectl config current-context)
-          fi
-
-          source ~/.zshrc
-      }
+                source ~/.zshrc
+            }
     '';
   };
 
@@ -440,10 +464,16 @@
     enableZshIntegration = true;
   };
 
-# MUSIC --------------------------
+  # PRIVACY & ANONYMITY --------------------------
+  programs.mullvad-vpn = {
+    enable = true;
+  };
+
+  # MUSIC --------------------------
   services.spotifyd = {
     enable = true;
-    settings = { # https://docs.spotifyd.rs/config/File.html#configuration-file
+    settings = {
+      # https://docs.spotifyd.rs/config/File.html#configuration-file
       global = {
         device_name = "starmachine"; # TODO: replace with variable
         device_type = "computer";
