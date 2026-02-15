@@ -106,8 +106,8 @@
   dconf.settings = {
     "org/gnome/desktop/background" = {
       color-shading-type = "solid";
-      picture-uri = "file:///home/witt/git/niche-os/nixos/wallpapers/flowers-desaturated.jpg";
-      picture-uri-dark = "file:///home/witt/git/niche-os/nixos/wallpapers/spaceship-silhouette.jpg";
+      picture-uri = "file:///home/witt/git/niche-os/nixos/flowers-desaturated.jpg";
+      picture-uri-dark = "file:///home/witt/git/niche-os/nixos/spaceship-silhouette.jpg";
     };
   };
 
@@ -235,7 +235,7 @@
     enable = true;
     settings = {
       # TODO: make un-ugly
-      image = "$HOME/git/niche-os/nixos/wallpapers/flowers-desaturated.jpg";
+      image = "$HOME/git/niche-os/nixos/flowers-desaturated.jpg";
       scaling = "fit";
       color = "809ABB";
       # font = TODO;
