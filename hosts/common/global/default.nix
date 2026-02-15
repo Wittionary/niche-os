@@ -194,10 +194,10 @@
     # general admin / utilities
     arcanechat-tui
     bottles # wine / exe wrapper
-    cinny-desktop
     curl
     deltachat-desktop
     file
+    fluffychat
     netbird-ui # network my devices together
     nh # nix helper CLI - https://github.com/viperML/nh
     mumble # client
