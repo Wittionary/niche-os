@@ -58,20 +58,23 @@
     };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users = {
-    witt = {
-      # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
-      # Be sure to change it (using passwd) after rebooting!
-      description = "witt";
-      isNormalUser = true;
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-      ];
-      openssh.authorizedKeys.keys = [
-        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
-      ];
-      ignoreShellProgramCheck = true; # because home.nix is managing shell
+  users = {
+    defaultUserShell = pkgs.zsh;
+    users = {
+      witt = {
+        # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
+        # Be sure to change it (using passwd) after rebooting!
+        description = "witt";
+        isNormalUser = true;
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+        ];
+        openssh.authorizedKeys.keys = [
+          # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
+        ];
+        ignoreShellProgramCheck = true; # because home.nix is managing shell
+      };
     };
   };
 
@@ -152,11 +155,20 @@
     wget
   ];
 
-  programs.nh = {
-    enable = true;
-    clean.enable = true;
-    clean.extraArgs = "--keep-since 90d --keep 10";
-    flake = "/home/witt/git/niche-os"; # TODO: have this take in variables
+  programs = {
+    nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 90d --keep 10";
+      flake = "/home/witt/git/niche-os"; # TODO: have this take in variables
+    };
+
+    vim = {
+      enable = true;
+      defaultEditor = true;
+    };
+
+    zsh.enable = true;
   };
 
   # SECURITY --------------------------
@@ -165,12 +177,4 @@
 
   # security exceptions -------------
   nixpkgs.config.permittedInsecurePackages = [ ];
-
-  users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
-
-  programs.vim = {
-    enable = true;
-    defaultEditor = true;
-  };
 }
