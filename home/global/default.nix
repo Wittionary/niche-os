@@ -477,7 +477,7 @@
       global = {
         device_name = "starmachine"; # TODO: replace with variable
         device_type = "computer";
-        cache_path = "/home/witt/.cache/spotifyd"; # TODO: replace home path with nix variable: e.g. ${home.homeDirectory}
+        cache_path = "$HOME/.cache/spotifyd"; # TODO: replace home path with nix variable: e.g. ${home.homeDirectory}
         autoplay = false;
         zeroconf_port = 5577;
         # use_keyring = true;
