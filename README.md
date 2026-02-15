@@ -1,6 +1,12 @@
 # niche-os
 My nix OS configurations
 
+Table of Contents
+- [stuff you should know](#stuff-you-should-know)
+- [getting started](#getting-started)
+- [general commands](#general-commands)
+- [update flakes](#update-flakes)
+
 ## stuff you should know
 - This uses flakes
 - This is unstable - by nature of it using the unstable `nixpkgs` and `home-manager`
