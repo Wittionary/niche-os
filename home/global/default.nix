@@ -475,9 +475,9 @@
     settings = {
       # https://docs.spotifyd.rs/config/File.html#configuration-file
       global = {
-        device_name = "starmachine"; # TODO: replace with variable
+        # device_name = "starmachine"; # TODO: replace with variable
         device_type = "computer";
-        cache_path = "$HOME/.cache/spotifyd"; # TODO: replace home path with nix variable: e.g. ${home.homeDirectory}
+        cache_path = "$HOME/.cache/spotifyd";
         autoplay = false;
         zeroconf_port = 5577;
         # use_keyring = true;

@@ -6,17 +6,19 @@
 
   imports = [
     ./global # Gotta get the basics
+    ./features/games.nix
   ];
 
   programs.kitty = {
     themeFile = "Doom_One";
   };
 
-  home.packages = with pkgs; [
-    protonup-ng # use `protonup` to add/update game compatibilities
-  ];
-
-  home.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\\\${HOME}/.steam/root/compatibilitytools.d";
+  services.spotifyd = {
+    settings = {
+      # https://docs.spotifyd.rs/config/File.html#configuration-file
+      global = {
+        device_name = "starmachine"; # TODO: replace with variable
+      };
+    };
   };
 }
