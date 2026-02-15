@@ -39,9 +39,9 @@
     };
   };
 
-  home = rec {
-    username = "witt";
-    homeDirectory = "/home/${username}";
+  home = {
+    username = lib.mkDefault "witt";
+    homeDirectory = lib.mkDefault "/home/${config.home.username}";
   };
 
   # Global stuff
@@ -106,8 +106,8 @@
   dconf.settings = {
     "org/gnome/desktop/background" = {
       color-shading-type = "solid";
-      picture-uri = "file:///home/witt/git/niche-os/nixos/wallpapers/flowers-desaturated.jpg";
-      picture-uri-dark = "file:///home/witt/git/niche-os/nixos/wallpapers/spaceship-silhouette.jpg";
+      picture-uri = "file:///home/witt/git/niche-os/wallpapers/flowers-desaturated.jpg";
+      picture-uri-dark = "file:///home/witt/git/niche-os/wallpapers/spaceship-silhouette.jpg";
     };
   };
 
@@ -235,7 +235,7 @@
     enable = true;
     settings = {
       # TODO: make un-ugly
-      image = "$HOME/git/niche-os/nixos/wallpapers/never-forget.jpg";
+      image = "$HOME/git/niche-os/wallpapers/flowers-desaturated.jpg";
       scaling = "fit";
       color = "809ABB";
       # font = TODO;
@@ -475,9 +475,9 @@
     settings = {
       # https://docs.spotifyd.rs/config/File.html#configuration-file
       global = {
-        device_name = "starmachine"; # TODO: replace with variable
+        # device_name = "starmachine"; # TODO: replace with variable
         device_type = "computer";
-        cache_path = "/home/witt/.cache/spotifyd"; # TODO: replace home path with nix variable: e.g. ${home.homeDirectory}
+        cache_path = "$HOME/.cache/spotifyd";
         autoplay = false;
         zeroconf_port = 5577;
         # use_keyring = true;
