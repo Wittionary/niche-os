@@ -8,7 +8,9 @@
 {
 
   imports = [
+    ./audio.nix
     ./containers.nix
+    # ./sddm-themes.nix
   ];
 
   nixpkgs = {
@@ -175,7 +177,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #_1password
     (callPackage ./sddm-themes.nix { }).sddm-theme-dialog # login screen theme
     where-is-my-sddm-theme
 
@@ -241,24 +242,12 @@
     };
   };
 
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
   # SECURITY --------------------------
   security.polkit.enable = true; # needed for sway
   security.pam.services.swaylock = { }; # needed for swaylock
 
   # security exceptions -------------
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-25.9.0" # for obsidian 1.4.16
-  ];
+  nixpkgs.config.permittedInsecurePackages = [ ];
 
   # Open ports in the firewall.
   networking.firewall = {
