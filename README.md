@@ -63,7 +63,7 @@ nh os switch .
 # for home-manager changes
 nh home switch .
 
-# every once in a while
+# every once in a while unless you have it setup to run automatically
 nh clean all
 ```
 
@@ -73,4 +73,4 @@ Make sure you're on a new branch and that you've got 15 minutes for this thing t
 sudo nix flake update
 nh os switch && nh home switch
 ```
-After that, you'll probably get a handful of errors and warnings that need to be resolved as a result of new deprecations or naming changes.
+After that, you'll probably get a handful of errors and warnings that need to be resolved as a result of deprecations or naming changes.
