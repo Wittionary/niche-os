@@ -35,10 +35,6 @@
     };
   };
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   # Enable the X11 windowing system.
   services.xserver = {
     videoDrivers = [
@@ -46,10 +42,6 @@
       "modesetting"
     ];
   };
-
-  # SECURITY --------------------------
-
-  # security exceptions -------------
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";

@@ -35,25 +35,26 @@
     };
   };
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   # graphics card stuff
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
+  hardware = {
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+    nvidia = {
+      open = false;
+    };
   };
-  hardware.nvidia = {
-    open = false;
-  };
+
   # GAMING RELATED ------------------
   # resource: https://journix.dev/posts/gaming-on-nixos/
-  programs.steam = {
-    enable = true;
-    gamescopeSession.enable = true;
+  programs = {
+    steam = {
+      enable = true;
+      gamescopeSession.enable = true;
+    };
+    gamemode.enable = true;
   };
-  programs.gamemode.enable = true;
 
   environment.systemPackages = with pkgs; [
     heroic # game launcher
