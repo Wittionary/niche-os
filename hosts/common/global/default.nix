@@ -100,9 +100,9 @@
         "45.90.30.0#c49352.dns.nextdns.io"
         "2a07:a8c1::#c49352.dns.nextdns.io"
       ];
+      DNSOverTLS = true;
+      DNSSEC = true;
     };
-    dnssec = "allow-downgrade";
-    dnsovertls = "true";
   };
 
   networking.hosts = {
