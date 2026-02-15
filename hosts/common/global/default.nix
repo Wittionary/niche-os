@@ -101,7 +101,7 @@
         "2a07:a8c1::#c49352.dns.nextdns.io"
       ];
       DNSOverTLS = true;
-      DNSSEC = true;
+      DNSSEC = false; # because NextDNS handles this
     };
   };
 
