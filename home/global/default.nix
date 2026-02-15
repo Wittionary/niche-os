@@ -39,9 +39,9 @@
     };
   };
 
-  home = rec {
-    username = "witt";
-    homeDirectory = "/home/${username}";
+  home = {
+    username = lib.mkDefault "witt";
+    homeDirectory = lib.mkDefault "/home/${config.home.username}";
   };
 
   # Global stuff
@@ -235,7 +235,7 @@
     enable = true;
     settings = {
       # TODO: make un-ugly
-      image = "$HOME/git/niche-os/nixos/wallpapers/never-forget.jpg";
+      image = "$HOME/git/niche-os/nixos/wallpapers/flowers-desaturated.jpg";
       scaling = "fit";
       color = "809ABB";
       # font = TODO;
