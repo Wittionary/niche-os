@@ -188,13 +188,17 @@
     # see also `containers.nix`
 
     # general admin / utilities
+    arcanechat-tui
     bottles # wine / exe wrapper
+    cinny-desktop
     curl
+    deltachat-desktop
     file
     netbird-ui # network my devices together
     nh # nix helper CLI - https://github.com/viperML/nh
     mumble # client
     nmap
+    stoat-desktop
     openssl
 
     # privacy / anonymity-based
