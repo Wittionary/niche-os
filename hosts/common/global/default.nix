@@ -104,14 +104,14 @@
   networking.hosts = {
     # example: "0.0.0.0" = [ "site-to-block.net" ];
   };
-  networking.stevenBlackHosts = {
-    enable = true;
-    enableIPv6 = true;
-    blockFakenews = false; # for performance
-    blockGambling = true;
-    blockPorn = true;
-    blockSocial = false;
-  };
+  # networking.stevenBlackHosts = {
+  #   enable = true;
+  #   enableIPv6 = true;
+  #   blockFakenews = false; # for performance
+  #   blockGambling = true;
+  #   blockPorn = true;
+  #   blockSocial = false;
+  # };
 
   # Set your time zone.
   time.timeZone = "America/Chicago";
