@@ -11,6 +11,7 @@
     ./audio.nix
     ./containers.nix
     ./desktop.nix
+    ./hardware.nix
     ./networking.nix
     # ./sddm-themes.nix
   ];
@@ -94,17 +95,6 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # support Thunderbolt devices
-  services.hardware.bolt.enable = true;
-
-  # hardware acceleration
-  hardware.graphics.extraPackages = [
-    pkgs.intel-compute-runtime
-  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

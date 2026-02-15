@@ -35,10 +35,6 @@
     };
   };
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   # graphics card stuff
   hardware.graphics = {
     enable = true;
