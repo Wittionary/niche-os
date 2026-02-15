@@ -91,12 +91,16 @@
   };
   services.resolved = {
     enable = true;
-    extraConfig = lib.mkDefault ''
-      DNS=45.90.28.0#c49352.dns.nextdns.io # TODO: consider implementing this native package; it's kind of trash though
-      DNS=2a07:a8c0::#c49352.dns.nextdns.io # TODO: refactor so the hostname is auto-prefixed in this global config
-      DNS=45.90.30.0#c49352.dns.nextdns.io
-      DNS=2a07:a8c1::#c49352.dns.nextdns.io
-    '';
+    settings.Resolve = lib.mkDefault {
+      Domains = [
+        # TODO: consider implementing this native package; it's kind of trash though
+        # TODO: refactor so the hostname is auto-prefixed in this global config
+        "45.90.28.0#c49352.dns.nextdns.io"
+        "2a07:a8c0::#c49352.dns.nextdns.io"
+        "45.90.30.0#c49352.dns.nextdns.io"
+        "2a07:a8c1::#c49352.dns.nextdns.io"
+      ];
+    };
     dnssec = "allow-downgrade";
     dnsovertls = "true";
   };
