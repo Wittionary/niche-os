@@ -11,6 +11,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    bottles # wine / exe wrapper
     heroic # game launcher
     mangohud # simple overlay program for monitoring FPS, temperature, CPU and GPU load
   ];
