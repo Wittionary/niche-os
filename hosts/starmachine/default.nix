@@ -12,12 +12,10 @@
     # inputs.hardware.nixosModules.common-cpu-amd
     # inputs.hardware.nixosModules.common-ssd
 
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
-
     ./hardware-configuration.nix
 
     ../common/global
+    # ../common/global/gaming.nix
   ];
 
   networking = {
@@ -45,21 +43,6 @@
       open = false;
     };
   };
-
-  # GAMING RELATED ------------------
-  # resource: https://journix.dev/posts/gaming-on-nixos/
-  programs = {
-    steam = {
-      enable = true;
-      gamescopeSession.enable = true;
-    };
-    gamemode.enable = true;
-  };
-
-  environment.systemPackages = with pkgs; [
-    heroic # game launcher
-    mangohud # simple overlay program for monitoring FPS, temperature, CPU and GPU load
-  ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
