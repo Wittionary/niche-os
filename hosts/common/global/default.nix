@@ -116,7 +116,6 @@
 
     # general admin / utilities
     arcanechat-tui
-    bottles # wine / exe wrapper
     curl
     deltachat-desktop
     file
@@ -149,7 +148,7 @@
     nh = {
       enable = true;
       clean.enable = true;
-      clean.extraArgs = "--keep-since 90d --keep 10";
+      clean.extraArgs = "--keep-since 60d --keep 10";
       flake = "/home/witt/git/niche-os"; # TODO: have this take in variables
     };
 
@@ -166,5 +165,7 @@
   security.pam.services.swaylock = { }; # needed for swaylock
 
   # security exceptions -------------
-  nixpkgs.config.permittedInsecurePackages = [ ];
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-38.8.4"
+  ];
 }
