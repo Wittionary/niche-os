@@ -65,13 +65,13 @@
     discord
     #dmenu-rs # dmenu but extensible and in Rust - https://github.com/Shizcow/dmenu-rs
 
+    fastfetch
     firefox
     fzf
 
     kubectl
     lolcat
 
-    neofetch
     obsidian
     podman
 
@@ -92,6 +92,7 @@
 
   gtk.theme.package = pkgs.adw-gtk3;
   gtk.theme.name = "adw-gtk3";
+  gtk.gtk4.theme = null;
 
   gtk.iconTheme.package = pkgs.adwaita-icon-theme;
   gtk.iconTheme.name = "Adwaita";
