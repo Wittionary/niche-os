@@ -103,6 +103,10 @@
     where-is-my-sddm-theme
 
     # dev tools
+    claude-agent-acp
+    claude-code
+    codex # OpenAI
+    codex-acp
     dotnetCorePackages.sdk_10_0-bin
     git
     git-credential-manager
