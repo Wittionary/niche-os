@@ -113,6 +113,7 @@
     jq
     nil # nix language server
     nixd # another nix language server
+    ollama
     python3Minimal
     uv # python package and env management
     zola
@@ -162,6 +163,20 @@
     };
 
     zsh.enable = true;
+  };
+
+  services.ollama = {
+    enable = true;
+    port = 11434;
+    openFirewall = false;
+    package = pkgs.ollama-cuda;
+    loadModels = [
+      "dolphin3"
+      "gemma3"
+      "gemma3:27b"
+      "deepseek-r1:latest"
+      "deepseek-r1:1.5b"
+    ];
   };
 
   # SECURITY --------------------------
