@@ -114,6 +114,7 @@
     nil # nix language server
     nixd # another nix language server
     ollama
+    opencode
     python3Minimal
     uv # python package and env management
     zola
