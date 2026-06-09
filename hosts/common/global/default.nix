@@ -103,12 +103,18 @@
     where-is-my-sddm-theme
 
     # dev tools
+    claude-agent-acp
+    claude-code
+    codex # OpenAI
+    codex-acp
     dotnetCorePackages.sdk_10_0-bin
     git
     git-credential-manager
     jq
     nil # nix language server
     nixd # another nix language server
+    ollama
+    opencode
     python3Minimal
     uv # python package and env management
     zola
@@ -158,6 +164,20 @@
     };
 
     zsh.enable = true;
+  };
+
+  services.ollama = {
+    enable = true;
+    port = 11434;
+    openFirewall = false;
+    package = pkgs.ollama-cuda;
+    loadModels = [
+      "dolphin3"
+      "gemma3"
+      "gemma3:27b"
+      "deepseek-r1:latest"
+      "deepseek-r1:1.5b"
+    ];
   };
 
   # SECURITY --------------------------

@@ -144,6 +144,7 @@
         helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
       };
     };
+    signing.format = "openpgp";
   };
 
   programs.delta = {
