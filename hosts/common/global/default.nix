@@ -99,8 +99,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    (callPackage ./sddm-themes.nix { }).sddm-theme-dialog # login screen theme
-    where-is-my-sddm-theme
 
     # dev tools
     claude-agent-acp
