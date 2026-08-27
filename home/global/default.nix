@@ -204,7 +204,7 @@
   # BROWSER --------------------------
   programs.librewolf = {
     enable = true;
-    globalExtensions = [ ];
+    # globalExtensions = [ ];
   };
 
   # ZED IDE --------------------------
