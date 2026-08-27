@@ -219,23 +219,26 @@
     ];
   };
   # WAYLAND --------------------------
-  wayland.windowManager.sway = {
-    enable = true;
-    config = rec {
-      modifier = "Mod4";
-      # Use kitty as default terminal
-      terminal = "kitty";
-      startup = [
-        # Launch terminal on start
-        { command = terminal; }
-      ];
+  wayland = {
+    systemd.target = "sway-session.target";
+    windowManager.sway = {
+      enable = true;
+      config = rec {
+        modifier = "Mod4";
+        # Use kitty as default terminal
+        terminal = "kitty";
+        startup = [
+          # Launch terminal on start
+          { command = terminal; }
+        ];
 
-      defaultWorkspace = "1";
-      bars = [
-        {
-          position = "top";
-        }
-      ];
+        defaultWorkspace = "1";
+        bars = [
+          {
+            position = "top";
+          }
+        ];
+      };
     };
   };
   programs.swaylock = {
