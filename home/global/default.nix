@@ -62,7 +62,6 @@
     awscli2
     bat # batcat
 
-    discord
     #dmenu-rs # dmenu but extensible and in Rust - https://github.com/Shizcow/dmenu-rs
 
     fastfetch
@@ -202,6 +201,12 @@
     };
   };
 
+  # BROWSER --------------------------
+  programs.librewolf = {
+    enable = true;
+    globalExtensions = [ ];
+  };
+
   # ZED IDE --------------------------
   programs.zed-editor = {
     enable = true;
@@ -237,7 +242,7 @@
     enable = true;
     settings = {
       # TODO: make un-ugly
-      image = "$HOME/git/niche-os/wallpapers/flowers-desaturated.jpg";
+      image = "file:///home/witt/git/niche-os/wallpapers/flowers-desaturated.jpg";
       scaling = "fit";
       color = "809ABB";
       # font = TODO;
@@ -348,7 +353,7 @@
                 elif [[ "$1" == "can" ]]; then
                     # Commit all now
                     git add .
-                    CommitMessage = "Commit All @ $(date +%m-%d-%y) $(date +%H:%M:%S)"
+                    CommitMessage="Commit All @ $(date +%m-%d-%y) $(date +%H:%M:%S)"
                     git commit -am $CommitMessage
                 elif [[ "$1" == "ca" ]]; then
                     git add .

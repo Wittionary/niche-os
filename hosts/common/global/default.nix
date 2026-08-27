@@ -109,6 +109,7 @@
     git
     git-credential-manager
     jq
+    llama-cpp
     nil # nix language server
     nixd # another nix language server
     ollama
@@ -124,12 +125,13 @@
     deltachat-desktop
     file
     fluffychat
+    mumble # client
     netbird-ui # network my devices together
     nh # nix helper CLI - https://github.com/viperML/nh
-    mumble # client
     nmap
-    stoat-desktop
     openssl
+    stoat-desktop
+    webcord
 
     # privacy / anonymity-based
     i2p # https://geti2p.net/en/about/intro
@@ -177,6 +179,14 @@
       "deepseek-r1:1.5b"
     ];
   };
+
+  # TODO: uncomment + update flake
+  # services.llama-cpp = {
+  #   enable = true;
+  #   settings = { # https://search.nixos.org/options?channel=unstable&query=llama-cpp&type=options#show=option%253Aservices.llama-cpp.settings
+  #     port = 12000;
+  #   };
+  # };
 
   # SECURITY --------------------------
   security.polkit.enable = true; # needed for sway
