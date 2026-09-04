@@ -37,6 +37,7 @@
   boot.loader.grub = {
     enable = true;
     backgroundColor = "#7EBAE4";
+    device = "/dev/disk/by-uuid/ebe1378c-1470-41b3-b0c6-38a5938a7f6a";
   };
   # boot.loader.efi.canTouchEfiVariables = true;
 
