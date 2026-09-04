@@ -121,6 +121,7 @@
 
     # general admin / utilities
     arcanechat-tui
+    btop
     curl
     deltachat-desktop
     file

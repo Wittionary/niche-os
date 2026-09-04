@@ -27,7 +27,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd}/bin/qtgreet --cmd sway";
+        command = "${pkgs.qtgreet}/bin/qtgreet";
       };
     };
   };
@@ -51,6 +51,7 @@
 
     dbus
     qtgreet
+    qt6.qtwayland
   ];
 
   # environment.sessionVariables = {
@@ -65,20 +66,28 @@
       enable = true;
       wrapperFeatures.gtk = true;
       extraOptions = [ "--unsupported-gpu" ];
+      # https://man.sr.ht/~kennylevinsen/greetd/#how-to-set-xdg_session_typewayland
       extraSessionCommands = ''
-        export SDL_VIDEODRIVER = wayland
-        export QT_QPA_PLATFORM = wayland
-        export XDG_SESSION_TYPE = wayland
+        # Session
+        export XDG_SESSION_TYPE=wayland
+        export XDG_SESSION_DESKTOP=sway
+        export XDG_CURRENT_DESKTOP=sway
+
+        # Wayland stuff
+        export MOZ_ENABLE_WAYLAND=1
+        export QT_QPA_PLATFORM=wayland
+        export SDL_VIDEODRIVER=wayland
+        export _JAVA_AWT_WM_NONREPARENTING=1
       '';
     };
   };
 
   xdg.portal = {
     enable = true;
-    # wlr = {
-    #   # sway
-    #   enable = true;
-    # };
+    wlr = {
+      # sway
+      enable = true;
+    };
   };
 
   fonts.packages = with pkgs; [
