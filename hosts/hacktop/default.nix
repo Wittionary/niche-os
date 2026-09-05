@@ -24,12 +24,15 @@
     hostName = "hacktop";
   };
   services.resolved = {
-    extraConfig = ''
-      DNS=45.90.28.0#hacktop-c49352.dns.nextdns.io # TODO: consider implementing this native package; it's kind of trash though
-      DNS=2a07:a8c0::#hacktop-c49352.dns.nextdns.io
-      DNS=45.90.30.0#hacktop-c49352.dns.nextdns.io
-      DNS=2a07:a8c1::#hacktop-c49352.dns.nextdns.io
-    '';
+    settings.Resolve = {
+      Domains = [
+        # TODO: consider implementing this native package; it's kind of trash though
+        "45.90.28.0#hacktop-c49352.dns.nextdns.io"
+        "2a07:a8c0::#hacktop-c49352.dns.nextdns.io"
+        "45.90.30.0#hacktop-c49352.dns.nextdns.io"
+        "2a07:a8c1::#hacktop-c49352.dns.nextdns.io"
+      ];
+    };
   };
 
   # Bootloader.
@@ -39,8 +42,6 @@
   # Enable the X11 windowing system.
   services.xserver = {
     videoDrivers = [
-      "displayLink"
-      "modesetting"
     ];
   };
 
