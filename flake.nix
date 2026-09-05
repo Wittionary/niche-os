@@ -57,7 +57,6 @@
         # > Our main nixos configuration file <
         modules = [
           ./hosts/hacktop
-          hosts.nixosModule
         ];
       };
 
@@ -66,7 +65,6 @@
         specialArgs = {inherit inputs outputs;};
         modules = [ 
           ./hosts/starmachine
-          hosts.nixosModule
           # add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
           nixos-hardware.nixosModules.common-cpu-amd
           nixos-hardware.nixosModules.common-gpu-nvidia-nonprime # the real graphics card
@@ -139,4 +137,5 @@
         };
       };
     };
+  };
 }
