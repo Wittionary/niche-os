@@ -118,16 +118,6 @@
         ];
       };
 
-      # hacktop
-      "witt@hacktop" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' insta>
-        extraSpecialArgs = {inherit inputs outputs;};
-        modules = [
-          ./home/global
-          ./home/hacktop.nix
-        ];
-      };
-
         # PC Desktop
         "witt@starmachine" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pk>
