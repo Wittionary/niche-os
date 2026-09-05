@@ -33,13 +33,8 @@
   };
 
   # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
-  boot.loader.grub = {
-    enable = true;
-    backgroundColor = "#7EBAE4";
-    device = "/dev/disk/by-uuid/ebe1378c-1470-41b3-b0c6-38a5938a7f6a";
-  };
-  # boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   # Enable the X11 windowing system.
   services.xserver = {
