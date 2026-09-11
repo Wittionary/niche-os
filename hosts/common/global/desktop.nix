@@ -27,8 +27,12 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.qtgreet}/bin/qtgreet";
+        command = "${pkgs.qtgreet}/bin/qtgreet"; # ${pkgs.sway}/bin/sway -- ${pkgs.qtgreet}/bin/qtgreet
+        user = "greeter";
       };
+      # terminal = {
+      #   vt = 1;
+      # };
     };
   };
 
@@ -88,6 +92,7 @@
       # sway
       enable = true;
     };
+    extraPortals = with pkgs; [ xdg-desktop-portal-wlr ]; # copied from https://github.com/budimanjojo/nix-config/blob/595f3cb2d7d8c5705a2f3589219dd4123b184e0a/modules/modules/nixos/core/mySystem/windowManager/sway/default.nix#L74-L75
   };
 
   fonts.packages = with pkgs; [
