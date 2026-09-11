@@ -51,20 +51,28 @@
           ];
         };
 
-        # PC desktop
-        starmachine = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/starmachine
-            # stevenblack-hosts.nixosModule
-            # add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
-            nixos-hardware.nixosModules.common-cpu-amd
-            nixos-hardware.nixosModules.common-gpu-nvidia-nonprime # the real graphics card
-            nixos-hardware.nixosModules.common-pc
-            # nixos-hardware.nixosModules.common-pc-ssd # not sure if needed
-            # nixos-hardware.nixosModules.common-hidpi # not sure if needed
-          ];
-        };
+    	# hacktop - ThinkPad
+      hacktop = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        # > Our main nixos configuration file <
+        modules = [
+          ./hosts/hacktop
+        ];
+      };
+
+	    # PC desktop
+      starmachine = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [ 
+          ./hosts/starmachine
+          # add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
+          nixos-hardware.nixosModules.common-cpu-amd
+          nixos-hardware.nixosModules.common-gpu-nvidia-nonprime # the real graphics card
+          nixos-hardware.nixosModules.common-pc
+          # nixos-hardware.nixosModules.common-pc-ssd # not sure if needed
+          # nixos-hardware.nixosModules.common-hidpi # not sure if needed
+        ];
+      };
 
         # WSL terminals
         stormtrooper = nixpkgs.lib.nixosSystem {
@@ -73,16 +81,26 @@
         };
       };
 
-      # Standalone home-manager configuration entrypoint
-      # Available through 'home-manager --flake .#your-username@your-hostname'
-      homeConfigurations = {
+    # Standalone home-manager configuration entrypoint
+    # Available through 'home-manager --flake .#your-username@your-hostname'
+    homeConfigurations = {
         # Yoga laptop - mainly for nixOS development
         "witt@snowmachine" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = { inherit inputs outputs; };
+          extraSpecialArgs = {inherit inputs outputs;};
           modules = [
             ./home/global
             ./home/snowmachine.nix
+          ];
+        };
+
+        # hacktop
+        "witt@hacktop" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' insta>
+          extraSpecialArgs = {inherit inputs outputs;};
+          modules = [
+            ./home/global
+            ./home/hacktop.nix
           ];
         };
 
@@ -106,5 +124,5 @@
           ];
         };
       };
-    };
+  };
 }
