@@ -1,8 +1,4 @@
 {
-  inputs,
-  lib,
-  config,
-  pkgs,
   ...
 }:
 {
@@ -39,9 +35,10 @@
       enable = true;
       enable32Bit = true;
     };
-    nvidia = {
-      open = false;
-    };
+    # Uncomment this if swapping away from nouveau driver (req. for sway)
+    # nvidia = {
+    #   open = true;
+    # };
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

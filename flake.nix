@@ -51,28 +51,28 @@
           ];
         };
 
-    	# hacktop - ThinkPad
-      hacktop = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        # > Our main nixos configuration file <
-        modules = [
-          ./hosts/hacktop
-        ];
-      };
+        # hacktop - ThinkPad
+        hacktop = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          # > Our main nixos configuration file <
+          modules = [
+            ./hosts/hacktop
+          ];
+        };
 
-	    # PC desktop
-      starmachine = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        modules = [ 
-          ./hosts/starmachine
-          # add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
-          nixos-hardware.nixosModules.common-cpu-amd
-          nixos-hardware.nixosModules.common-gpu-nvidia-nonprime # the real graphics card
-          nixos-hardware.nixosModules.common-pc
-          # nixos-hardware.nixosModules.common-pc-ssd # not sure if needed
-          # nixos-hardware.nixosModules.common-hidpi # not sure if needed
-        ];
-      };
+        # PC desktop
+        starmachine = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./hosts/starmachine
+            # add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
+            nixos-hardware.nixosModules.common-cpu-amd
+            # cancels out 'nouveau' - nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
+            nixos-hardware.nixosModules.common-pc
+            # nixos-hardware.nixosModules.common-pc-ssd # not sure if needed
+            # nixos-hardware.nixosModules.common-hidpi # not sure if needed
+          ];
+        };
 
         # WSL terminals
         stormtrooper = nixpkgs.lib.nixosSystem {
@@ -97,7 +97,7 @@
         # hacktop
         "witt@hacktop" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' insta>
-          extraSpecialArgs = {inherit inputs outputs;};
+          extraSpecialArgs = { inherit inputs outputs; };
           modules = [
             ./home/global
             ./home/hacktop.nix
