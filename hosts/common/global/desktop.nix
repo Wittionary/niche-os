@@ -1,99 +1,33 @@
-{ pkgs, ... }:
 {
+  pkgs,
+  ...
+}:
+{
+
+  imports = [
+    ./sway.nix
+  ];
+
   services.xserver = {
     enable = true;
 
-    # desktopManager.xfce = {
-    #   enable = true;
-    #   # enableWaylandSession = true;
-    # };
-
-    # displayManager.lightdm = {
-    #   enable = true;
-    #   greeters = {
-    #     # gtk.enable = true;
-    #     slick = {
-    #       enable = true;
-    #       extraConfig = "";
-    #     };
-    #   };
-    # };
     # Configure keymap
     xkb.layout = "us";
     xkb.variant = "";
   };
 
-  services.greetd = {
+  programs.regreet = {
     enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.qtgreet}/bin/qtgreet"; # ${pkgs.sway}/bin/sway -- ${pkgs.qtgreet}/bin/qtgreet
-        user = "greeter";
-      };
-      # terminal = {
-      #   vt = 1;
-      # };
-    };
+    theme.name = "Adwaita";
+    cursorTheme.name = "Adwaita";
   };
 
-  # services.displayManager = {
-  #   defaultSession = "xfce"; # gnome | sway
-  #   lightdm.enable = true;
-  #   # sddm = {
-  #   #   enable = true;
-  #   #   package = pkgs.kdePackages.sddm; # https://github.com/NixOS/nixpkgs/issues/292761#issuecomment-2110094381
-  #   #   #extraPackages = pkgs.lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
-  #   #   theme = "sddm-theme-dialog"; # "where-is-my-sddm-theme";
-  #   #   wayland.enable = true;
-  #   # };
-
-  # };
+  services.displayManager = {
+  };
 
   environment.systemPackages = with pkgs; [
-    # (callPackage ./sddm-themes.nix { }).sddm-theme-dialog # login screen theme
-    # where-is-my-sddm-theme
-
-    dbus
-    qtgreet
-    qt6.qtwayland
+    regreet
   ];
-
-  # environment.sessionVariables = {
-  #   XDG_CONFIG_DIRS = [
-  #     "${pkgs.xfce4-session}/etc"
-  #     "/run/current-system/sw/etc/xdg"
-  #   ];
-  # };
-
-  programs = {
-    sway = {
-      enable = true;
-      wrapperFeatures.gtk = true;
-      extraOptions = [ "--unsupported-gpu" ];
-      # https://man.sr.ht/~kennylevinsen/greetd/#how-to-set-xdg_session_typewayland
-      extraSessionCommands = ''
-        # Session
-        export XDG_SESSION_TYPE=wayland
-        export XDG_SESSION_DESKTOP=sway
-        export XDG_CURRENT_DESKTOP=sway
-
-        # Wayland stuff
-        export MOZ_ENABLE_WAYLAND=1
-        export QT_QPA_PLATFORM=wayland
-        export SDL_VIDEODRIVER=wayland
-        export _JAVA_AWT_WM_NONREPARENTING=1
-      '';
-    };
-  };
-
-  xdg.portal = {
-    enable = true;
-    wlr = {
-      # sway
-      enable = true;
-    };
-    extraPortals = with pkgs; [ xdg-desktop-portal-wlr ]; # copied from https://github.com/budimanjojo/nix-config/blob/595f3cb2d7d8c5705a2f3589219dd4123b184e0a/modules/modules/nixos/core/mySystem/windowManager/sway/default.nix#L74-L75
-  };
 
   fonts.packages = with pkgs; [
     ibm-plex
