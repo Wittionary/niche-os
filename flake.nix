@@ -73,21 +73,15 @@
             # nixos-hardware.nixosModules.common-hidpi # not sure if needed
           ];
         };
-
-        # WSL terminals
-        stormtrooper = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/stormtrooper ];
-        };
       };
 
-    # Standalone home-manager configuration entrypoint
-    # Available through 'home-manager --flake .#your-username@your-hostname'
-    homeConfigurations = {
+      # Standalone home-manager configuration entrypoint
+      # Available through 'home-manager --flake .#your-username@your-hostname'
+      homeConfigurations = {
         # Yoga laptop - mainly for nixOS development
         "witt@snowmachine" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = {inherit inputs outputs;};
+          extraSpecialArgs = { inherit inputs outputs; };
           modules = [
             ./home/global
             ./home/snowmachine.nix
@@ -113,16 +107,6 @@
             ./home/starmachine.nix
           ];
         };
-
-        # WSL terminals
-        "witt@stormtrooper" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./home/global
-            ./home/stormtrooper.nix
-          ];
-        };
       };
-  };
+    };
 }
