@@ -43,9 +43,11 @@
       };
     };
 
-    registries.search = [
-      "quay.io"
-    ];
+    registries.settings = {
+      registry = [
+        { location = "quay.io"; }
+      ];
+    };
   };
 
   # This allows non-root users to run containers

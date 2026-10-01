@@ -43,11 +43,15 @@
     {
       settings = {
         # Enable flakes and new 'nix' command
-        experimental-features = "nix-command flakes";
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
         # Opinionated: disable global registry
         flake-registry = "";
         # Workaround for https://github.com/NixOS/nix/issues/9574
-        nix-path = config.nix.nixPath;
+        # nix-path = config.nix.settings.nix-path; # commenting out because that issue is now close - and I'm getting build errors about infinit recursion
+        nix-path = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
         warn-dirty = false;
       };
       # Opinionated: disable channels
@@ -55,7 +59,7 @@
 
       # Opinionated: make flake registry and nix path match flake inputs
       registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
-      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+
     };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -125,7 +129,7 @@
     deltachat-desktop
     file
     fluffychat
-    mumble # client
+    # mumble # client
     netbird-ui # network my devices together
     nh # nix helper CLI - https://github.com/viperML/nh
     nmap
@@ -166,20 +170,6 @@
     zsh.enable = true;
   };
 
-  services.ollama = {
-    enable = true;
-    port = 11434;
-    openFirewall = false;
-    package = pkgs.ollama-cuda;
-    loadModels = [
-      "dolphin3"
-      "gemma3"
-      "gemma3:27b"
-      "deepseek-r1:latest"
-      "deepseek-r1:1.5b"
-    ];
-  };
-
   # TODO: uncomment + update flake
   # services.llama-cpp = {
   #   enable = true;
@@ -194,6 +184,6 @@
 
   # security exceptions -------------
   nixpkgs.config.permittedInsecurePackages = [
-    "electron-38.8.4"
+    # "electron-38.8.4"
   ];
 }
