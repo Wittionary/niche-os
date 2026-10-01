@@ -16,13 +16,10 @@
     xkb.variant = "";
   };
 
-  programs.regreet = {
+  services.displayManager.regreet = {
     enable = true;
     theme.name = "Adwaita";
     cursorTheme.name = "Adwaita";
-  };
-
-  services.displayManager = {
   };
 
   environment.systemPackages = with pkgs; [
