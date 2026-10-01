@@ -16,49 +16,44 @@ Assumes the state of a freshly installed nixOS; nothing with an existing customi
 
 On nixOS:
 ```bash
-HOSTNAME=$(hostname)
+# hostname is all lowers, hyphens ok
+export HOSTNAME=$(hostname)
+export TEMPLATE_HOST="snowmachine"
+
 mkdir $HOME/git/ && cd $HOME/git/
 nix shell nixpkgs#git --extra-experimental-features nix-command --extra-experimental-features flakes
-git clone https://github.com/Wittionary/niche-os.git --extra-experimental-features nix-command --extra-experimental-features flakes
+git clone https://github.com/Wittionary/niche-os.git
 cd $HOME/git/niche-os/
 
+# TODO: get latest branch or create new one for $HOSTNAME
+echo "NOTE: get latest branch or create new one for \'$HOSTNAME\'"
+
+# setup hardware config
+mkdir hosts/$HOSTNAME
+sudo mv /etc/nixos/hardware-configuration.nix hosts/$HOSTNAME/hardware-configuration.nix
+sudo mv /etc/nixos/configuration.nix ~ # back, back, back it up!
+# setup home manager config
+cp home/$TEMPLATE_HOST.nix home/$HOSTNAME.nix
+sed -i "s/$TEMPLATE_HOST/$HOSTNAME/g" home/$HOSTNAME.nix
+# create default config
+cp hosts/$TEMPLATE_HOST/default.nix hosts/$HOSTNAME/default.nix
+sed -i "s/$TEMPLATE_HOST/$HOSTNAME/g" hosts/$HOSTNAME/default.nix
+# TODO: add config to flake.nix
+echo "NOTE: add new entry to flake.nix"
+
 # set symlink so we use the version controlled config
-sudo ln --symbolic --verbose /home/nixos/git/niche-os/ /etc/nixos
-# TODO:
-# - copy the hardware-configuration.nix
-# - create new directories for $HOSTNAME
-# - create default/empty configs for $HOSTNAME
-# - get latest branch or create new one for $HOSTNAME
+sudo rm -rfi /etc/nixos
+sudo ln --symbolic --verbose /home/witt/git/niche-os/ /etc/nixos
 
 # build nixOS config
 sudo nixos-rebuild switch --flake .#$HOSTNAME
 
 # build home-manager config
-# NOTE: after nixos-rebuild succeeds, it installs nh, but not home-manager - because home-manager CLI isn't available until the home-manager config is already ran
 nh home switch .
 ```
 
+NOTE: after `nixos-rebuild` succeeds, it installs `nh`, but not home-manager - because `home-manager` CLI isn't available until the home-manager config is already ran
 
-~~On nixOS on WSL:~~
-I've not yet gotten this to work successfully.
-```bash
-HOSTNAME="stormtrooper"
-mkdir $HOME/git/ && cd $HOME/git/
-nix shell nixpkgs#git --extra-experimental-features nix-command --extra-experimental-features flakes
-git clone https://github.com/Wittionary/niche-os.git --extra-experimental-features nix-command --extra-experimental-features flakes
-cd $HOME/git/niche-os/
-# delete nixos directory - there's no hardware-configuration.nix to worry about for WSL
-sudo rm -drf /etc/nixos/
-# set symlink so we use the version controlled config
-sudo ln --symbolic --verbose /home/nixos/git/niche-os/ /etc/nixos
-
-# build nixOS config
-sudo nixos-rebuild switch --flake .#$HOSTNAME
-
-# build home-manager config
-# NOTE: after nixos-rebuild succeeds, it installs nh, but not home-manager - because home-manager CLI isn't available until the home-manager config is already ran
-nh home switch .
-```
 
 ## general commands
 After the initial setup, use `nh` for iteration

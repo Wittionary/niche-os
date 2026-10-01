@@ -62,16 +62,15 @@
     awscli2
     bat # batcat
 
-    discord
     #dmenu-rs # dmenu but extensible and in Rust - https://github.com/Shizcow/dmenu-rs
 
+    fastfetch
     firefox
     fzf
 
     kubectl
     lolcat
 
-    neofetch
     obsidian
     podman
 
@@ -92,6 +91,7 @@
 
   gtk.theme.package = pkgs.adw-gtk3;
   gtk.theme.name = "adw-gtk3";
+  gtk.gtk4.theme = null;
 
   gtk.iconTheme.package = pkgs.adwaita-icon-theme;
   gtk.iconTheme.name = "Adwaita";
@@ -143,6 +143,7 @@
         helper = "${pkgs.git-credential-manager}/bin/git-credential-manager";
       };
     };
+    signing.format = "openpgp";
   };
 
   programs.delta = {
@@ -200,6 +201,12 @@
     };
   };
 
+  # BROWSER --------------------------
+  programs.librewolf = {
+    enable = true;
+    # globalExtensions = [ ];
+  };
+
   # ZED IDE --------------------------
   programs.zed-editor = {
     enable = true;
@@ -212,30 +219,48 @@
     ];
   };
   # WAYLAND --------------------------
-  wayland.windowManager.sway = {
-    enable = true;
-    config = rec {
-      modifier = "Mod4";
-      # Use kitty as default terminal
-      terminal = "kitty";
-      startup = [
-        # Launch terminal on start
-        { command = terminal; }
-      ];
+  wayland = {
+    systemd.target = "sway-session.target";
+    windowManager.sway = {
+      enable = true;
+      config = rec {
+        modifier = "Mod4";
+        # Use kitty as default terminal
+        terminal = "kitty";
+        startup = [
+          # Launch terminal on start
+          { command = terminal; }
+        ];
 
-      defaultWorkspace = "1";
-      bars = [
-        {
-          position = "top";
-        }
-      ];
+        defaultWorkspace = "1";
+        bars = [
+          {
+            position = "top";
+          }
+        ];
+        output = {
+          # output DP-3 resolution 2560x1440 position 0 0 background #236767 solid_color
+          "DP-3" = {
+            resolution = "2560x1440";
+            position = "0 0";
+            bg = "#236767 solid_color";
+          };
+          # output DP-4 resolution 2560x1440 position 2560 0 background #236767 solid_color
+          "DP-4" = {
+            resolution = "2560x1440";
+            position = "2560 0";
+            bg = "#236767 solid_color";
+          };
+        };
+        gaps.inner = 10;
+      };
     };
   };
   programs.swaylock = {
     enable = true;
     settings = {
       # TODO: make un-ugly
-      image = "$HOME/git/niche-os/wallpapers/flowers-desaturated.jpg";
+      image = "file:///home/witt/git/niche-os/wallpapers/flowers-desaturated.jpg";
       scaling = "fit";
       color = "809ABB";
       # font = TODO;
@@ -346,7 +371,7 @@
                 elif [[ "$1" == "can" ]]; then
                     # Commit all now
                     git add .
-                    CommitMessage = "Commit All @ $(date +%m-%d-%y) $(date +%H:%M:%S)"
+                    CommitMessage="Commit All @ $(date +%m-%d-%y) $(date +%H:%M:%S)"
                     git commit -am $CommitMessage
                 elif [[ "$1" == "ca" ]]; then
                     git add .

@@ -43,11 +43,15 @@
     {
       settings = {
         # Enable flakes and new 'nix' command
-        experimental-features = "nix-command flakes";
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
         # Opinionated: disable global registry
         flake-registry = "";
         # Workaround for https://github.com/NixOS/nix/issues/9574
-        nix-path = config.nix.nixPath;
+        # nix-path = config.nix.settings.nix-path; # commenting out because that issue is now close - and I'm getting build errors about infinit recursion
+        nix-path = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
         warn-dirty = false;
       };
       # Opinionated: disable channels
@@ -55,7 +59,7 @@
 
       # Opinionated: make flake registry and nix path match flake inputs
       registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
-      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+
     };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -99,16 +103,20 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    (callPackage ./sddm-themes.nix { }).sddm-theme-dialog # login screen theme
-    where-is-my-sddm-theme
 
     # dev tools
+    claude-agent-acp
+    claude-code
+    codex # OpenAI
+    codex-acp
     dotnetCorePackages.sdk_10_0-bin
     git
     git-credential-manager
     jq
+    llama-cpp
     nil # nix language server
     nixd # another nix language server
+    opencode
     python3Minimal
     uv # python package and env management
     zola
@@ -116,17 +124,18 @@
 
     # general admin / utilities
     arcanechat-tui
-    bottles # wine / exe wrapper
+    btop
     curl
     deltachat-desktop
     file
     fluffychat
+    # mumble # client
     netbird-ui # network my devices together
     nh # nix helper CLI - https://github.com/viperML/nh
-    mumble # client
     nmap
-    stoat-desktop
     openssl
+    stoat-desktop
+    webcord
 
     # privacy / anonymity-based
     i2p # https://geti2p.net/en/about/intro
@@ -149,7 +158,7 @@
     nh = {
       enable = true;
       clean.enable = true;
-      clean.extraArgs = "--keep-since 90d --keep 10";
+      clean.extraArgs = "--keep-since 60d --keep 10";
       flake = "/home/witt/git/niche-os"; # TODO: have this take in variables
     };
 
@@ -161,10 +170,20 @@
     zsh.enable = true;
   };
 
+  # TODO: uncomment + update flake
+  # services.llama-cpp = {
+  #   enable = true;
+  #   settings = { # https://search.nixos.org/options?channel=unstable&query=llama-cpp&type=options#show=option%253Aservices.llama-cpp.settings
+  #     port = 12000;
+  #   };
+  # };
+
   # SECURITY --------------------------
   security.polkit.enable = true; # needed for sway
   security.pam.services.swaylock = { }; # needed for swaylock
 
   # security exceptions -------------
-  nixpkgs.config.permittedInsecurePackages = [ ];
+  nixpkgs.config.permittedInsecurePackages = [
+    # "electron-38.8.4"
+  ];
 }

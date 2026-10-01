@@ -51,25 +51,27 @@
           ];
         };
 
+        # hacktop - ThinkPad
+        hacktop = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          # > Our main nixos configuration file <
+          modules = [
+            ./hosts/hacktop
+          ];
+        };
+
         # PC desktop
         starmachine = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
             ./hosts/starmachine
-            # stevenblack-hosts.nixosModule
             # add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
             nixos-hardware.nixosModules.common-cpu-amd
-            nixos-hardware.nixosModules.common-gpu-nvidia-nonprime # the real graphics card
+            # cancels out 'nouveau' - nixos-hardware.nixosModules.common-gpu-nvidia-nonprime
             nixos-hardware.nixosModules.common-pc
             # nixos-hardware.nixosModules.common-pc-ssd # not sure if needed
             # nixos-hardware.nixosModules.common-hidpi # not sure if needed
           ];
-        };
-
-        # WSL terminals
-        stormtrooper = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [ ./hosts/stormtrooper ];
         };
       };
 
@@ -86,6 +88,16 @@
           ];
         };
 
+        # hacktop
+        "witt@hacktop" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' insta>
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            ./home/global
+            ./home/hacktop.nix
+          ];
+        };
+
         # PC Desktop
         "witt@starmachine" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pk>
@@ -93,16 +105,6 @@
           modules = [
             ./home/global
             ./home/starmachine.nix
-          ];
-        };
-
-        # WSL terminals
-        "witt@stormtrooper" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./home/global
-            ./home/stormtrooper.nix
           ];
         };
       };

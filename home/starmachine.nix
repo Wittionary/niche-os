@@ -6,7 +6,7 @@
 
   imports = [
     ./global # Gotta get the basics
-    ./features/games.nix
+    # ./features/games.nix
   ];
 
   programs.kitty = {
