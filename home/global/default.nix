@@ -65,7 +65,6 @@
     #dmenu-rs # dmenu but extensible and in Rust - https://github.com/Shizcow/dmenu-rs
 
     fastfetch
-    firefox
     fzf
 
     kubectl
