@@ -236,7 +236,14 @@
           {
             position = "top";
             # https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#descrip
-            #fonts = "Cantarell Italic Light 15 @‍wght=200 #‍tnum=1";
+            fonts = {
+              names = [
+                "DejaVu Sans Mono"
+                "Terminus"
+              ];
+              size = 16.0;
+              style = "Bold Semi-Condensed";
+            };
             # https://i3wm.org/docs/userguide.html#_colors
             colors = {
               background = "#0F2E2E";
