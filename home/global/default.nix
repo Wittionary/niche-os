@@ -248,7 +248,7 @@
             colors = {
               background = "#0F2E2E";
             };
-            statusCommand = "while date +'%A, %b %d %I:%M%P'; do sleep 1; done";
+            statusCommand = "while date +'%A, %b %d %I:%M%P'; do sleep 5; done";
           }
         ];
         output = {
