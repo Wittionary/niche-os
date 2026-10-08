@@ -235,6 +235,12 @@
         bars = [
           {
             position = "top";
+            # https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#descrip
+            #fonts = "Cantarell Italic Light 15 @‍wght=200 #‍tnum=1";
+            # https://i3wm.org/docs/userguide.html#_colors
+            colors = {
+              background = "#0F2E2E";
+            };
           }
         ];
         output = {
@@ -470,6 +476,16 @@
                 fi
 
                 source ~/.zshrc
+            }
+
+            cr() { # change repo / switch repo
+                local selected
+                selected=$(
+                    find "$GIT_PATH" -type d -name ".git" |
+                    sed 's/\/.git$//' |
+                    fzf --exact --height 25% --layout=reverse --header="REPOS"
+                )
+                [[ -n "$selected" ]] && cd "$selected" || return
             }
     '';
   };
