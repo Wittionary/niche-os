@@ -495,6 +495,10 @@
                 )
                 [[ -n "$selected" ]] && cd "$selected" || return
             }
+
+            batt() { # check laptop battery percentage
+                upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep -E 'percentage' | sed 's/percentage:          /batt: /g'
+            }
     '';
   };
 

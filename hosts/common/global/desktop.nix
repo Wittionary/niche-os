@@ -29,4 +29,9 @@
   fonts.packages = with pkgs; [
     ibm-plex
   ];
+
+  services.upower = {
+    enable = true;
+
+  };
 }
