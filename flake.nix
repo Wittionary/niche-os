@@ -57,6 +57,7 @@
           # > Our main nixos configuration file <
           modules = [
             ./hosts/hacktop
+            nixos-hardware.nixosModules.lenovo-thinkpad-x250
           ];
         };
 
