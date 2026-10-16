@@ -20,6 +20,10 @@
     enable = true;
     theme.name = "Adwaita";
     cursorTheme.name = "Adwaita";
+    settings = {
+      skip_selection = true;
+      background.path = "/home/witt/git/niche-os/wallpapers/flowers-desaturated.jpg";
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -29,4 +33,9 @@
   fonts.packages = with pkgs; [
     ibm-plex
   ];
+
+  services.upower = {
+    enable = true;
+
+  };
 }

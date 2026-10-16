@@ -20,6 +20,11 @@
         export _JAVA_AWT_WM_NONREPARENTING=1
       '';
     };
+
+    waybar = {
+      enable = true;
+
+    };
   };
 
   xdg.portal = {
@@ -30,4 +35,6 @@
     };
     extraPortals = with pkgs; [ xdg-desktop-portal-wlr ]; # copied from https://github.com/budimanjojo/nix-config/blob/595f3cb2d7d8c5705a2f3589219dd4123b184e0a/modules/modules/nixos/core/mySystem/windowManager/sway/default.nix#L74-L75
   };
+
+  services.gnome.gnome-keyring.enable = true;
 }

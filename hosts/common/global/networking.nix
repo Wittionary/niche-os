@@ -24,14 +24,14 @@
   networking.hosts = {
     # example: "0.0.0.0" = [ "site-to-block.net" ];
   };
-  # networking.stevenBlackHosts = {
-  #   enable = true;
-  #   enableIPv6 = true;
-  #   blockFakenews = false; # for performance
-  #   blockGambling = true;
-  #   blockPorn = true;
-  #   blockSocial = false;
-  # };
+
+  services.mullvad-vpn = {
+    enable = true;
+    enableEarlyBootBlocking = false; # TODO: change to true after 2026-10-18
+    enableExcludeWrapper = true; # TODO: change to false after 2026-10-18
+
+
+  };
 
   services.openssh = {
     enable = true;
