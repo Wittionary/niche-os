@@ -1,7 +1,6 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
-  inputs,
   lib,
   config,
   pkgs,
@@ -12,9 +11,7 @@
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
+    ./sway.nix
   ];
 
   nixpkgs = {
@@ -65,7 +62,6 @@
     #dmenu-rs # dmenu but extensible and in Rust - https://github.com/Shizcow/dmenu-rs
 
     fastfetch
-    firefox
     fzf
 
     kubectl
@@ -218,76 +214,7 @@
       "terraform"
     ];
   };
-  # WAYLAND --------------------------
-  wayland = {
-    systemd.target = "sway-session.target";
-    windowManager.sway = {
-      enable = true;
-      config = rec {
-        modifier = "Mod4";
-        # Use kitty as default terminal
-        terminal = "kitty";
-        startup = [
-          # Launch terminal on start
-          { command = terminal; }
-        ];
 
-        defaultWorkspace = "1";
-        bars = [
-          {
-            position = "top";
-          }
-        ];
-        output = {
-          # output DP-3 resolution 2560x1440 position 0 0 background #236767 solid_color
-          "DP-3" = {
-            resolution = "2560x1440";
-            position = "0 0";
-            bg = "#236767 solid_color";
-          };
-          # output DP-4 resolution 2560x1440 position 2560 0 background #236767 solid_color
-          "DP-4" = {
-            resolution = "2560x1440";
-            position = "2560 0";
-            bg = "#236767 solid_color";
-          };
-        };
-        gaps.inner = 10;
-      };
-    };
-  };
-  programs.swaylock = {
-    enable = true;
-    settings = {
-      # TODO: make un-ugly
-      image = "file:///home/witt/git/niche-os/wallpapers/flowers-desaturated.jpg";
-      scaling = "fit";
-      color = "809ABB";
-      # font = TODO;
-      font-size = 24;
-      indicator-idle-visible = false; # circle shows when not typing
-      indicator-radius = 100;
-      line-color = "ffffff";
-      line-caps-lock-color = "ff0000";
-      show-failed-attempts = true;
-      ignore-empty-password = true;
-
-      inside-color = "676767ff";
-      inside-clear-color = "1f1f1f";
-      inside-ver-color = "898f89";
-      inside-wrong-color = "8f4656";
-
-      separator-color = "ffffffff";
-
-      text-color = "efefef";
-      text-ver-color = "898f89";
-      text-wrong-color = "8f4656";
-    };
-  };
-  systemd.user.services.swaylock = {
-    Unit.Description = "Lock screen";
-    Service.ExecStart = "${config.programs.swaylock.package}/bin/swaylock";
-  };
 
   # TERMINAL --------------------------
   programs.kitty = {
@@ -481,6 +408,20 @@
 
                 source ~/.zshrc
             }
+
+            cr() { # change repo / switch repo
+                local selected
+                selected=$(
+                    find "$GIT_PATH" -type d -name ".git" |
+                    sed 's/\/.git$//' |
+                    fzf --exact --height 25% --layout=reverse --header="REPOS"
+                )
+                [[ -n "$selected" ]] && cd "$selected" || return
+            }
+
+            batt() { # check laptop battery percentage
+                upower -i /org/freedesktop/UPower/devices/battery_BAT1 | grep -E 'percentage' | sed 's/percentage:          /batt: /g'
+            }
     '';
   };
 
@@ -492,6 +433,16 @@
   # PRIVACY & ANONYMITY --------------------------
   programs.mullvad-vpn = {
     enable = true;
+    settings = {
+      # animateMap = true;
+      # autoConnect = false;
+      # browsedForSplitTunnelingApplications = [ ];
+      # enableSystemNotifications = true;
+      # monochromaticIcon = false;
+      # preferredLocale = "system";
+      # startMinimized = false;
+      # unpinnedWindow = true;
+    };
   };
 
   # MUSIC --------------------------
