@@ -1,7 +1,6 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
-  inputs,
   lib,
   config,
   pkgs,
@@ -12,9 +11,7 @@
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
+    ./sway.nix
   ];
 
   nixpkgs = {
@@ -217,81 +214,7 @@
       "terraform"
     ];
   };
-  # WAYLAND --------------------------
-  wayland = {
-    systemd.target = "sway-session.target";
-    windowManager.sway = {
-      enable = true;
-      config = rec {
-        modifier = "Mod4";
-        # Use kitty as default terminal
-        terminal = "kitty";
-        startup = [
-          # Launch terminal on start
-          { command = terminal; }
-        ];
 
-        defaultWorkspace = "1";
-        bars = [
-          {
-            position = "top";
-            # https://docs.gtk.org/Pango/type_func.FontDescription.from_string.html#descrip
-            fonts = {
-              names = [
-                "DejaVu Sans Mono"
-                "Terminus"
-              ];
-              size = 16.0;
-              style = "Bold Semi-Condensed";
-            };
-            # https://i3wm.org/docs/userguide.html#_colors
-            colors = {
-              background = "#0F2E2E";
-            };
-            statusCommand = "while date +'%A, %b %d %I:%M%P'; do sleep 5; done";
-          }
-        ];
-        output = {
-          "*" = {
-            bg = "#236767 solid_color";
-          };
-        };
-        gaps.inner = 10;
-      };
-    };
-  };
-  programs.swaylock = {
-    enable = true;
-    settings = {
-      # TODO: make un-ugly
-      image = "file:///home/witt/git/niche-os/wallpapers/flowers-desaturated.jpg";
-      scaling = "fit";
-      color = "809ABB";
-      # font = TODO;
-      font-size = 24;
-      indicator-idle-visible = false; # circle shows when not typing
-      indicator-radius = 100;
-      line-color = "ffffff";
-      line-caps-lock-color = "ff0000";
-      show-failed-attempts = true;
-      ignore-empty-password = true;
-
-      inside-color = "676767ff";
-      inside-clear-color = "1f1f1f";
-      inside-ver-color = "898f89";
-      inside-wrong-color = "8f4656";
-
-      separator-color = "ffffffff";
-
-      text-color = "efefef";
-      text-ver-color = "898f89";
-      text-wrong-color = "8f4656";
-    };
-  };
-  systemd.user.services.swaylock = {
-    Unit.Description = "Lock screen";
-    Service.ExecStart = "${config.programs.swaylock.package}/bin/swaylock";
-  };
 
   # TERMINAL --------------------------
   programs.kitty = {
