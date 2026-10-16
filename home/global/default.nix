@@ -510,6 +510,16 @@
   # PRIVACY & ANONYMITY --------------------------
   programs.mullvad-vpn = {
     enable = true;
+    settings = {
+      # animateMap = true;
+      # autoConnect = false;
+      # browsedForSplitTunnelingApplications = [ ];
+      # enableSystemNotifications = true;
+      # monochromaticIcon = false;
+      # preferredLocale = "system";
+      # startMinimized = false;
+      # unpinnedWindow = true;
+    };
   };
 
   # MUSIC --------------------------
