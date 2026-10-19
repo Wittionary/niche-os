@@ -74,6 +74,15 @@
             # nixos-hardware.nixosModules.common-hidpi # not sure if needed
           ];
         };
+        
+        # monolith
+        monolith = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./hosts/monolith
+            # add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
+          ];
+        };
       };
 
       # Standalone home-manager configuration entrypoint
@@ -106,6 +115,16 @@
           modules = [
             ./home/global
             ./home/starmachine.nix
+          ];
+        };
+        
+        # monolith
+        "witt@monolith" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [
+            ./home/global
+            ./home/monolith.nix
           ];
         };
       };
