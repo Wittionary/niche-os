@@ -37,7 +37,6 @@
 
   services.xserver = {
     videoDrivers = [
-      "displayLink"
       "modesetting"
     ];
   };
