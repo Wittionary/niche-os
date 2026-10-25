@@ -1,4 +1,5 @@
 {
+  pkgs,
   ...
 }:
 {
@@ -28,6 +29,11 @@
       ];
     };
   };
+
+  environment.systemPackages = [
+    pkgs.openssh-askpass
+  ];
+  programs.ssh.askPassword = "${pkgs.openssh-askpass}/libexec/x11-ssh-askpass";
 
   nix.settings.trusted-users = [ "witt" ];
   users = {
