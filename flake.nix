@@ -94,11 +94,11 @@
       # Remote deployments ---------------------------------------------------------------
       deploy.nodes.monolith = {
         hostname = "monolith";
-        interactiveSudo = true;
+        # interactiveSudo = true;
         profiles.system = {
 
           user = "root";
-          sshUser = "root";
+          sshUser = "witt";
           path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.monolith;
         };
       };
