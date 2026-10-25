@@ -35,6 +35,7 @@
   ];
   programs.ssh.askPassword = "${pkgs.openssh-askpass}/libexec/x11-ssh-askpass";
 
+  services.openssh.settings.PasswordAuthentication = false;
   nix.settings.trusted-users = [ "witt" ];
   users = {
     users = {
