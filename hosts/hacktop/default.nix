@@ -34,6 +34,10 @@
       ];
     };
   };
+  environment.systemPackages = [
+    pkgs.openssh-askpass
+  ];
+  programs.ssh.askPassword = "${pkgs.openssh-askpass}/libexec/x11-ssh-askpass";
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

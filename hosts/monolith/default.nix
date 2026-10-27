@@ -44,12 +44,14 @@
         openssh.authorizedKeys.keys = [
           # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6lCkUHMpo4FI5YE4WgOA5NXNgCvzBs7pYsfSy+i2Hu witt" # hacktop
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ9mm2Az18TBDKNZU7zwtDRVkGUOWzOI5NWTJIKnzNFd witt" # redo
         ];
       };
       witt = {
         openssh.authorizedKeys.keys = [
           # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6lCkUHMpo4FI5YE4WgOA5NXNgCvzBs7pYsfSy+i2Hu witt" # hacktop
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ9mm2Az18TBDKNZU7zwtDRVkGUOWzOI5NWTJIKnzNFd witt" # redo
         ];
       };
     };
