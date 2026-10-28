@@ -40,7 +40,6 @@
   User witt
   PreferredAuthentications publickey
   IdentityFile ~/.ssh/monolith2
-
   ";
 
   # Bootloader.
