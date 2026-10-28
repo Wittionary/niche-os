@@ -34,10 +34,14 @@
       ];
     };
   };
-  environment.systemPackages = [
-    pkgs.openssh-askpass
-  ];
-  programs.ssh.askPassword = "${pkgs.openssh-askpass}/libexec/x11-ssh-askpass";
+
+  programs.ssh.extraConfig = "
+  Host monolith
+  User witt
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/monolith2
+
+  ";
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
