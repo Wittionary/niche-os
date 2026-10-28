@@ -13,7 +13,7 @@
     ./hardware-configuration.nix
 
     ../common/global
-    ../common/features/deploy
+    ../common/features/deploy.nix
   ];
 
   networking = {
