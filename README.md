@@ -6,6 +6,7 @@ Table of Contents
 - [getting started](#getting-started)
 - [general commands](#general-commands)
 - [update flakes](#update-flakes)
+- [remote deploy](#remote-deploy)
 
 ## stuff you should know
 - This uses flakes
@@ -75,3 +76,9 @@ sudo nix flake update
 nh os switch && nh home switch
 ```
 After that, you'll probably get a handful of errors and warnings that need to be resolved as a result of deprecations or naming changes.
+
+## remote deploy
+I use deploy-rs for this. Add [deploy.nix](./hosts/common/features/deploy.nix) to a host's imported modules, update the deploy-rs section of `flake.nix`, get one last manual deploy off on it and run:
+```bash
+nix run nixpkgs#deploy-rs 
+```

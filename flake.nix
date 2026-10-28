@@ -21,6 +21,11 @@
       url = "github:NixOS/nixos-hardware/master";
     };
 
+    # remote deploy!
+    deploy-rs.url = "github:serokell/deploy-rs";
+
+
+
     # hosts file provider - https://github.com/StevenBlack/hosts#nix-flake
     # stevenblack-hosts.url = "github:StevenBlack/hosts/master";
   };
@@ -32,13 +37,14 @@
       home-manager,
       # stevenblack-hosts,
       nixos-hardware,
+      deploy-rs,
       ...
     }@inputs:
     let
       inherit (self) outputs;
     in
     {
-      # NixOS configuration entrypoint
+      # NixOS configuration entrypoint ---------------------------------------------------------------
       # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
         # Yoga laptop - mainly for nixOS development
@@ -74,7 +80,7 @@
             # nixos-hardware.nixosModules.common-hidpi # not sure if needed
           ];
         };
-        
+
         # monolith
         monolith = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
@@ -85,7 +91,22 @@
         };
       };
 
-      # Standalone home-manager configuration entrypoint
+      # Remote deployments ---------------------------------------------------------------
+      deploy.nodes.monolith = {
+        hostname = "monolith";
+        # interactiveSudo = true;
+        profiles.system = {
+
+          user = "root";
+          sshUser = "witt";
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.monolith;
+        };
+      };
+
+      # This is highly advised and will prevent many possible deploy-rs mistakes
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
+      # Standalone home-manager configuration entrypoint ---------------------------------------------------------------
       # Available through 'home-manager --flake .#your-username@your-hostname'
       homeConfigurations = {
         # Yoga laptop - mainly for nixOS development
@@ -117,7 +138,7 @@
             ./home/starmachine.nix
           ];
         };
-        
+
         # monolith
         "witt@monolith" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;

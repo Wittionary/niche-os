@@ -1,4 +1,6 @@
 {
+  pkgs,
+  lib,
   ...
 }:
 {
@@ -11,7 +13,7 @@
     ./hardware-configuration.nix
 
     ../common/global
-    # ../common/global/gaming.nix
+    ../common/features/deploy.nix
   ];
 
   networking = {

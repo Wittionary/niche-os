@@ -35,15 +35,16 @@
     };
   };
 
+  programs.ssh.extraConfig = "
+  Host monolith
+  User witt
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/monolith2
+  ";
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # Enable the X11 windowing system.
-  services.xserver = {
-    videoDrivers = [
-    ];
-  };
 
   # SECURITY --------------------------
 
