@@ -1,9 +1,12 @@
 {
   pkgs,
   lib,
+  outputs,
+  config,
   ...
-}:
-{
+}: let
+  hosts = lib.attrNames outputs.nixosConfigurations;
+in {
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules from other flakes (such as nixos-hardware):
@@ -31,12 +34,41 @@
     };
   };
 
+
   services.prometheus = {
     enable = true;
-    scrapeConfigs = {
-      "monolith" = {};
+    globalConfig = {
+      # Scrape a bit more frequently
+      scrape_interval = "30s";
     };
+    scrapeConfigs = [
+      {
+        job_name = "hosts";
+        scheme = "http";
+        static_configs =
+          map (hostname: {
+            targets = [
+              "${hostname}:${toString config.services.prometheus.exporters.node.port}"
+            ];
+            labels.instance = hostname;
+          })
+          hosts;
+      }
+    ];
   };
+
+  # keep prometheus metrics around after.. reboot?
+  # Source: https://github.com/Misterio77/Foundry/blob/b9cc07e5adaac816812ef5320069c89122c63ac8/hosts/nixos/alcyone/services/prometheus.nix#L95
+  environment.persistence = {
+      "/persist".directories = [
+        {
+          directory = "/var/lib/prometheus2";
+          user = "prometheus";
+          group = "prometheus";
+          mode = "0700";
+        }
+      ];
+    };
 
   # graphics card stuff
   hardware = {

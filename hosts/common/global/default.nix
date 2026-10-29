@@ -172,10 +172,13 @@
 
   # configuration.nix
 
-  services.prometheus.exporters.node = {
-    enable = true;
-    openFirewall = true;
-    group = "node-exporter";
+  services.prometheus.exporters = {
+    node = {
+      enable = true;
+      enabledCollectors = [ "systemd" ];
+      openFirewall = true;
+      group = "node-exporter";
+    };
   };
 
   # TODO: uncomment + update flake
