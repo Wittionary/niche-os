@@ -59,16 +59,16 @@ in {
 
   # keep prometheus metrics around after.. reboot?
   # Source: https://github.com/Misterio77/Foundry/blob/b9cc07e5adaac816812ef5320069c89122c63ac8/hosts/nixos/alcyone/services/prometheus.nix#L95
-  environment.persistence = {
-      "/persist".directories = [
-        {
-          directory = "/var/lib/prometheus2";
-          user = "prometheus";
-          group = "prometheus";
-          mode = "0700";
-        }
-      ];
-    };
+  # environment.persistence = {
+  #     "/persist".directories = [
+  #       {
+  #         directory = "/var/lib/prometheus2";
+  #         user = "prometheus";
+  #         group = "prometheus";
+  #         mode = "0700";
+  #       }
+  #     ];
+  #   };
 
   # graphics card stuff
   hardware = {
