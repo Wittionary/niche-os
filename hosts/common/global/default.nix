@@ -170,6 +170,14 @@
     zsh.enable = true;
   };
 
+  # configuration.nix
+
+  services.prometheus.exporters.node = {
+    enable = true;
+    openFirewall = true;
+    group = "node-exporter";
+  };
+
   # TODO: uncomment + update flake
   # services.llama-cpp = {
   #   enable = true;

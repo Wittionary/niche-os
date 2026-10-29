@@ -31,6 +31,13 @@
     };
   };
 
+  services.prometheus = {
+    enable = true;
+    scrapeConfigs = {
+      "monolith" = {};
+    };
+  };
+
   # graphics card stuff
   hardware = {
     graphics = {
