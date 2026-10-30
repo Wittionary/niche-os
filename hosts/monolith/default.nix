@@ -57,6 +57,12 @@ in {
     ];
   };
 
+  networking.firewall = {
+    allowedTCPPorts = [
+      9090 # prometheus server
+    ];
+  };
+
   # keep prometheus metrics around after.. reboot?
   # Source: https://github.com/Misterio77/Foundry/blob/b9cc07e5adaac816812ef5320069c89122c63ac8/hosts/nixos/alcyone/services/prometheus.nix#L95
   # environment.persistence = {
