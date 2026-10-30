@@ -140,6 +140,7 @@
     # privacy / anonymity-based
     i2p # https://geti2p.net/en/about/intro
     mullvad # CLI tool for the VPN client
+    signal-desktop
     simplex-chat-desktop
     tor-browser
     tutanota-desktop
