@@ -24,7 +24,7 @@
 
   wayland = {
     windowManager.sway = {
-      config = rec {
+      config = {
         output = {
           # output DP-3 resolution 2560x1440 position 0 0 background #236767 solid_color
           "GIGA-BYTE\ TECHNOLOGY\ CO\.\,\ LTD\.\ G27Q\ 22082B002607" = {
