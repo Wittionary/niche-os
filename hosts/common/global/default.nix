@@ -140,6 +140,7 @@
     # privacy / anonymity-based
     i2p # https://geti2p.net/en/about/intro
     mullvad # CLI tool for the VPN client
+    signal-desktop
     simplex-chat-desktop
     tor-browser
     tutanota-desktop
@@ -168,6 +169,17 @@
     };
 
     zsh.enable = true;
+  };
+
+  # configuration.nix
+
+  services.prometheus.exporters = {
+    node = {
+      enable = true;
+      enabledCollectors = [ "systemd" ];
+      openFirewall = true;
+      group = "node-exporter";
+    };
   };
 
   # TODO: uncomment + update flake

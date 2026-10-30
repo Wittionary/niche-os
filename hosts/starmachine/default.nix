@@ -29,6 +29,13 @@
     };
   };
 
+  programs.ssh.extraConfig = "
+  Host monolith
+  User witt
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/monolith
+  ";
+
   # graphics card stuff
   hardware = {
     graphics = {

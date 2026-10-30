@@ -2,6 +2,10 @@
 
 {
 
+  environment.systemPackages = with pkgs; [
+    swaybg
+  ];
+
   programs = {
     sway = {
       enable = true;
