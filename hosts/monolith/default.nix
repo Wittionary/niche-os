@@ -3,15 +3,13 @@
 }:{
   # You can import other NixOS modules here
   imports = [
-    # If you want to use modules from other flakes (such as nixos-hardware):
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-ssd
-
     ./hardware-configuration.nix
-
     ../common/global
+
     ../common/features/deploy.nix
+
     ../common/services/forgejo.nix
+    ../common/services/prometheus.nix
     ../common/services/reticulum.nix
     ../common/services/xmpp.nix
   ];
