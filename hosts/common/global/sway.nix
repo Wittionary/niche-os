@@ -27,7 +27,6 @@
 
     waybar = {
       enable = true;
-
     };
   };
 

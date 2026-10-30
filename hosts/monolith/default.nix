@@ -17,6 +17,9 @@ in {
 
     ../common/global
     ../common/features/deploy.nix
+    ../common/services/forgejo.nix
+    ../common/services/reticulum.nix
+    ../common/services/xmpp.nix
   ];
 
   networking = {

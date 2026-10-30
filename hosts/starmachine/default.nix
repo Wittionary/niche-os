@@ -12,6 +12,7 @@
 
     ../common/global
     # ../common/global/gaming.nix
+    ../common/services/llama.nix
   ];
 
   networking = {

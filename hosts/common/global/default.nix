@@ -182,14 +182,6 @@
     };
   };
 
-  # TODO: uncomment + update flake
-  # services.llama-cpp = {
-  #   enable = true;
-  #   settings = { # https://search.nixos.org/options?channel=unstable&query=llama-cpp&type=options#show=option%253Aservices.llama-cpp.settings
-  #     port = 12000;
-  #   };
-  # };
-
   # SECURITY --------------------------
   security.polkit.enable = true; # needed for sway
   security.pam.services.swaylock = { }; # needed for swaylock
