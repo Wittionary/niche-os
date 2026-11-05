@@ -20,6 +20,12 @@
     ../common/global
   ];
 
+  environment.systemPackages = with pkgs; [
+    playerctl # media controls
+    swayosd # on-screen display of media key usage
+
+  ];
+
   networking = {
     hostName = "hacktop";
   };
