@@ -62,6 +62,30 @@
           "${modifier}+F4" = "move window to workspace number 4";
           "${modifier}+F5" = "move window to workspace number 5";
           "${modifier}+F6" = "move window to workspace number 6";
+
+          # MEDIA CONTROLS FOR HACKTOP ---------- TODO: put it in hacktop.nix but merge with above config
+          # Audio Volume Controls (Sink - Output)
+          "XF86AudioRaiseVolume" = "exec swayosd-client --output-volume raise";
+          "XF86AudioLowerVolume" = "exec swayosd-client --output-volume lower";
+          "XF86AudioMute" = "exec swayosd-client --output-volume mute-toggle";
+
+          # Microphone Volume Control (Source - Input)
+          "XF86AudioMicMute" = "exec swayosd-client --input-volume mute-toggle";
+
+          # Caps Lock
+          "--release Caps_Lock" = "exec swayosd-client --caps-lock";
+
+          # Brightness Controls
+          "XF86MonBrightnessUp" = "exec swayosd-client --brightness raise";
+          "XF86MonBrightnessDown" = "exec swayosd-client --brightness lower";
+
+          # Media Player Controls
+          "XF86AudioPlay" = "exec swayosd-client --playerctl play-pause";
+          "XF86AudioNext" = "exec swayosd-client --playerctl next";
+          "XF86AudioPrev" = "exec swayosd-client --playerctl prev";
+
+          # camera toggle
+          # bluetooth/wifi toggle
         };
 
         defaultWorkspace = "workspace number 1";

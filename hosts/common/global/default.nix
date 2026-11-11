@@ -145,6 +145,8 @@
     tutanota-desktop
 
     # system
+    playerctl # media controls
+    swayosd # on-screen display of media key usage
 
     # terminal
     cowsay
