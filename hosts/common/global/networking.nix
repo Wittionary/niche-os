@@ -27,10 +27,8 @@
 
   services.mullvad-vpn = {
     enable = true;
-    enableEarlyBootBlocking = false; # TODO: change to true after 2026-10-18
-    enableExcludeWrapper = true; # TODO: change to false after 2026-10-18
-
-
+    enableEarlyBootBlocking = true;
+    enableExcludeWrapper = false;
   };
 
   services.openssh = {
