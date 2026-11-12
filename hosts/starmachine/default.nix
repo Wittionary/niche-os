@@ -1,4 +1,5 @@
 {
+  config,
   ...
 }:
 {
@@ -22,10 +23,10 @@
     settings.Resolve = {
       Domains = [
         # TODO: consider implementing this native package; it's kind of trash though
-        "45.90.28.0#starmachine-c49352.dns.nextdns.io"
-        "2a07:a8c0::#starmachine-c49352.dns.nextdns.io"
-        "45.90.30.0#starmachine-c49352.dns.nextdns.io"
-        "2a07:a8c1::#starmachine-c49352.dns.nextdns.io"
+        "45.90.28.0#${config.networking.hostName}-c49352.dns.nextdns.io"
+        "2a07:a8c0::#${config.networking.hostName}-c49352.dns.nextdns.io"
+        "45.90.30.0#${config.networking.hostName}-c49352.dns.nextdns.io"
+        "2a07:a8c1::#${config.networking.hostName}-c49352.dns.nextdns.io"
       ];
     };
   };
