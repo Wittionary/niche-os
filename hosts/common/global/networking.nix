@@ -18,6 +18,7 @@
       ];
       DNSOverTLS = true;
       DNSSEC = false; # because NextDNS handles this
+      FallbackDNS = "9.9.9.9";
     };
   };
 
