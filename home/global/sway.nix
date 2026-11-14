@@ -2,6 +2,7 @@
   inputs,
   lib,
   config,
+  pkgs,
   ...
 }:
 {
@@ -99,8 +100,8 @@
     enable = true;
     settings = {
       # TODO: make un-ugly
-      image = "file:///home/witt/git/niche-os/wallpapers/flowers-desaturated.jpg";
-      scaling = "fit";
+      image = "/home/witt/git/niche-os/wallpapers/flowers-desaturated.jpg";
+      scaling = "stretch";
       color = "809ABB";
       # font = TODO;
       font-size = 24;
@@ -126,5 +127,18 @@
   systemd.user.services.swaylock = {
     Unit.Description = "Lock screen";
     Service.ExecStart = "${config.programs.swaylock.package}/bin/swaylock";
+  };
+
+  services.swayidle = {
+    enable = true;
+    events = {
+      "before-sleep" = "${pkgs.swaylock}/bin/swaylock -f";
+      "lock" = "lock";
+    };
+    timeouts = [
+      { timeout = 15*60; command = "${pkgs.swaylock}/bin/swaylock -f"; }
+      #{ timeout = 60*60; command = "${pkgs.systemd}/bin/systemctl suspend"; } # how do I make the server NOT suspend?
+  ];
+
   };
 }
