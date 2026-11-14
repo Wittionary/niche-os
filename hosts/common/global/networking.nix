@@ -18,7 +18,12 @@
       ];
       DNSOverTLS = true;
       DNSSEC = false; # because NextDNS handles this
-      FallbackDNS = "9.9.9.9";
+      FallbackDNS = [
+        "149.112.112.112" # These are all Quad9
+        "9.9.9.9"
+        "2620:fe::9"
+        "2620:fe::fe"
+      ];
     };
   };
 
