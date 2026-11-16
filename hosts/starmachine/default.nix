@@ -12,7 +12,7 @@
     ./hardware-configuration.nix
 
     ../common/global
-    # ../common/global/gaming.nix
+    # ../common/features/gaming.nix
     ../common/services/llama.nix
   ];
 
