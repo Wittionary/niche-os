@@ -29,7 +29,7 @@
           "${modifier}+Return" = "exec ${config.wayland.windowManager.sway.config.terminal}";
           "${modifier}+Shift+q" = "kill";
           "${modifier}+d" = "exec ${config.wayland.windowManager.sway.config.menu}";
-          "${modifier}+l" = "exec swaylock";
+          "${modifier}+Shift+l" = "exec swaylock";
           "${modifier}+1" = "workspace number 1";
           "${modifier}+2" = "workspace number 2";
           "${modifier}+3" = "workspace number 3";
