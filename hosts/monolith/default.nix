@@ -10,6 +10,7 @@
     ../common/features/deploy.nix
 
     ../common/services/forgejo.nix
+    ../common/services/github-runner.nix
     ../common/services/prometheus.nix
     ../common/services/reticulum.nix
     ../common/services/xmpp.nix
