@@ -25,7 +25,10 @@
          color: #AAB2BF;
        }
        #workspaces button {
-         padding: 0 5px;
+        padding: 0 5px;
+       }
+       #workspaces button:active {
+        border-color: #0F2E2E;
        }
     '';
   };
@@ -84,6 +87,7 @@
               background = "#0F2E2E";
             };
             statusCommand = "while date +'%A, %b %d %I:%M%P'; do sleep 5; done";
+            command = "waybar";
           }
         ];
         output = {
