@@ -19,17 +19,22 @@
          border: none;
          border-radius: 0;
          font-family: Source Code Pro;
-       }
-       window#waybar {
+      }
+      window#waybar {
          background: #16191C;
          color: #AAB2BF;
-       }
-       #workspaces button {
+      }
+      #workspaces button {
         padding: 0 5px;
-       }
-       #workspaces button:active {
-        border-color: #0F2E2E;
-       }
+      }
+      #workspaces button.focused,
+      #workspaces button.active {
+        color: #3EC1C1;
+        background: #0F2E2E;
+        border-bottom: 3px solid white;
+      }
+
+
     '';
   };
 
