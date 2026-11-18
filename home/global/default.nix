@@ -200,15 +200,15 @@
   # BROWSER --------------------------
   programs.librewolf = {
     enable = true;
-    # globalExtensions = with pkgs.nur.repos.rycee.firefox-addons; [
-    #   privacy-badger
-    #   {
-    #     package = ublock-origin;
-    #     settings = {
-    #       private_browsing = true;
-    #     };
-    #   }
-    # ];
+    globalExtensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      privacy-badger
+      {
+        package = ublock-origin;
+        settings = {
+          private_browsing = true;
+        };
+      }
+    ];
     # profiles = {
     #   default = {
     #
