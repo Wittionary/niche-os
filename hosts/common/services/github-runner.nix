@@ -10,7 +10,7 @@
       enable = true;
       name = "home-services";
       tokenType = "access";
-      tokenFile = "/run/secrets/github-runner/nixos.token";
+      tokenFile = "/home/witt/nixos.token";
       url = "https://github.com/wittionary/home-infra";
       extraPackages = [];
     };
