@@ -160,7 +160,7 @@
     nh = {
       enable = true;
       clean.enable = true;
-      clean.extraArgs = "--keep-since 60d --keep 10";
+      clean.extraArgs = "--keep-since 60d --keep 7";
       flake = "/home/witt/git/niche-os"; # TODO: have this take in variables
     };
 
