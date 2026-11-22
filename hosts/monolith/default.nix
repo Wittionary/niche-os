@@ -9,6 +9,7 @@
 
     ../common/features/deploy.nix
 
+    ../common/services/container-hosted.nix
     ../common/services/forgejo.nix
     ../common/services/github-runner.nix
     ../common/services/prometheus.nix
