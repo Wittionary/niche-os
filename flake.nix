@@ -80,7 +80,7 @@
             # add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
             nixos-hardware.nixosModules.common-cpu-amd
             nixos-hardware.nixosModules.common-pc
-            nur.repos.rycee.modules.nixos.pkgs.firefox-addons
+            # nur.repos.rycee.modules.nixos.pkgs.firefox-addons
           ];
         };
 

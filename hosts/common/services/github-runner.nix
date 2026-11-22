@@ -12,7 +12,10 @@
       tokenType = "access";
       tokenFile = "/home/witt/nixos.token";
       url = "https://github.com/wittionary/home-infra";
-      extraPackages = [];
+      extraPackages = with pkgs; [
+        podman
+        podman-compose
+      ];
     };
   };
 }
