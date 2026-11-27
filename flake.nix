@@ -24,11 +24,7 @@
     # remote deploy!
     deploy-rs.url = "github:serokell/deploy-rs";
 
-    # nix user repository
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
 
     # hosts file provider - https://github.com/StevenBlack/hosts#nix-flake
     # stevenblack-hosts.url = "github:StevenBlack/hosts/master";
@@ -42,7 +38,6 @@
       # stevenblack-hosts,
       nixos-hardware,
       deploy-rs,
-      nur,
       ...
     }@inputs:
     let
@@ -80,7 +75,6 @@
             # add your model from this list: https://github.com/NixOS/nixos-hardware/blob/master/flake.nix
             nixos-hardware.nixosModules.common-cpu-amd
             nixos-hardware.nixosModules.common-pc
-            # nur.repos.rycee.modules.nixos.pkgs.firefox-addons
           ];
         };
 
