@@ -55,9 +55,9 @@
         keybindings = let
           modifier = config.wayland.windowManager.sway.config.modifier;
         in lib.mkOptionDefault {
-          "${modifier}+Return" = "exec ${config.wayland.windowManager.sway.config.terminal}";
+          "${modifier}+d" = "exec ${config.wayland.windowManager.sway.config.terminal}";
           "${modifier}+Shift+q" = "kill";
-          "${modifier}+d" = "exec ${config.wayland.windowManager.sway.config.menu}";
+          "${modifier}+Return" = "exec ${config.wayland.windowManager.sway.config.menu}";
           "${modifier}+x" = "move workspace to output next"; # do not work :/
           "${modifier}+Shift+l" = "exec swaylock";
           "F1" = "workspace number 1";
