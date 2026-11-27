@@ -32,6 +32,7 @@
 
   fonts.packages = with pkgs; [
     ibm-plex
+    source-code-pro
   ];
 
   services.upower = {

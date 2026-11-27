@@ -18,7 +18,7 @@
       * {
          border: none;
          border-radius: 0;
-         font-family: Source Code Pro;
+         font-family: Source Code Pro, ibm-plex, DejaVu Sans;
       }
       window#waybar {
          background: #16191C;
@@ -91,7 +91,7 @@
             colors = {
               background = "#0F2E2E";
             };
-            statusCommand = "while date +'%A, %b %d %I:%M%P'; do sleep 5; done";
+            # statusCommand = "while date +'%A, %b %d %I:%M%P'; do sleep 5; done";
             command = "waybar";
           }
         ];
