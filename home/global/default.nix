@@ -70,8 +70,8 @@
     obsidian
     podman
 
-    terraform
-    terragrunt
+    # terraform
+    # terragrunt
     todoist-electron
 
     vivaldi

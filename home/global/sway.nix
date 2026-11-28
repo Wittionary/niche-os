@@ -97,7 +97,7 @@
         ];
         output = {
           "*" = {
-            bg = "#236767 solid_color";
+            bg = "/home/witt/git/niche-os/wallpapers/flowers-desaturated.jpg stretch #236767"; # fallback color
           };
         };
         gaps.inner = 10;
